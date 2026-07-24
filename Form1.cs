@@ -29,7 +29,7 @@ namespace CpE2_DSA_Olivar_26271Sem
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(txtFname.Text + "" + txtMI.Text + " ay bading" + txtLname.Text);
+            MessageBox.Show(txtFname.Text + "" + txtMI.Text + " ay bading" + txtLname.Text + "Github");
         }
 
         private void txtLname_TextChanged(object sender, EventArgs e)
