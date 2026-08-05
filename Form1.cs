@@ -19,7 +19,7 @@ namespace CpE2_DSA_Olivar_26271Sem
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -29,7 +29,14 @@ namespace CpE2_DSA_Olivar_26271Sem
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(txtFname.Text + "" + txtMI.Text + " ay bading" + txtLname.Text + "Github");
+            MessageBox.Show(txtFname.Text + " " + txtMI.Text + " " + txtLname.Text + " Github");
+        }
+
+        private void btnArray_Click(object sender, EventArgs e)
+        {
+            Array frm = new Array(this);
+            frm.Show();
+            this.Hide();
         }
 
         private void txtLname_TextChanged(object sender, EventArgs e)
