@@ -30,11 +30,14 @@ namespace CpE2_DSA_Olivar_26271Sem
         private void button1_Click(object sender, EventArgs e)
         {
             MessageBox.Show(txtFname.Text + " " + txtMI.Text + " " + txtLname.Text + " Github");
+
+            txtFname.Focus();
+            txtFname.SelectAll();
         }
 
         private void btnArray_Click(object sender, EventArgs e)
         {
-            Array frm = new Array(this);
+            ArrayForm frm = new ArrayForm(this);
             frm.Show();
             this.Hide();
         }
