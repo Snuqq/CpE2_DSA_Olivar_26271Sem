@@ -27,7 +27,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             }
             catch
             {
-                MessageBox.Show("Invalid input.");h
+                MessageBox.Show("Invalid input.");
                 txtIndex.Focus();
                 txtIndex.SelectAll();
             }
