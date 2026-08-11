@@ -20,7 +20,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             try
             {
                 int index = Convert.ToInt32(txtIndex.Text);
-                lblArray.Text = names[index];
+                MessageBox.Show(names[index], "Index " + index);
 
                 txtIndex.Focus();
                 txtIndex.SelectAll();
@@ -31,6 +31,21 @@ namespace CpE2_DSA_Olivar_26271Sem
                 txtIndex.Focus();
                 txtIndex.SelectAll();
             }
+        }
+
+        private void btnDisplayAll_Click(object sender, EventArgs e)
+        {
+            lstbArray.Items.Clear();
+
+            foreach (string name in names)
+            {
+                lstbArray.Items.Add(name);
+            }
+        }
+
+        private void btnClearAll_Click(object sender, EventArgs e)
+        {
+            lstbArray.Items.Clear();
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
@@ -69,11 +84,6 @@ namespace CpE2_DSA_Olivar_26271Sem
         private void ArrayForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             mainForm.Show();
-        }
-
-        private void lblValue_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
