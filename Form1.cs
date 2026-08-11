@@ -22,19 +22,6 @@ namespace CpE2_DSA_Olivar_26271Sem
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(txtFname.Text + " " + txtMI.Text + " " + txtLname.Text + " Github");
-
-            txtFname.Focus();
-            txtFname.SelectAll();
-        }
-
         private void btnArray_Click(object sender, EventArgs e)
         {
             ArrayForm frm = new ArrayForm(this);
@@ -42,34 +29,11 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.Hide();
         }
 
-        private void txtLname_TextChanged(object sender, EventArgs e)
+        private void btnLinkedList_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void txtMI_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            LinkedListForm frm = new LinkedListForm(this);
+            frm.Show();
+            this.Hide();
         }
     }
 }
