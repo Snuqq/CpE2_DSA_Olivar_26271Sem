@@ -1,6 +1,6 @@
-﻿namespace CpE2_DSA_Olivar_26271Sem
+namespace CpE2_DSA_Olivar_26271Sem
 {
-    partial class LinkedListForm
+    partial class LinkedListControl
     {
         /// <summary>
         /// Required designer variable.
@@ -25,43 +25,47 @@
         private void InitializeComponent()
         {
             this.lstbLinkedList = new System.Windows.Forms.ListBox();
-            this.btnBack = new System.Windows.Forms.Button();
-            this.lblOperation = new System.Windows.Forms.Label();
-            this.cmbOperation = new System.Windows.Forms.ComboBox();
-            this.lblValue = new System.Windows.Forms.Label();
-            this.txtValue = new System.Windows.Forms.TextBox();
+            this.pnlControls = new System.Windows.Forms.Panel();
             this.btnInsert = new System.Windows.Forms.Button();
+            this.txtValue = new System.Windows.Forms.TextBox();
+            this.lblValue = new System.Windows.Forms.Label();
+            this.cmbOperation = new System.Windows.Forms.ComboBox();
+            this.lblOperation = new System.Windows.Forms.Label();
+            this.pnlControls.SuspendLayout();
             this.SuspendLayout();
             // 
             // lstbLinkedList
             // 
+            this.lstbLinkedList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstbLinkedList.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstbLinkedList.FormattingEnabled = true;
             this.lstbLinkedList.ItemHeight = 24;
-            this.lstbLinkedList.Location = new System.Drawing.Point(15, 15);
+            this.lstbLinkedList.Location = new System.Drawing.Point(0, 0);
             this.lstbLinkedList.Name = "lstbLinkedList";
-            this.lstbLinkedList.Size = new System.Drawing.Size(300, 244);
+            this.lstbLinkedList.Size = new System.Drawing.Size(300, 295);
             this.lstbLinkedList.TabIndex = 0;
             // 
-            // btnBack
+            // pnlControls
             // 
-            this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBack.Location = new System.Drawing.Point(433, 15);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(92, 30);
-            this.btnBack.TabIndex = 1;
-            this.btnBack.Text = "Back";
-            this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            this.pnlControls.Controls.Add(this.btnInsert);
+            this.pnlControls.Controls.Add(this.txtValue);
+            this.pnlControls.Controls.Add(this.lblValue);
+            this.pnlControls.Controls.Add(this.cmbOperation);
+            this.pnlControls.Controls.Add(this.lblOperation);
+            this.pnlControls.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlControls.Location = new System.Drawing.Point(300, 0);
+            this.pnlControls.Name = "pnlControls";
+            this.pnlControls.Size = new System.Drawing.Size(280, 295);
+            this.pnlControls.TabIndex = 1;
             // 
             // lblOperation
             // 
             this.lblOperation.AutoSize = true;
             this.lblOperation.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOperation.Location = new System.Drawing.Point(330, 55);
+            this.lblOperation.Location = new System.Drawing.Point(20, 25);
             this.lblOperation.Name = "lblOperation";
             this.lblOperation.Size = new System.Drawing.Size(103, 24);
-            this.lblOperation.TabIndex = 2;
+            this.lblOperation.TabIndex = 0;
             this.lblOperation.Text = "Operation";
             // 
             // cmbOperation
@@ -74,65 +78,58 @@
             "AddLast",
             "AddAfter",
             "AddBefore"});
-            this.cmbOperation.Location = new System.Drawing.Point(330, 80);
+            this.cmbOperation.Location = new System.Drawing.Point(20, 55);
             this.cmbOperation.Name = "cmbOperation";
-            this.cmbOperation.Size = new System.Drawing.Size(195, 32);
-            this.cmbOperation.TabIndex = 3;
+            this.cmbOperation.Size = new System.Drawing.Size(230, 32);
+            this.cmbOperation.TabIndex = 1;
             // 
             // lblValue
             // 
             this.lblValue.AutoSize = true;
             this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValue.Location = new System.Drawing.Point(330, 118);
+            this.lblValue.Location = new System.Drawing.Point(20, 105);
             this.lblValue.Name = "lblValue";
             this.lblValue.Size = new System.Drawing.Size(109, 24);
-            this.lblValue.TabIndex = 4;
+            this.lblValue.TabIndex = 2;
             this.lblValue.Text = "Insert Value";
             // 
             // txtValue
             // 
             this.txtValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtValue.Location = new System.Drawing.Point(330, 143);
+            this.txtValue.Location = new System.Drawing.Point(20, 135);
             this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(195, 29);
-            this.txtValue.TabIndex = 5;
+            this.txtValue.Size = new System.Drawing.Size(230, 29);
+            this.txtValue.TabIndex = 3;
             // 
             // btnInsert
             // 
             this.btnInsert.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInsert.Location = new System.Drawing.Point(330, 182);
+            this.btnInsert.Location = new System.Drawing.Point(20, 180);
             this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(195, 30);
-            this.btnInsert.TabIndex = 6;
+            this.btnInsert.Size = new System.Drawing.Size(230, 40);
+            this.btnInsert.TabIndex = 4;
             this.btnInsert.Text = "Insert";
             this.btnInsert.UseVisualStyleBackColor = true;
             this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
             // 
-            // LinkedListForm
+            // LinkedListControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 295);
-            this.Controls.Add(this.btnInsert);
-            this.Controls.Add(this.txtValue);
-            this.Controls.Add(this.lblValue);
-            this.Controls.Add(this.cmbOperation);
-            this.Controls.Add(this.lblOperation);
-            this.Controls.Add(this.btnBack);
+            this.Size = new System.Drawing.Size(580, 295);
+            this.Controls.Add(this.pnlControls);
             this.Controls.Add(this.lstbLinkedList);
-            this.Name = "LinkedListForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LinkedList";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LinkedListForm_FormClosing);
+            this.Name = "LinkedListControl";
+            this.pnlControls.ResumeLayout(false);
+            this.pnlControls.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.ListBox lstbLinkedList;
-        private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Panel pnlControls;
         private System.Windows.Forms.Label lblOperation;
         private System.Windows.Forms.ComboBox cmbOperation;
         private System.Windows.Forms.Label lblValue;

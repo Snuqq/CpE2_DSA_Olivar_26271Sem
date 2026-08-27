@@ -3,16 +3,13 @@ using System.Windows.Forms;
 
 namespace CpE2_DSA_Olivar_26271Sem
 {
-    public partial class ArrayForm : Form
+    public partial class ArrayControl : UserControl
     {
-        Form mainForm;
-
         string[] names = { "Charles", "Joshua", "Maria", "Shawn" };
 
-        public ArrayForm(Form frm)
+        public ArrayControl()
         {
             InitializeComponent();
-            mainForm = frm;
         }
 
         private void btnDisplay_Click(object sender, EventArgs e)
@@ -75,15 +72,5 @@ namespace CpE2_DSA_Olivar_26271Sem
             }
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            mainForm.Show();
-            Close();
-        }
-
-        private void ArrayForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            mainForm.Show();
-        }
     }
 }

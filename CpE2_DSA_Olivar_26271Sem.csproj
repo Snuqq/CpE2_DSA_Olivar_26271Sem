@@ -46,11 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="ArrayControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ArrayForm.Designer.cs">
-      <DependentUpon>ArrayForm.cs</DependentUpon>
+    <Compile Include="ArrayControl.Designer.cs">
+      <DependentUpon>ArrayControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -58,22 +58,22 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="LinkedListForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="LinkedListControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LinkedListForm.Designer.cs">
-      <DependentUpon>LinkedListForm.cs</DependentUpon>
+    <Compile Include="LinkedListControl.Designer.cs">
+      <DependentUpon>LinkedListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ArrayForm.resx">
-      <DependentUpon>ArrayForm.cs</DependentUpon>
+    <EmbeddedResource Include="ArrayControl.resx">
+      <DependentUpon>ArrayControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LinkedListForm.resx">
-      <DependentUpon>LinkedListForm.cs</DependentUpon>
+    <EmbeddedResource Include="LinkedListControl.resx">
+      <DependentUpon>LinkedListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

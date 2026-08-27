@@ -4,15 +4,13 @@ using System.Windows.Forms;
 
 namespace CpE2_DSA_Olivar_26271Sem
 {
-    public partial class LinkedListForm : Form
+    public partial class LinkedListControl : UserControl
     {
-        Form mainForm;
         LinkedList<int> Llist = new LinkedList<int>();
 
-        public LinkedListForm(Form frm)
+        public LinkedListControl()
         {
             InitializeComponent();
-            mainForm = frm;
 
             cmbOperation.SelectedIndex = 0;
         }
@@ -91,15 +89,5 @@ namespace CpE2_DSA_Olivar_26271Sem
             }
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            mainForm.Show();
-            Close();
-        }
-
-        private void LinkedListForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            mainForm.Show();
-        }
     }
 }

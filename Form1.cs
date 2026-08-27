@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CpE2_DSA_Olivar_26271Sem
@@ -17,23 +10,20 @@ namespace CpE2_DSA_Olivar_26271Sem
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnArray_Click(object sender, EventArgs e)
         {
-            ArrayForm frm = new ArrayForm(this);
-            frm.Show();
-            this.Hide();
+            splitContainer1.Panel2.Controls.Clear();
+            ArrayControl ctrl = new ArrayControl();
+            ctrl.Dock = DockStyle.Fill;
+            splitContainer1.Panel2.Controls.Add(ctrl);
         }
 
         private void btnLinkedList_Click(object sender, EventArgs e)
         {
-            LinkedListForm frm = new LinkedListForm(this);
-            frm.Show();
-            this.Hide();
+            splitContainer1.Panel2.Controls.Clear();
+            LinkedListControl ctrl = new LinkedListControl();
+            ctrl.Dock = DockStyle.Fill;
+            splitContainer1.Panel2.Controls.Add(ctrl);
         }
     }
 }
