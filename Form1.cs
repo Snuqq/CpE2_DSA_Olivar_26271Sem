@@ -25,5 +25,9 @@ namespace CpE2_DSA_Olivar_26271Sem
             ctrl.Dock = DockStyle.Fill;
             splitContainer1.Panel2.Controls.Add(ctrl);
         }
+        private void lblAuthor_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
