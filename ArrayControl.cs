@@ -16,61 +16,57 @@ namespace CpE2_DSA_Olivar_26271Sem
         {
             try
             {
-                int index = Convert.ToInt32(txtIndex.Text);
-                MessageBox.Show(names[index], "Index " + index);
-
-                txtIndex.Focus();
-                txtIndex.SelectAll();
+                lstbArray.Items.Clear();
+                lstbArray.Items.Add(names[Convert.ToInt32(txtIndex.Text)]);
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Invalid input.");
+                MessageBox.Show(ex.Message);
+                txtIndex.Clear();
                 txtIndex.Focus();
-                txtIndex.SelectAll();
             }
         }
 
         private void btnDisplayAll_Click(object sender, EventArgs e)
         {
-            lstbArray.Items.Clear();
-
-            foreach (string name in names)
-            {
-                lstbArray.Items.Add(name);
-            }
+            DisplayAll();
         }
 
         private void btnClearAll_Click(object sender, EventArgs e)
         {
             lstbArray.Items.Clear();
+            txtValue.Clear();
+            txtIndex.Clear();
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
             try
             {
-                string[] temp = new string[names.Length + 1];
-
-                for (int i = 0; i < names.Length; i++)
-                {
-                    temp[i] = names[i];
-                }
-
-                temp[names.Length] = txtValue.Text;
-
-                names = temp;
-
-                txtValue.Clear();
-                txtIndex.Clear();
-
-                txtValue.Focus();
+                int newLength = names.Length + 1;
+                Array.Resize(ref names, newLength);
+                names[newLength - 1] = txtValue.Text;
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Error.");
+                MessageBox.Show(ex.Message);
                 txtValue.Focus();
+                return;
             }
+
+            MessageBox.Show("New value inserted");
+            DisplayAll();
+            txtValue.Clear();
+            txtIndex.Clear();
         }
 
+        private void DisplayAll()
+        {
+            lstbArray.Items.Clear();
+            foreach (string name in names)
+            {
+                lstbArray.Items.Add(name);
+            }
+        }
     }
 }

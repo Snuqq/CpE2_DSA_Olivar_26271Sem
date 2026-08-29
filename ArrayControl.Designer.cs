@@ -45,7 +45,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.lstbArray.ItemHeight = 24;
             this.lstbArray.Location = new System.Drawing.Point(0, 0);
             this.lstbArray.Name = "lstbArray";
-            this.lstbArray.Size = new System.Drawing.Size(300, 295);
+            this.lstbArray.Size = new System.Drawing.Size(610, 352);
             this.lstbArray.TabIndex = 0;
             // 
             // pnlControls
@@ -59,79 +59,10 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.pnlControls.Controls.Add(this.txtIndex);
             this.pnlControls.Controls.Add(this.lblIndex);
             this.pnlControls.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlControls.Location = new System.Drawing.Point(300, 0);
+            this.pnlControls.Location = new System.Drawing.Point(330, 0);
             this.pnlControls.Name = "pnlControls";
-            this.pnlControls.Size = new System.Drawing.Size(280, 295);
+            this.pnlControls.Size = new System.Drawing.Size(280, 352);
             this.pnlControls.TabIndex = 1;
-            // 
-            // lblIndex
-            // 
-            this.lblIndex.AutoSize = true;
-            this.lblIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIndex.Location = new System.Drawing.Point(20, 25);
-            this.lblIndex.Name = "lblIndex";
-            this.lblIndex.Size = new System.Drawing.Size(92, 24);
-            this.lblIndex.TabIndex = 1;
-            this.lblIndex.Text = "Index No.";
-            // 
-            // txtIndex
-            // 
-            this.txtIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIndex.Location = new System.Drawing.Point(140, 20);
-            this.txtIndex.Name = "txtIndex";
-            this.txtIndex.Size = new System.Drawing.Size(110, 29);
-            this.txtIndex.TabIndex = 2;
-            // 
-            // btnDisplay
-            // 
-            this.btnDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisplay.Location = new System.Drawing.Point(20, 70);
-            this.btnDisplay.Name = "btnDisplay";
-            this.btnDisplay.Size = new System.Drawing.Size(230, 40);
-            this.btnDisplay.TabIndex = 3;
-            this.btnDisplay.Text = "Display Index Value";
-            this.btnDisplay.UseVisualStyleBackColor = true;
-            this.btnDisplay.Click += new System.EventHandler(this.btnDisplay_Click);
-            // 
-            // btnDisplayAll
-            // 
-            this.btnDisplayAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisplayAll.Location = new System.Drawing.Point(20, 120);
-            this.btnDisplayAll.Name = "btnDisplayAll";
-            this.btnDisplayAll.Size = new System.Drawing.Size(230, 40);
-            this.btnDisplayAll.TabIndex = 4;
-            this.btnDisplayAll.Text = "Display All";
-            this.btnDisplayAll.UseVisualStyleBackColor = true;
-            this.btnDisplayAll.Click += new System.EventHandler(this.btnDisplayAll_Click);
-            // 
-            // lblValue
-            // 
-            this.lblValue.AutoSize = true;
-            this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValue.Location = new System.Drawing.Point(20, 180);
-            this.lblValue.Name = "lblValue";
-            this.lblValue.Size = new System.Drawing.Size(109, 24);
-            this.lblValue.TabIndex = 5;
-            this.lblValue.Text = "Insert Value";
-            // 
-            // txtValue
-            // 
-            this.txtValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtValue.Location = new System.Drawing.Point(140, 176);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(110, 29);
-            this.txtValue.TabIndex = 6;
-            // 
-            // btnInsert
-            // 
-            this.btnInsert.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInsert.Location = new System.Drawing.Point(20, 225);
-            this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(230, 40);
-            this.btnInsert.TabIndex = 7;
-            this.btnInsert.Text = "Insert";
-            this.btnInsert.UseVisualStyleBackColor = true;
-            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
             // 
             // btnClearAll
             // 
@@ -144,14 +75,83 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnClearAll.UseVisualStyleBackColor = true;
             this.btnClearAll.Click += new System.EventHandler(this.btnClearAll_Click);
             // 
+            // btnInsert
+            // 
+            this.btnInsert.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInsert.Location = new System.Drawing.Point(20, 225);
+            this.btnInsert.Name = "btnInsert";
+            this.btnInsert.Size = new System.Drawing.Size(230, 40);
+            this.btnInsert.TabIndex = 7;
+            this.btnInsert.Text = "Insert";
+            this.btnInsert.UseVisualStyleBackColor = true;
+            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
+            // 
+            // txtValue
+            // 
+            this.txtValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtValue.Location = new System.Drawing.Point(140, 176);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(110, 29);
+            this.txtValue.TabIndex = 6;
+            // 
+            // lblValue
+            // 
+            this.lblValue.AutoSize = true;
+            this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblValue.Location = new System.Drawing.Point(20, 180);
+            this.lblValue.Name = "lblValue";
+            this.lblValue.Size = new System.Drawing.Size(109, 24);
+            this.lblValue.TabIndex = 5;
+            this.lblValue.Text = "Insert Value";
+            // 
+            // btnDisplayAll
+            // 
+            this.btnDisplayAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisplayAll.Location = new System.Drawing.Point(20, 120);
+            this.btnDisplayAll.Name = "btnDisplayAll";
+            this.btnDisplayAll.Size = new System.Drawing.Size(230, 40);
+            this.btnDisplayAll.TabIndex = 4;
+            this.btnDisplayAll.Text = "Display All";
+            this.btnDisplayAll.UseVisualStyleBackColor = true;
+            this.btnDisplayAll.Click += new System.EventHandler(this.btnDisplayAll_Click);
+            // 
+            // btnDisplay
+            // 
+            this.btnDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisplay.Location = new System.Drawing.Point(20, 70);
+            this.btnDisplay.Name = "btnDisplay";
+            this.btnDisplay.Size = new System.Drawing.Size(230, 40);
+            this.btnDisplay.TabIndex = 3;
+            this.btnDisplay.Text = "Display Index Value";
+            this.btnDisplay.UseVisualStyleBackColor = true;
+            this.btnDisplay.Click += new System.EventHandler(this.btnDisplay_Click);
+            // 
+            // txtIndex
+            // 
+            this.txtIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIndex.Location = new System.Drawing.Point(140, 20);
+            this.txtIndex.Name = "txtIndex";
+            this.txtIndex.Size = new System.Drawing.Size(110, 29);
+            this.txtIndex.TabIndex = 2;
+            // 
+            // lblIndex
+            // 
+            this.lblIndex.AutoSize = true;
+            this.lblIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIndex.Location = new System.Drawing.Point(20, 25);
+            this.lblIndex.Name = "lblIndex";
+            this.lblIndex.Size = new System.Drawing.Size(92, 24);
+            this.lblIndex.TabIndex = 1;
+            this.lblIndex.Text = "Index No.";
+            // 
             // ArrayControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Size = new System.Drawing.Size(580, 295);
             this.Controls.Add(this.pnlControls);
             this.Controls.Add(this.lstbArray);
             this.Name = "ArrayControl";
+            this.Size = new System.Drawing.Size(610, 352);
             this.pnlControls.ResumeLayout(false);
             this.pnlControls.PerformLayout();
             this.ResumeLayout(false);

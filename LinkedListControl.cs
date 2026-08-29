@@ -49,7 +49,6 @@ namespace CpE2_DSA_Olivar_26271Sem
                             Llist.AddBefore(node, value);
                             break;
                         }
-
                     default:
                         MessageBox.Show("Please select an operation.");
                         return;
