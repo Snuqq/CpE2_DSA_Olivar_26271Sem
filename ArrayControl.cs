@@ -5,7 +5,7 @@ namespace CpE2_DSA_Olivar_26271Sem
 {
     public partial class ArrayControl : UserControl
     {
-        string[] names = { "Charles", "Joshua", "Maria", "Shawn" };
+        string[] names = { "Charles", "Joshua", "Maria", "Shawn" }; niggas
 
         public ArrayControl()
         {
