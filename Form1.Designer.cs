@@ -53,7 +53,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(1013, 602);
-            this.splitContainer1.SplitterDistance = 220;
+            this.splitContainer1.SplitterDistance = 130;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -73,11 +73,11 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Impact", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Orange;
-            this.label2.Location = new System.Drawing.Point(10, 51);
+            this.label2.Location = new System.Drawing.Point(9, 51);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(311, 26);
+            this.label2.Size = new System.Drawing.Size(509, 26);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Data Structures and Algorithms";
+            this.label2.Text = "Data Structures and Algorithms (1st Sem 2026-2027)";
             // 
             // label1
             // 
@@ -86,9 +86,9 @@
             this.label1.ForeColor = System.Drawing.Color.Gold;
             this.label1.Location = new System.Drawing.Point(7, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(521, 39);
+            this.label1.Size = new System.Drawing.Size(789, 39);
             this.label1.TabIndex = 0;
-            this.label1.Text = "University of Perpetual Health DALTA";
+            this.label1.Text = "University of Perpetual Health DALTA - Calamba Campus";
             // 
             // splitContainer2
             // 
@@ -106,8 +106,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.BackColor = System.Drawing.Color.White;
-            this.splitContainer2.Size = new System.Drawing.Size(1013, 475);
-            this.splitContainer2.SplitterDistance = 268;
+            this.splitContainer2.Size = new System.Drawing.Size(1013, 471);
+            this.splitContainer2.SplitterDistance = 200;
             this.splitContainer2.TabIndex = 0;
             // 
             // btnArray
@@ -115,9 +115,9 @@
             this.btnArray.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnArray.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnArray.Location = new System.Drawing.Point(46, 51);
+            this.btnArray.Location = new System.Drawing.Point(31, 52);
             this.btnArray.Name = "btnArray";
-            this.btnArray.Size = new System.Drawing.Size(186, 55);
+            this.btnArray.Size = new System.Drawing.Size(134, 50);
             this.btnArray.TabIndex = 0;
             this.btnArray.Text = "Array";
             this.btnArray.UseVisualStyleBackColor = true;
@@ -128,9 +128,9 @@
             this.btnLinkList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkList.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnLinkList.Location = new System.Drawing.Point(46, 155);
+            this.btnLinkList.Location = new System.Drawing.Point(31, 143);
             this.btnLinkList.Name = "btnLinkList";
-            this.btnLinkList.Size = new System.Drawing.Size(186, 55);
+            this.btnLinkList.Size = new System.Drawing.Size(134, 50);
             this.btnLinkList.TabIndex = 1;
             this.btnLinkList.Text = "LinkedList";
             this.btnLinkList.UseVisualStyleBackColor = true;
