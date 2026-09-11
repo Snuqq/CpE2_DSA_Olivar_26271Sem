@@ -107,7 +107,7 @@
             // 
             this.splitContainer2.Panel2.BackColor = System.Drawing.Color.White;
             this.splitContainer2.Size = new System.Drawing.Size(1013, 471);
-            this.splitContainer2.SplitterDistance = 200;
+            this.splitContainer2.SplitterDistance = 199;
             this.splitContainer2.TabIndex = 0;
             // 
             // btnArray
@@ -117,7 +117,7 @@
             this.btnArray.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnArray.Location = new System.Drawing.Point(31, 52);
             this.btnArray.Name = "btnArray";
-            this.btnArray.Size = new System.Drawing.Size(134, 50);
+            this.btnArray.Size = new System.Drawing.Size(133, 50);
             this.btnArray.TabIndex = 0;
             this.btnArray.Text = "Array";
             this.btnArray.UseVisualStyleBackColor = true;
@@ -130,7 +130,7 @@
             this.btnLinkList.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnLinkList.Location = new System.Drawing.Point(31, 143);
             this.btnLinkList.Name = "btnLinkList";
-            this.btnLinkList.Size = new System.Drawing.Size(134, 50);
+            this.btnLinkList.Size = new System.Drawing.Size(133, 50);
             this.btnLinkList.TabIndex = 1;
             this.btnLinkList.Text = "LinkedList";
             this.btnLinkList.UseVisualStyleBackColor = true;

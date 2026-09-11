@@ -24,6 +24,7 @@ namespace CpE2_DSA_Olivar_26271Sem
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArrayControl));
             this.lstbArray = new System.Windows.Forms.ListBox();
             this.pnlControls = new System.Windows.Forms.Panel();
             this.btnClearAll = new System.Windows.Forms.Button();
@@ -34,6 +35,8 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnDisplay = new System.Windows.Forms.Button();
             this.txtIndex = new System.Windows.Forms.TextBox();
             this.lblIndex = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.pnlControls.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -144,6 +147,16 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.lblIndex.TabIndex = 1;
             this.lblIndex.Text = "Index No.";
             // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
+            // 
             // ArrayControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,5 +183,7 @@ namespace CpE2_DSA_Olivar_26271Sem
         private System.Windows.Forms.TextBox txtValue;
         private System.Windows.Forms.Button btnInsert;
         private System.Windows.Forms.Button btnClearAll;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
     }
 }

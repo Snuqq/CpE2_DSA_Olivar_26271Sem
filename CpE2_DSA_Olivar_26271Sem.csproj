@@ -58,11 +58,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="LinkedListControl.cs">
+    <Compile Include="Linkedlist.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LinkedListControl.Designer.cs">
-      <DependentUpon>LinkedListControl.cs</DependentUpon>
+    <Compile Include="Linkedlist.Designer.cs">
+      <DependentUpon>Linkedlist.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,8 +72,8 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LinkedListControl.resx">
-      <DependentUpon>LinkedListControl.cs</DependentUpon>
+    <EmbeddedResource Include="Linkedlist.resx">
+      <DependentUpon>Linkedlist.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -26,7 +26,7 @@ namespace CpE2_DSA_Olivar_26271Sem
         private void btnLinkedList_Click(object sender, EventArgs e)
         {
             splitContainer2.Panel2.Controls.Clear();
-            LinkedListControl ctrl = new LinkedListControl();
+            Linkedlist ctrl = new Linkedlist();
             splitContainer2.Panel2.Controls.Add(ctrl);
             CenterInPanel2(ctrl);
         }
