@@ -11,7 +11,6 @@ namespace CpE2_DSA_Olivar_26271Sem
             InitializeComponent();
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer | ControlStyles.ResizeRedraw, true);
             this.DoubleBuffered = true;
-
             splitContainer2.Panel2.Resize += Panel2_Resize;
         }
 
@@ -20,7 +19,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             splitContainer2.Panel2.Controls.Clear();
             ArrayControl ctrl = new ArrayControl();
             splitContainer2.Panel2.Controls.Add(ctrl);
-            CenterInPanel2(ctrl);
+            ctrl.Dock = DockStyle.Fill;
         }
 
         private void btnLinkedList_Click(object sender, EventArgs e)
@@ -28,7 +27,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             splitContainer2.Panel2.Controls.Clear();
             Linkedlist ctrl = new Linkedlist();
             splitContainer2.Panel2.Controls.Add(ctrl);
-            CenterInPanel2(ctrl);
+            ctrl.Dock = DockStyle.Fill;
         }
 
         private void CenterInPanel2(Control ctrl)
