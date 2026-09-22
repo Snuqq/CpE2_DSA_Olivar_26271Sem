@@ -2,188 +2,164 @@ namespace CpE2_DSA_Olivar_26271Sem
 {
     partial class ArrayControl
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-
+            if (disposing && components != null) components.Dispose();
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArrayControl));
-            this.lstbArray = new System.Windows.Forms.ListBox();
-            this.pnlControls = new System.Windows.Forms.Panel();
-            this.btnClearAll = new System.Windows.Forms.Button();
-            this.btnInsert = new System.Windows.Forms.Button();
-            this.txtValue = new System.Windows.Forms.TextBox();
             this.lblValue = new System.Windows.Forms.Label();
-            this.btnDisplayAll = new System.Windows.Forms.Button();
-            this.btnDisplay = new System.Windows.Forms.Button();
-            this.txtIndex = new System.Windows.Forms.TextBox();
+            this.txtValue = new System.Windows.Forms.TextBox();
             this.lblIndex = new System.Windows.Forms.Label();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.pnlControls.SuspendLayout();
+            this.txtIndexNo = new System.Windows.Forms.TextBox();
+            this.btnDisplayIndexValue = new System.Windows.Forms.Button();
+            this.btnDisplayAll = new System.Windows.Forms.Button();
+            this.btnInsert = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.lstbArray = new System.Windows.Forms.ListBox();
+            this.grpArray = new System.Windows.Forms.GroupBox();
+            this.grpArray.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lstbArray
-            // 
-            this.lstbArray.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstbArray.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstbArray.FormattingEnabled = true;
-            this.lstbArray.ItemHeight = 24;
-            this.lstbArray.Location = new System.Drawing.Point(0, 0);
-            this.lstbArray.Name = "lstbArray";
-            this.lstbArray.Size = new System.Drawing.Size(610, 352);
-            this.lstbArray.TabIndex = 0;
-            // 
-            // pnlControls
-            // 
-            this.pnlControls.Controls.Add(this.btnClearAll);
-            this.pnlControls.Controls.Add(this.btnInsert);
-            this.pnlControls.Controls.Add(this.txtValue);
-            this.pnlControls.Controls.Add(this.lblValue);
-            this.pnlControls.Controls.Add(this.btnDisplayAll);
-            this.pnlControls.Controls.Add(this.btnDisplay);
-            this.pnlControls.Controls.Add(this.txtIndex);
-            this.pnlControls.Controls.Add(this.lblIndex);
-            this.pnlControls.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlControls.Location = new System.Drawing.Point(330, 0);
-            this.pnlControls.Name = "pnlControls";
-            this.pnlControls.Size = new System.Drawing.Size(280, 352);
-            this.pnlControls.TabIndex = 1;
-            // 
-            // btnClearAll
-            // 
-            this.btnClearAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearAll.Location = new System.Drawing.Point(20, 285);
-            this.btnClearAll.Name = "btnClearAll";
-            this.btnClearAll.Size = new System.Drawing.Size(230, 40);
-            this.btnClearAll.TabIndex = 8;
-            this.btnClearAll.Text = "Clear";
-            this.btnClearAll.UseVisualStyleBackColor = true;
-            this.btnClearAll.Click += new System.EventHandler(this.btnClearAll_Click);
-            // 
-            // btnInsert
-            // 
-            this.btnInsert.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInsert.Location = new System.Drawing.Point(20, 225);
-            this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(230, 40);
-            this.btnInsert.TabIndex = 7;
-            this.btnInsert.Text = "Insert";
-            this.btnInsert.UseVisualStyleBackColor = true;
-            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
-            // 
-            // txtValue
-            // 
-            this.txtValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtValue.Location = new System.Drawing.Point(140, 176);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(110, 29);
-            this.txtValue.TabIndex = 6;
             // 
             // lblValue
             // 
-            this.lblValue.AutoSize = true;
-            this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValue.Location = new System.Drawing.Point(20, 180);
+            this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblValue.Location = new System.Drawing.Point(470, 84);
             this.lblValue.Name = "lblValue";
-            this.lblValue.Size = new System.Drawing.Size(109, 24);
-            this.lblValue.TabIndex = 5;
-            this.lblValue.Text = "Insert Value";
+            this.lblValue.Size = new System.Drawing.Size(108, 25);
+            this.lblValue.TabIndex = 0;
+            this.lblValue.Text = "Insert value";
             // 
-            // btnDisplayAll
+            // txtValue
             // 
-            this.btnDisplayAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisplayAll.Location = new System.Drawing.Point(20, 120);
-            this.btnDisplayAll.Name = "btnDisplayAll";
-            this.btnDisplayAll.Size = new System.Drawing.Size(230, 40);
-            this.btnDisplayAll.TabIndex = 4;
-            this.btnDisplayAll.Text = "Display All";
-            this.btnDisplayAll.UseVisualStyleBackColor = true;
-            this.btnDisplayAll.Click += new System.EventHandler(this.btnDisplayAll_Click);
-            // 
-            // btnDisplay
-            // 
-            this.btnDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisplay.Location = new System.Drawing.Point(20, 70);
-            this.btnDisplay.Name = "btnDisplay";
-            this.btnDisplay.Size = new System.Drawing.Size(230, 40);
-            this.btnDisplay.TabIndex = 3;
-            this.btnDisplay.Text = "Display Index Value";
-            this.btnDisplay.UseVisualStyleBackColor = true;
-            this.btnDisplay.Click += new System.EventHandler(this.btnDisplay_Click);
-            // 
-            // txtIndex
-            // 
-            this.txtIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIndex.Location = new System.Drawing.Point(140, 20);
-            this.txtIndex.Name = "txtIndex";
-            this.txtIndex.Size = new System.Drawing.Size(110, 29);
-            this.txtIndex.TabIndex = 2;
+            this.txtValue.Location = new System.Drawing.Point(584, 86);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(145, 26);
+            this.txtValue.TabIndex = 1;
             // 
             // lblIndex
             // 
-            this.lblIndex.AutoSize = true;
-            this.lblIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIndex.Location = new System.Drawing.Point(20, 25);
+            this.lblIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIndex.Location = new System.Drawing.Point(488, 121);
             this.lblIndex.Name = "lblIndex";
-            this.lblIndex.Size = new System.Drawing.Size(92, 24);
-            this.lblIndex.TabIndex = 1;
+            this.lblIndex.Size = new System.Drawing.Size(90, 25);
+            this.lblIndex.TabIndex = 2;
             this.lblIndex.Text = "Index No.";
             // 
-            // printPreviewDialog1
+            // txtIndexNo
             // 
-            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
-            this.printPreviewDialog1.Enabled = true;
-            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
-            this.printPreviewDialog1.Name = "printPreviewDialog1";
-            this.printPreviewDialog1.Visible = false;
+            this.txtIndexNo.Location = new System.Drawing.Point(581, 118);
+            this.txtIndexNo.Name = "txtIndexNo";
+            this.txtIndexNo.Size = new System.Drawing.Size(145, 26);
+            this.txtIndexNo.TabIndex = 3;
+            // 
+            // btnDisplayIndexValue
+            // 
+            this.btnDisplayIndexValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisplayIndexValue.Location = new System.Drawing.Point(484, 171);
+            this.btnDisplayIndexValue.Name = "btnDisplayIndexValue";
+            this.btnDisplayIndexValue.Size = new System.Drawing.Size(120, 38);
+            this.btnDisplayIndexValue.TabIndex = 4;
+            this.btnDisplayIndexValue.Text = "Display Index";
+            this.btnDisplayIndexValue.Click += new System.EventHandler(this.btnDisplayIndexValue_Click);
+            // 
+            // btnDisplayAll
+            // 
+            this.btnDisplayAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisplayAll.Location = new System.Drawing.Point(609, 171);
+            this.btnDisplayAll.Name = "btnDisplayAll";
+            this.btnDisplayAll.Size = new System.Drawing.Size(120, 38);
+            this.btnDisplayAll.TabIndex = 5;
+            this.btnDisplayAll.Text = "Display All";
+            this.btnDisplayAll.Click += new System.EventHandler(this.btnDisplayAll_Click);
+            // 
+            // btnInsert
+            // 
+            this.btnInsert.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInsert.Location = new System.Drawing.Point(484, 219);
+            this.btnInsert.Name = "btnInsert";
+            this.btnInsert.Size = new System.Drawing.Size(120, 38);
+            this.btnInsert.TabIndex = 6;
+            this.btnInsert.Text = "Insert";
+            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.Location = new System.Drawing.Point(609, 219);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(120, 38);
+            this.btnClear.TabIndex = 7;
+            this.btnClear.Text = "Clear";
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.Location = new System.Drawing.Point(484, 260);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(245, 100);
+            this.lblStatus.TabIndex = 8;
+            // 
+            // lstbArray
+            // 
+            this.lstbArray.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstbArray.HorizontalScrollbar = true;
+            this.lstbArray.ItemHeight = 20;
+            this.lstbArray.Location = new System.Drawing.Point(20, 31);
+            this.lstbArray.Name = "lstbArray";
+            this.lstbArray.Size = new System.Drawing.Size(400, 324);
+            this.lstbArray.TabIndex = 9;
+            // 
+            // grpArray
+            // 
+            this.grpArray.Controls.Add(this.lblValue);
+            this.grpArray.Controls.Add(this.txtValue);
+            this.grpArray.Controls.Add(this.lblIndex);
+            this.grpArray.Controls.Add(this.txtIndexNo);
+            this.grpArray.Controls.Add(this.btnDisplayIndexValue);
+            this.grpArray.Controls.Add(this.btnDisplayAll);
+            this.grpArray.Controls.Add(this.btnInsert);
+            this.grpArray.Controls.Add(this.btnClear);
+            this.grpArray.Controls.Add(this.lblStatus);
+            this.grpArray.Controls.Add(this.lstbArray);
+            this.grpArray.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpArray.Location = new System.Drawing.Point(14, 16);
+            this.grpArray.Name = "grpArray";
+            this.grpArray.Size = new System.Drawing.Size(770, 430);
+            this.grpArray.TabIndex = 10;
+            this.grpArray.TabStop = false;
+            this.grpArray.Text = "Array";
             // 
             // ArrayControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pnlControls);
-            this.Controls.Add(this.lstbArray);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(800, 460);
+            this.Controls.Add(this.grpArray);
             this.Name = "ArrayControl";
-            this.Size = new System.Drawing.Size(610, 352);
-            this.pnlControls.ResumeLayout(false);
-            this.pnlControls.PerformLayout();
+            this.Text = "Array (zero-based index)";
+            this.grpArray.ResumeLayout(false);
+            this.grpArray.PerformLayout();
             this.ResumeLayout(false);
 
         }
-
-        #endregion
-
-        private System.Windows.Forms.ListBox lstbArray;
-        private System.Windows.Forms.Panel pnlControls;
-        private System.Windows.Forms.Label lblIndex;
-        private System.Windows.Forms.TextBox txtIndex;
-        private System.Windows.Forms.Button btnDisplay;
-        private System.Windows.Forms.Button btnDisplayAll;
         private System.Windows.Forms.Label lblValue;
         private System.Windows.Forms.TextBox txtValue;
+        private System.Windows.Forms.Label lblIndex;
+        private System.Windows.Forms.TextBox txtIndexNo;
+        private System.Windows.Forms.Button btnDisplayIndexValue;
+        private System.Windows.Forms.Button btnDisplayAll;
         private System.Windows.Forms.Button btnInsert;
-        private System.Windows.Forms.Button btnClearAll;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.ListBox lstbArray;
+        private System.Windows.Forms.GroupBox grpArray;
     }
 }

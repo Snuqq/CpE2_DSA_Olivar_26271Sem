@@ -1,4 +1,4 @@
-﻿namespace CpE2_DSA_Olivar_26271Sem
+namespace CpE2_DSA_Olivar_26271Sem
 {
     partial class Form1
     {
@@ -24,6 +24,8 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.btnArray = new System.Windows.Forms.Button();
             this.btnLinkList = new System.Windows.Forms.Button();
+            this.btnStack = new System.Windows.Forms.Button();
+            this.btnQueue = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -102,6 +104,8 @@
             this.splitContainer2.Panel1.BackColor = System.Drawing.Color.Gray;
             this.splitContainer2.Panel1.Controls.Add(this.btnArray);
             this.splitContainer2.Panel1.Controls.Add(this.btnLinkList);
+            this.splitContainer2.Panel1.Controls.Add(this.btnStack);
+            this.splitContainer2.Panel1.Controls.Add(this.btnQueue);
             // 
             // splitContainer2.Panel2
             // 
@@ -138,6 +142,22 @@
             // 
             // Form1
             // 
+            this.btnStack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnStack.Location = new System.Drawing.Point(31, 234);
+            this.btnStack.Name = "btnStack";
+            this.btnStack.Size = new System.Drawing.Size(133, 50);
+            this.btnStack.TabIndex = 2;
+            this.btnStack.Text = "Stack";
+            this.btnStack.UseVisualStyleBackColor = true;
+            this.btnStack.Click += new System.EventHandler(this.btnStack_Click);
+            this.btnQueue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnQueue.Location = new System.Drawing.Point(31, 325);
+            this.btnQueue.Name = "btnQueue";
+            this.btnQueue.Size = new System.Drawing.Size(133, 50);
+            this.btnQueue.TabIndex = 3;
+            this.btnQueue.Text = "Queue";
+            this.btnQueue.UseVisualStyleBackColor = true;
+            this.btnQueue.Click += new System.EventHandler(this.btnQueue_Click);
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
@@ -165,6 +185,8 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btnLinkList;
         private System.Windows.Forms.Button btnArray;
+        private System.Windows.Forms.Button btnStack;
+        private System.Windows.Forms.Button btnQueue;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;

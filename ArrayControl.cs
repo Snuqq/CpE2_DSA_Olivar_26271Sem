@@ -1,72 +1,76 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace CpE2_DSA_Olivar_26271Sem
 {
-    public partial class ArrayControl : UserControl
+    public partial class ArrayControl : Form
     {
-        string[] names = { "Charles", "Barcellano", "Ben", "Shawn" }; 
-
+        private string[] studentName = { "Jerome", "Maria", "Juan", "John" };
         public ArrayControl()
         {
             InitializeComponent();
-        }
-
-        private void btnDisplay_Click(object sender, EventArgs e)
-        {
-            try
+            ActiveControl = txtValue;
+            btnInsert.Click += FocusValue;
+            btnClear.Click += FocusValue;
+            btnDisplayAll.Click += FocusValue;
+            btnDisplayIndexValue.Click += delegate
             {
-                lstbArray.Items.Clear();
-                lstbArray.Items.Add(names[Convert.ToInt32(txtIndex.Text)]);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                txtIndex.Clear();
-                txtIndex.Focus();
-            }
+                txtIndexNo.Focus();
+                txtIndexNo.SelectAll();
+            };
         }
 
-        private void btnDisplayAll_Click(object sender, EventArgs e)
+        private void FocusValue(object sender, EventArgs e)
         {
-            DisplayAll();
+            txtValue.Focus();
+            txtValue.SelectAll();
         }
 
-        private void btnClearAll_Click(object sender, EventArgs e)
+        private void btnClear_Click(object sender, EventArgs e)
         {
             lstbArray.Items.Clear();
             txtValue.Clear();
-            txtIndex.Clear();
+            txtIndexNo.Clear();
+            lblStatus.Text = "Display cleared. Display All restores the array values.";
         }
+
+        private void btnDisplayIndexValue_Click(object sender, EventArgs e)
+        {
+            int index;
+            if (!int.TryParse(txtIndexNo.Text, out index) || index < 0 || index >= studentName.Length)
+            {
+                lblStatus.Text = "Enter an index from 0 to " + (studentName.Length - 1) + ".";
+                txtIndexNo.SelectAll();
+                txtIndexNo.Focus();
+                return;
+            }
+            lstbArray.Items.Clear();
+            lstbArray.Items.Add(studentName[index]);
+            lblStatus.Text = "Index " + index;
+        }
+
+        private void btnDisplayAll_Click(object sender, EventArgs e) { DisplayAll(); }
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            try
+            if (string.IsNullOrWhiteSpace(txtValue.Text))
             {
-                int newLength = names.Length + 1;
-                Array.Resize(ref names, newLength);
-                names[newLength - 1] = txtValue.Text;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                lblStatus.Text = "Insert a value first.";
                 txtValue.Focus();
                 return;
             }
-
-            MessageBox.Show("New value inserted");
+            int length = studentName.Length + 1;
+            Array.Resize(ref studentName, length);
+            studentName[length - 1] = txtValue.Text;
             DisplayAll();
-            txtValue.Clear();
-            txtIndex.Clear();
+            lblStatus.Text = "New value inserted!";
         }
 
         private void DisplayAll()
         {
             lstbArray.Items.Clear();
-            foreach (string name in names)
-            {
-                lstbArray.Items.Add(name);
-            }
+            foreach (string studName in studentName) lstbArray.Items.Add(studName);
+            lblStatus.Text = "Count: " + studentName.Length;
         }
     }
 }

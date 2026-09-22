@@ -1,5 +1,4 @@
-using System;
-using System.Drawing;
+﻿using System;
 using System.Windows.Forms;
 
 namespace CpE2_DSA_Olivar_26271Sem
@@ -9,60 +8,58 @@ namespace CpE2_DSA_Olivar_26271Sem
         public Form1()
         {
             InitializeComponent();
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer | ControlStyles.ResizeRedraw, true);
-            this.DoubleBuffered = true;
-            splitContainer2.Panel2.Resize += Panel2_Resize;
+            DoubleBuffered = true;
+            CenterMainPanel();
+        }
+
+        private void CenterMainPanel()
+        {
+            splitContainer1.Location = new System.Drawing.Point(
+                (ClientSize.Width - splitContainer1.Width) / 2,
+                (ClientSize.Height - splitContainer1.Height) / 2);
+        }
+
+        private void Form1_Load(object sender, EventArgs e) { CenterMainPanel(); }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            CenterMainPanel();
+            Invalidate();
         }
 
         private void btnArray_Click(object sender, EventArgs e)
         {
-            splitContainer2.Panel2.Controls.Clear();
-            ArrayControl ctrl = new ArrayControl();
-            splitContainer2.Panel2.Controls.Add(ctrl);
-            ctrl.Dock = DockStyle.Fill;
+            formShow(new ArrayControl(), splitContainer2.Panel2);
         }
 
         private void btnLinkedList_Click(object sender, EventArgs e)
         {
-            splitContainer2.Panel2.Controls.Clear();
-            Linkedlist ctrl = new Linkedlist();
-            splitContainer2.Panel2.Controls.Add(ctrl);
-            ctrl.Dock = DockStyle.Fill;
+            Form linkedListForm = new Form();
+            linkedListForm.Controls.Add(new Linkedlist { Dock = DockStyle.Fill });
+            formShow(linkedListForm, splitContainer2.Panel2);
         }
 
-        private void CenterInPanel2(Control ctrl)
+        private void btnStack_Click(object sender, EventArgs e)
         {
-            ctrl.Location = new Point(
-                (splitContainer2.Panel2.ClientSize.Width - ctrl.Width) / 2,
-                (splitContainer2.Panel2.ClientSize.Height - ctrl.Height) / 2
-            );
+            formShow(new Stack(), splitContainer2.Panel2);
         }
 
-        private void Panel2_Resize(object sender, EventArgs e)
+        private void btnQueue_Click(object sender, EventArgs e)
         {
-            if (splitContainer2.Panel2.Controls.Count > 0)
-            {
-                CenterInPanel2(splitContainer2.Panel2.Controls[0]);
-            }
+            formShow(new Queue(), splitContainer2.Panel2);
         }
 
-        private void CenterSplitContainer()
+        // Embed forms as in Form1.pdf, disposing the previous screen first.
+        private void formShow(Form formToShow, Panel formToShowParent)
         {
-            splitContainer1.Location = new Point(
-                (ClientSize.Width - splitContainer1.Width) / 2,
-                (ClientSize.Height - splitContainer1.Height) / 2
-            );
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            CenterSplitContainer();
-        }
-
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            CenterSplitContainer();
-            Invalidate();
+            while (formToShowParent.Controls.Count > 0)
+                formToShowParent.Controls[0].Dispose();
+            formToShow.TopLevel = false;
+            formToShow.FormBorderStyle = FormBorderStyle.None;
+            formToShow.Dock = DockStyle.Fill;
+            formToShowParent.Controls.Add(formToShow);
+            formToShow.Show();
+            formToShow.Select();
         }
     }
 }

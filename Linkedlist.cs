@@ -19,9 +19,32 @@ namespace CpE2_DSA_Olivar_26271Sem
         public Linkedlist()
         {
             InitializeComponent();
+            ActiveControl = txtValue;
+            bttnInsert.Click += FocusValue;
+            bttndisplay.Click += FocusValue;
+            btnRemove.Click += FocusValue;
+            btnCount.Click += FocusValue;
+            btnClear.Click += FocusValue;
+            btnReset.Click += FocusValue;
+            btnInsertBeforeAfter.Click += delegate
+            {
+                txtValue2.Focus();
+                txtValue2.SelectAll();
+            };
+            btnFind.Click += delegate
+            {
+                txtFind.Focus();
+                txtFind.SelectAll();
+            };
         }
 
 
+
+        private void FocusValue(object sender, EventArgs e)
+        {
+            txtValue.Focus();
+            txtValue.SelectAll();
+        }
 
         private void Linkedlist_Load(object sender, EventArgs e)
         {
