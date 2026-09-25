@@ -14,7 +14,6 @@
             this.txtStack = new System.Windows.Forms.TextBox();
             this.btnpush = new System.Windows.Forms.Button();
             this.btnpop = new System.Windows.Forms.Button();
-            this.btnDisplay = new System.Windows.Forms.Button();
             this.btnContains = new System.Windows.Forms.Button();
             this.btnCount = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
@@ -28,7 +27,7 @@
             // lblValue
             // 
             this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValue.Location = new System.Drawing.Point(461, 31);
+            this.lblValue.Location = new System.Drawing.Point(468, 66);
             this.lblValue.Name = "lblValue";
             this.lblValue.Size = new System.Drawing.Size(107, 25);
             this.lblValue.TabIndex = 0;
@@ -37,15 +36,15 @@
             // txtStack
             // 
             this.txtStack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStack.Location = new System.Drawing.Point(574, 31);
+            this.txtStack.Location = new System.Drawing.Point(471, 94);
             this.txtStack.Name = "txtStack";
-            this.txtStack.Size = new System.Drawing.Size(147, 26);
+            this.txtStack.Size = new System.Drawing.Size(245, 26);
             this.txtStack.TabIndex = 1;
             // 
             // btnpush
             // 
             this.btnpush.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnpush.Location = new System.Drawing.Point(477, 63);
+            this.btnpush.Location = new System.Drawing.Point(472, 126);
             this.btnpush.Name = "btnpush";
             this.btnpush.Size = new System.Drawing.Size(120, 38);
             this.btnpush.TabIndex = 2;
@@ -55,27 +54,17 @@
             // btnpop
             // 
             this.btnpop.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnpop.Location = new System.Drawing.Point(602, 63);
+            this.btnpop.Location = new System.Drawing.Point(472, 170);
             this.btnpop.Name = "btnpop";
             this.btnpop.Size = new System.Drawing.Size(120, 38);
             this.btnpop.TabIndex = 3;
             this.btnpop.Text = "Pop";
             this.btnpop.Click += new System.EventHandler(this.btnpop_Click);
             // 
-            // btnDisplay
-            // 
-            this.btnDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisplay.Location = new System.Drawing.Point(477, 111);
-            this.btnDisplay.Name = "btnDisplay";
-            this.btnDisplay.Size = new System.Drawing.Size(120, 38);
-            this.btnDisplay.TabIndex = 4;
-            this.btnDisplay.Text = "Display";
-            this.btnDisplay.Click += new System.EventHandler(this.btnDisplay_Click);
-            // 
             // btnContains
             // 
             this.btnContains.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnContains.Location = new System.Drawing.Point(602, 111);
+            this.btnContains.Location = new System.Drawing.Point(598, 126);
             this.btnContains.Name = "btnContains";
             this.btnContains.Size = new System.Drawing.Size(120, 38);
             this.btnContains.TabIndex = 5;
@@ -85,7 +74,7 @@
             // btnCount
             // 
             this.btnCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCount.Location = new System.Drawing.Point(477, 159);
+            this.btnCount.Location = new System.Drawing.Point(471, 214);
             this.btnCount.Name = "btnCount";
             this.btnCount.Size = new System.Drawing.Size(120, 38);
             this.btnCount.TabIndex = 6;
@@ -95,7 +84,7 @@
             // btnClear
             // 
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(602, 159);
+            this.btnClear.Location = new System.Drawing.Point(598, 214);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(120, 38);
             this.btnClear.TabIndex = 7;
@@ -105,7 +94,7 @@
             // btnPeek
             // 
             this.btnPeek.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPeek.Location = new System.Drawing.Point(477, 207);
+            this.btnPeek.Location = new System.Drawing.Point(598, 170);
             this.btnPeek.Name = "btnPeek";
             this.btnPeek.Size = new System.Drawing.Size(120, 38);
             this.btnPeek.TabIndex = 8;
@@ -115,7 +104,7 @@
             // lblStatus
             // 
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus.Location = new System.Drawing.Point(477, 248);
+            this.lblStatus.Location = new System.Drawing.Point(471, 255);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(245, 100);
             this.lblStatus.TabIndex = 9;
@@ -139,7 +128,6 @@
             this.grpStack.Controls.Add(this.txtStack);
             this.grpStack.Controls.Add(this.btnpush);
             this.grpStack.Controls.Add(this.btnpop);
-            this.grpStack.Controls.Add(this.btnDisplay);
             this.grpStack.Controls.Add(this.btnContains);
             this.grpStack.Controls.Add(this.btnCount);
             this.grpStack.Controls.Add(this.btnClear);
@@ -161,6 +149,7 @@
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 460);
             this.Controls.Add(this.grpStack);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Stack";
             this.Text = "Stack (top to bottom)";
             this.Load += new System.EventHandler(this.Stack_Load);
@@ -173,7 +162,6 @@
         private System.Windows.Forms.TextBox txtStack;
         private System.Windows.Forms.Button btnpush;
         private System.Windows.Forms.Button btnpop;
-        private System.Windows.Forms.Button btnDisplay;
         private System.Windows.Forms.Button btnContains;
         private System.Windows.Forms.Button btnCount;
         private System.Windows.Forms.Button btnClear;
