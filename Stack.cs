@@ -13,7 +13,6 @@ namespace CpE2_DSA_Olivar_26271Sem
             ActiveControl = txtStack;
             btnpush.Click += FocusInput;
             btnpop.Click += FocusInput;
-            btnDisplay.Click += FocusInput;
             btnContains.Click += FocusInput;
             btnCount.Click += FocusInput;
             btnClear.Click += FocusInput;
@@ -33,6 +32,8 @@ namespace CpE2_DSA_Olivar_26271Sem
             if (!HasValue()) return;
             myStack.Push(txtStack.Text);
             DisplayAll();
+            txtStack.Focus();
+            txtStack.Clear();
         }
 
         private void btnpop_Click(object sender, EventArgs e)
@@ -40,11 +41,8 @@ namespace CpE2_DSA_Olivar_26271Sem
             if (!HasItems()) return;
             myStack.Pop();
             DisplayAll();
-        }
-
-        private void btnDisplay_Click(object sender, EventArgs e)
-        {
-            DisplayAll();
+            txtStack.Focus();
+            txtStack.Clear();
         }
 
         private void btnContains_Click(object sender, EventArgs e)

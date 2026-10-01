@@ -13,13 +13,11 @@ namespace CpE2_DSA_Olivar_26271Sem
             ActiveControl = txtQueue;
             btnEnqueue.Click += FocusInput;
             btnDequeue.Click += FocusInput;
-            btnDisplay.Click += FocusInput;
             btnContains.Click += FocusInput;
             btnCount.Click += FocusInput;
             btnClear.Click += FocusInput;
             btnPeek.Click += FocusInput;
         }
-
         private void FocusInput(object sender, EventArgs e)
         {
             txtQueue.Focus();
@@ -33,6 +31,8 @@ namespace CpE2_DSA_Olivar_26271Sem
             if (!HasValue()) return;
             myQueue.Enqueue(txtQueue.Text);
             DisplayAll();
+            txtQueue.Focus();
+            txtQueue.Clear();
         }
 
         private void btnDequeue_Click(object sender, EventArgs e)
@@ -40,11 +40,8 @@ namespace CpE2_DSA_Olivar_26271Sem
             if (!HasItems()) return;
             myQueue.Dequeue();
             DisplayAll();
-        }
-
-        private void btnDisplay_Click(object sender, EventArgs e)
-        {
-            DisplayAll();
+            txtQueue.Focus();
+            txtQueue.Clear();
         }
 
         private void btnContains_Click(object sender, EventArgs e)

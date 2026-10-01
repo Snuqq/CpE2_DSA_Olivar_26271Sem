@@ -14,7 +14,6 @@
             this.txtQueue = new System.Windows.Forms.TextBox();
             this.btnEnqueue = new System.Windows.Forms.Button();
             this.btnDequeue = new System.Windows.Forms.Button();
-            this.btnDisplay = new System.Windows.Forms.Button();
             this.btnContains = new System.Windows.Forms.Button();
             this.btnCount = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
@@ -28,7 +27,7 @@
             // lblValue
             // 
             this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValue.Location = new System.Drawing.Point(465, 30);
+            this.lblValue.Location = new System.Drawing.Point(465, 67);
             this.lblValue.Name = "lblValue";
             this.lblValue.Size = new System.Drawing.Size(103, 25);
             this.lblValue.TabIndex = 0;
@@ -37,15 +36,15 @@
             // txtQueue
             // 
             this.txtQueue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtQueue.Location = new System.Drawing.Point(583, 30);
+            this.txtQueue.Location = new System.Drawing.Point(469, 95);
             this.txtQueue.Name = "txtQueue";
-            this.txtQueue.Size = new System.Drawing.Size(139, 26);
+            this.txtQueue.Size = new System.Drawing.Size(246, 26);
             this.txtQueue.TabIndex = 1;
             // 
             // btnEnqueue
             // 
             this.btnEnqueue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEnqueue.Location = new System.Drawing.Point(478, 62);
+            this.btnEnqueue.Location = new System.Drawing.Point(469, 127);
             this.btnEnqueue.Name = "btnEnqueue";
             this.btnEnqueue.Size = new System.Drawing.Size(120, 38);
             this.btnEnqueue.TabIndex = 2;
@@ -55,27 +54,17 @@
             // btnDequeue
             // 
             this.btnDequeue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDequeue.Location = new System.Drawing.Point(604, 62);
+            this.btnDequeue.Location = new System.Drawing.Point(469, 171);
             this.btnDequeue.Name = "btnDequeue";
             this.btnDequeue.Size = new System.Drawing.Size(120, 38);
             this.btnDequeue.TabIndex = 3;
             this.btnDequeue.Text = "Dequeue";
             this.btnDequeue.Click += new System.EventHandler(this.btnDequeue_Click);
             // 
-            // btnDisplay
-            // 
-            this.btnDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisplay.Location = new System.Drawing.Point(479, 106);
-            this.btnDisplay.Name = "btnDisplay";
-            this.btnDisplay.Size = new System.Drawing.Size(120, 38);
-            this.btnDisplay.TabIndex = 4;
-            this.btnDisplay.Text = "Display";
-            this.btnDisplay.Click += new System.EventHandler(this.btnDisplay_Click);
-            // 
             // btnContains
             // 
             this.btnContains.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnContains.Location = new System.Drawing.Point(604, 106);
+            this.btnContains.Location = new System.Drawing.Point(595, 127);
             this.btnContains.Name = "btnContains";
             this.btnContains.Size = new System.Drawing.Size(120, 38);
             this.btnContains.TabIndex = 5;
@@ -85,7 +74,7 @@
             // btnCount
             // 
             this.btnCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCount.Location = new System.Drawing.Point(479, 154);
+            this.btnCount.Location = new System.Drawing.Point(469, 215);
             this.btnCount.Name = "btnCount";
             this.btnCount.Size = new System.Drawing.Size(120, 38);
             this.btnCount.TabIndex = 6;
@@ -95,7 +84,7 @@
             // btnClear
             // 
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(604, 154);
+            this.btnClear.Location = new System.Drawing.Point(595, 215);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(120, 38);
             this.btnClear.TabIndex = 7;
@@ -105,7 +94,7 @@
             // btnPeek
             // 
             this.btnPeek.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPeek.Location = new System.Drawing.Point(479, 202);
+            this.btnPeek.Location = new System.Drawing.Point(595, 171);
             this.btnPeek.Name = "btnPeek";
             this.btnPeek.Size = new System.Drawing.Size(120, 38);
             this.btnPeek.TabIndex = 8;
@@ -115,7 +104,7 @@
             // lblStatus
             // 
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus.Location = new System.Drawing.Point(477, 243);
+            this.lblStatus.Location = new System.Drawing.Point(470, 256);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(245, 100);
             this.lblStatus.TabIndex = 9;
@@ -140,7 +129,6 @@
             this.grpQueue.Controls.Add(this.txtQueue);
             this.grpQueue.Controls.Add(this.btnEnqueue);
             this.grpQueue.Controls.Add(this.btnDequeue);
-            this.grpQueue.Controls.Add(this.btnDisplay);
             this.grpQueue.Controls.Add(this.btnContains);
             this.grpQueue.Controls.Add(this.btnCount);
             this.grpQueue.Controls.Add(this.btnClear);
@@ -162,6 +150,7 @@
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 460);
             this.Controls.Add(this.grpQueue);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Queue";
             this.Text = "Queue (front to back)";
             this.Load += new System.EventHandler(this.Queue_Load);
@@ -174,7 +163,6 @@
         private System.Windows.Forms.TextBox txtQueue;
         private System.Windows.Forms.Button btnEnqueue;
         private System.Windows.Forms.Button btnDequeue;
-        private System.Windows.Forms.Button btnDisplay;
         private System.Windows.Forms.Button btnContains;
         private System.Windows.Forms.Button btnCount;
         private System.Windows.Forms.Button btnClear;

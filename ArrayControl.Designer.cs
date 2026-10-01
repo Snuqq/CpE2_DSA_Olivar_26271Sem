@@ -143,6 +143,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 460);
             this.Controls.Add(this.grpArray);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ArrayControl";
             this.Text = "Array (zero-based index)";
             this.grpArray.ResumeLayout(false);

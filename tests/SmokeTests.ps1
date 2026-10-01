@@ -31,7 +31,6 @@ foreach ($kind in @('Stack', 'Queue')) {
         Assert ((Field $form 'lblStatus').Text -match 'True') 'Contains failed'
         Click $form 'btnCount'
         Assert ((Field $form 'lblStatus').Text -match '2') 'Count failed'
-        Click $form 'btnDisplay'
         Assert ((Field $form 'lstDisplay').Items.Count -eq 2) 'Display failed'
         Assert ((Field $form 'lstDisplay').Items[0] -eq 'second') 'Display order failed'
         Click $form 'btnClear'

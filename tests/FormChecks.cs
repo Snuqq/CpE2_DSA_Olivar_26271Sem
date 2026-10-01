@@ -92,8 +92,8 @@ class FormChecks
         Input(form, "txt" + kind, "b"); Click(form, "btnContains"); Check(Field<Label>(form, "lblStatus").Text.EndsWith("True"), "Contains");
         Input(form, "txt" + kind, "missing"); Click(form, "btnContains"); Check(Field<Label>(form, "lblStatus").Text.EndsWith("False"), "Missing contains");
         Click(form, "btnCount"); Check(Field<Label>(form, "lblStatus").Text == "Count: 2", "Count");
-        Click(form, "btnClear"); Click(form, "btnDisplay"); Check(list.Items.Count == 0, "Clear");
-        foreach(var button in new[] { add, remove, "btnDisplay", "btnContains", "btnCount", "btnClear", "btnPeek" }) FocusWired(form, button);
+        Click(form, "btnClear"); Check(list.Items.Count == 0, "Clear");
+        foreach(var button in new[] { add, remove, "btnContains", "btnCount", "btnClear", "btnPeek" }) FocusWired(form, button);
     }
     static void NavigationChecks()
     {

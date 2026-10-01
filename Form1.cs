@@ -49,7 +49,6 @@ namespace CpE2_DSA_Olivar_26271Sem
             formShow(new Queue(), splitContainer2.Panel2);
         }
 
-        // Embed forms as in Form1.pdf, disposing the previous screen first.
         private void formShow(Form formToShow, Panel formToShowParent)
         {
             while (formToShowParent.Controls.Count > 0)
