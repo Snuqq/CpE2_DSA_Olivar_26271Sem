@@ -11,8 +11,13 @@ namespace CpE2_DSA_Olivar_26271Sem
         {
             InitializeComponent();
             ActiveControl = txtStack;
-            foreach (Control control in Controls)
-                if (control is Button) control.Click += FocusInput;
+            btnpush.Click += FocusInput;
+            btnpop.Click += FocusInput;
+            btnDisplay.Click += FocusInput;
+            btnContains.Click += FocusInput;
+            btnCount.Click += FocusInput;
+            btnClear.Click += FocusInput;
+            btnPeek.Click += FocusInput;
         }
 
         private void FocusInput(object sender, EventArgs e)
@@ -84,6 +89,21 @@ namespace CpE2_DSA_Olivar_26271Sem
             lstDisplay.Items.Clear();
             foreach (string value in myStack) lstDisplay.Items.Add(value);
             lblStatus.Text = "Count: " + myStack.Count;
+        }
+
+        private void grpStack_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lstDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblStatus_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

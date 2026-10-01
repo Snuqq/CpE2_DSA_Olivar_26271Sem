@@ -88,9 +88,9 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.label1.ForeColor = System.Drawing.Color.Gold;
             this.label1.Location = new System.Drawing.Point(7, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(789, 39);
+            this.label1.Size = new System.Drawing.Size(761, 39);
             this.label1.TabIndex = 0;
-            this.label1.Text = "University of Perpetual Health DALTA - Calamba Campus";
+            this.label1.Text = "University of Perpetual Help DALTA - Calamba Campus";
             // 
             // splitContainer2
             // 
@@ -140,7 +140,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnLinkList.UseVisualStyleBackColor = true;
             this.btnLinkList.Click += new System.EventHandler(this.btnLinkedList_Click);
             // 
-            // Form1
+            // btnStack
             // 
             this.btnStack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnStack.Location = new System.Drawing.Point(31, 234);
@@ -150,6 +150,9 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnStack.Text = "Stack";
             this.btnStack.UseVisualStyleBackColor = true;
             this.btnStack.Click += new System.EventHandler(this.btnStack_Click);
+            // 
+            // btnQueue
+            // 
             this.btnQueue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnQueue.Location = new System.Drawing.Point(31, 325);
             this.btnQueue.Name = "btnQueue";
@@ -158,10 +161,13 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnQueue.Text = "Queue";
             this.btnQueue.UseVisualStyleBackColor = true;
             this.btnQueue.Click += new System.EventHandler(this.btnQueue_Click);
+            // 
+            // Form1
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.ClientSize = new System.Drawing.Size(1284, 941);
             this.Controls.Add(this.splitContainer1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "Form1";

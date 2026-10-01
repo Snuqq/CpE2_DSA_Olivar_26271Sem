@@ -11,8 +11,13 @@ namespace CpE2_DSA_Olivar_26271Sem
         {
             InitializeComponent();
             ActiveControl = txtQueue;
-            foreach (Control control in Controls)
-                if (control is Button) control.Click += FocusInput;
+            btnEnqueue.Click += FocusInput;
+            btnDequeue.Click += FocusInput;
+            btnDisplay.Click += FocusInput;
+            btnContains.Click += FocusInput;
+            btnCount.Click += FocusInput;
+            btnClear.Click += FocusInput;
+            btnPeek.Click += FocusInput;
         }
 
         private void FocusInput(object sender, EventArgs e)
@@ -84,6 +89,11 @@ namespace CpE2_DSA_Olivar_26271Sem
             lstDisplay.Items.Clear();
             foreach (string value in myQueue) lstDisplay.Items.Add(value);
             lblStatus.Text = "Count: " + myQueue.Count;
+        }
+
+        private void lblStatus_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -126,9 +126,14 @@ namespace CpE2_DSA_Olivar_26271Sem
 
         private void btnInsertBeforeAfter_Click(object sender, EventArgs e)
         {
-            current = myLinkedList.Find(Convert.ToInt32(txtCurrent.Text));
             try
             {
+                current = myLinkedList.Find(Convert.ToInt32(txtCurrent.Text));
+                if (current == null)
+                {
+                    MessageBox.Show("Current value was not found in the list.");
+                    return;
+                }
                 switch (cmbAddBeforeAfter.Text)
                 {
                     case "AddBefore":
@@ -187,5 +192,9 @@ namespace CpE2_DSA_Olivar_26271Sem
             DisplayAll();
         }
 
+        private void lstbLinkedList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

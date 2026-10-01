@@ -305,6 +305,7 @@
             this.lstbLinkedList.Name = "lstbLinkedList";
             this.lstbLinkedList.Size = new System.Drawing.Size(191, 384);
             this.lstbLinkedList.TabIndex = 6;
+            this.lstbLinkedList.SelectedIndexChanged += new System.EventHandler(this.lstbLinkedList_SelectedIndexChanged);
             // 
             // bttndisplay
             // 
