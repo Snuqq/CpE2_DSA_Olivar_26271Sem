@@ -22,6 +22,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnArray = new System.Windows.Forms.Button();
             this.btnLinkList = new System.Windows.Forms.Button();
             this.btnStack = new System.Windows.Forms.Button();
@@ -102,6 +103,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.BackColor = System.Drawing.Color.Gray;
+            this.splitContainer2.Panel1.Controls.Add(this.button1);
             this.splitContainer2.Panel1.Controls.Add(this.btnArray);
             this.splitContainer2.Panel1.Controls.Add(this.btnLinkList);
             this.splitContainer2.Panel1.Controls.Add(this.btnStack);
@@ -114,12 +116,23 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.splitContainer2.SplitterDistance = 199;
             this.splitContainer2.TabIndex = 0;
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.button1.Location = new System.Drawing.Point(31, 367);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(133, 50);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "List";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnList_Click);
+            // 
             // btnArray
             // 
             this.btnArray.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnArray.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnArray.Location = new System.Drawing.Point(31, 52);
+            this.btnArray.Location = new System.Drawing.Point(31, 42);
             this.btnArray.Name = "btnArray";
             this.btnArray.Size = new System.Drawing.Size(133, 50);
             this.btnArray.TabIndex = 0;
@@ -132,7 +145,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnLinkList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkList.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnLinkList.Location = new System.Drawing.Point(31, 143);
+            this.btnLinkList.Location = new System.Drawing.Point(31, 120);
             this.btnLinkList.Name = "btnLinkList";
             this.btnLinkList.Size = new System.Drawing.Size(133, 50);
             this.btnLinkList.TabIndex = 1;
@@ -143,7 +156,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             // btnStack
             // 
             this.btnStack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnStack.Location = new System.Drawing.Point(31, 234);
+            this.btnStack.Location = new System.Drawing.Point(31, 204);
             this.btnStack.Name = "btnStack";
             this.btnStack.Size = new System.Drawing.Size(133, 50);
             this.btnStack.TabIndex = 2;
@@ -154,7 +167,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             // btnQueue
             // 
             this.btnQueue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnQueue.Location = new System.Drawing.Point(31, 325);
+            this.btnQueue.Location = new System.Drawing.Point(31, 285);
             this.btnQueue.Name = "btnQueue";
             this.btnQueue.Size = new System.Drawing.Size(133, 50);
             this.btnQueue.TabIndex = 3;
@@ -197,5 +210,6 @@ namespace CpE2_DSA_Olivar_26271Sem
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
     }
 }

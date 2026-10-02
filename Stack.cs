@@ -89,19 +89,5 @@ namespace CpE2_DSA_Olivar_26271Sem
             lblStatus.Text = "Count: " + myStack.Count;
         }
 
-        private void grpStack_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lstDisplay_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblStatus_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -60,5 +60,10 @@ namespace CpE2_DSA_Olivar_26271Sem
             formToShow.Show();
             formToShow.Select();
         }
+
+        private void btnList_Click(object sender, EventArgs e)
+        {
+            formShow(new ListForm(), splitContainer2.Panel2);
+        }
     }
 }
