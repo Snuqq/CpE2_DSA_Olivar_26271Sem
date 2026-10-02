@@ -108,7 +108,7 @@
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(245, 100);
             this.lblStatus.TabIndex = 9;
-            this.lblStatus.Click += new System.EventHandler(this.lblStatus_Click);
+            
             // 
             // lstDisplay
             // 
@@ -122,7 +122,7 @@
             this.lstDisplay.Name = "lstDisplay";
             this.lstDisplay.Size = new System.Drawing.Size(400, 324);
             this.lstDisplay.TabIndex = 10;
-            this.lstDisplay.SelectedIndexChanged += new System.EventHandler(this.lstDisplay_SelectedIndexChanged);
+      
             // 
             // grpStack
             // 
@@ -143,7 +143,7 @@
             this.grpStack.TabIndex = 11;
             this.grpStack.TabStop = false;
             this.grpStack.Text = "Stack";
-            this.grpStack.Enter += new System.EventHandler(this.grpStack_Enter);
+
             // 
             // Stack
             // 
