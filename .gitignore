@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Local Codex configuration, instructions, and attachments
+/.codex/
+/.codex-remote-attachments/
+/AGENTS.md
+/docs/agents/
