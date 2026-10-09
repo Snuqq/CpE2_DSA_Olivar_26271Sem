@@ -1,4 +1,4 @@
-﻿namespace CpE2_DSA_Olivar_26271Sem
+namespace CpE2_DSA_Olivar_26271Sem
 {
     partial class ListForm
     {
@@ -56,6 +56,7 @@
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnInsert
             // 
@@ -66,6 +67,7 @@
             this.btnInsert.TabIndex = 1;
             this.btnInsert.Text = "Insert";
             this.btnInsert.UseVisualStyleBackColor = true;
+            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
             // 
             // btnRemove
             // 
@@ -76,6 +78,7 @@
             this.btnRemove.TabIndex = 2;
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnRemoveAt
             // 
@@ -86,6 +89,7 @@
             this.btnRemoveAt.TabIndex = 3;
             this.btnRemoveAt.Text = "RemoveAt";
             this.btnRemoveAt.UseVisualStyleBackColor = true;
+            this.btnRemoveAt.Click += new System.EventHandler(this.btnRemoveAt_Click);
             // 
             // btnCount
             // 
@@ -96,6 +100,7 @@
             this.btnCount.TabIndex = 4;
             this.btnCount.Text = "Count";
             this.btnCount.UseVisualStyleBackColor = true;
+            this.btnCount.Click += new System.EventHandler(this.btnCount_Click);
             // 
             // btnContains
             // 
@@ -106,6 +111,7 @@
             this.btnContains.TabIndex = 5;
             this.btnContains.Text = "Contains";
             this.btnContains.UseVisualStyleBackColor = true;
+            this.btnContains.Click += new System.EventHandler(this.btnContains_Click);
             // 
             // btnIndexOf
             // 
@@ -116,6 +122,7 @@
             this.btnIndexOf.TabIndex = 6;
             this.btnIndexOf.Text = "IndexOf";
             this.btnIndexOf.UseVisualStyleBackColor = true;
+            this.btnIndexOf.Click += new System.EventHandler(this.btnIndexOf_Click);
             // 
             // btnSort
             // 
@@ -126,6 +133,7 @@
             this.btnSort.TabIndex = 7;
             this.btnSort.Text = "Sort";
             this.btnSort.UseVisualStyleBackColor = true;
+            this.btnSort.Click += new System.EventHandler(this.btnSort_Click);
             // 
             // btnClear
             // 
@@ -136,6 +144,7 @@
             this.btnClear.TabIndex = 8;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // lstDisplay
             // 

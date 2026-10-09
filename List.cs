@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -13,15 +13,6 @@ namespace CpE2_DSA_Olivar_26271Sem
             InitializeComponent();
             ActiveControl = txtValue;
 
-            btnAdd.Click += btnAdd_Click;
-            btnInsert.Click += btnInsert_Click;
-            btnRemove.Click += btnRemove_Click;
-            btnRemoveAt.Click += btnRemoveAt_Click;
-            btnCount.Click += btnCount_Click;
-            btnContains.Click += btnContains_Click;
-            btnIndexOf.Click += btnIndexOf_Click;
-            btnSort.Click += btnSort_Click;
-            btnClear.Click += btnClear_Click;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
