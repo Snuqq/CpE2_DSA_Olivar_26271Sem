@@ -1,4 +1,4 @@
-namespace CpE2_DSA_Olivar_26271Sem
+﻿namespace CpE2_DSA_Olivar_26271Sem
 {
     partial class ArrayControl
     {
@@ -65,6 +65,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnDisplayIndexValue.TabIndex = 4;
             this.btnDisplayIndexValue.Text = "Display Index";
             this.btnDisplayIndexValue.Click += new System.EventHandler(this.btnDisplayIndexValue_Click);
+            this.btnDisplayIndexValue.Click += new System.EventHandler(this.btnDisplayIndexValue_FocusInput);
             // 
             // btnDisplayAll
             // 
@@ -75,6 +76,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnDisplayAll.TabIndex = 5;
             this.btnDisplayAll.Text = "Display All";
             this.btnDisplayAll.Click += new System.EventHandler(this.btnDisplayAll_Click);
+            this.btnDisplayAll.Click += new System.EventHandler(this.FocusValue);
             // 
             // btnInsert
             // 
@@ -85,6 +87,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnInsert.TabIndex = 6;
             this.btnInsert.Text = "Insert";
             this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
+            this.btnInsert.Click += new System.EventHandler(this.FocusValue);
             // 
             // btnClear
             // 
@@ -95,6 +98,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnClear.TabIndex = 7;
             this.btnClear.Text = "Clear";
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnClear.Click += new System.EventHandler(this.FocusValue);
             // 
             // lblStatus
             // 

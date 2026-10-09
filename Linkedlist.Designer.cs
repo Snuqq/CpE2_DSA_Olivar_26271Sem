@@ -100,6 +100,7 @@
             this.btnFind.Text = "Find";
             this.btnFind.UseVisualStyleBackColor = true;
             this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
+            this.btnFind.Click += new System.EventHandler(this.btnFind_FocusInput);
             // 
             // txtFind
             // 
@@ -184,6 +185,7 @@
             this.btnInsertBeforeAfter.Text = "Insert";
             this.btnInsertBeforeAfter.UseVisualStyleBackColor = true;
             this.btnInsertBeforeAfter.Click += new System.EventHandler(this.btnInsertBeforeAfter_Click);
+            this.btnInsertBeforeAfter.Click += new System.EventHandler(this.btnInsertBeforeAfter_FocusInput);
             // 
             // btnClear
             // 
@@ -194,6 +196,7 @@
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnClear.Click += new System.EventHandler(this.FocusValue);
             // 
             // btnCount
             // 
@@ -204,6 +207,7 @@
             this.btnCount.Text = "Count";
             this.btnCount.UseVisualStyleBackColor = true;
             this.btnCount.Click += new System.EventHandler(this.btnCount_Click);
+            this.btnCount.Click += new System.EventHandler(this.FocusValue);
             // 
             // btnReset
             // 
@@ -214,6 +218,7 @@
             this.btnReset.Text = "Reset Initial Value";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnReset.Click += new System.EventHandler(this.FocusValue);
             // 
             // cmbRemove
             // 
@@ -246,6 +251,7 @@
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnRemove.Click += new System.EventHandler(this.FocusValue);
             // 
             // cmbAdd
             // 
@@ -296,6 +302,7 @@
             this.bttnInsert.Text = "Insert";
             this.bttnInsert.UseVisualStyleBackColor = true;
             this.bttnInsert.Click += new System.EventHandler(this.bttnInsert_Click);
+            this.bttnInsert.Click += new System.EventHandler(this.FocusValue);
             // 
             // lstbLinkedList
             // 
@@ -316,6 +323,7 @@
             this.bttndisplay.Text = "Display All";
             this.bttndisplay.UseVisualStyleBackColor = true;
             this.bttndisplay.Click += new System.EventHandler(this.bttndisplay_Click);
+            this.bttndisplay.Click += new System.EventHandler(this.FocusValue);
             // 
             // Linkedlist
             // 

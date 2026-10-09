@@ -11,12 +11,6 @@ namespace CpE2_DSA_Olivar_26271Sem
         {
             InitializeComponent();
             ActiveControl = txtQueue;
-            btnEnqueue.Click += FocusInput;
-            btnDequeue.Click += FocusInput;
-            btnContains.Click += FocusInput;
-            btnCount.Click += FocusInput;
-            btnClear.Click += FocusInput;
-            btnPeek.Click += FocusInput;
         }
         private void FocusInput(object sender, EventArgs e)
         {

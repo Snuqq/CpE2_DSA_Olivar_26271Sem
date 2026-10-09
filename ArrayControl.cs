@@ -10,14 +10,12 @@ namespace CpE2_DSA_Olivar_26271Sem
         {
             InitializeComponent();
             ActiveControl = txtValue;
-            btnInsert.Click += FocusValue;
-            btnClear.Click += FocusValue;
-            btnDisplayAll.Click += FocusValue;
-            btnDisplayIndexValue.Click += delegate
-            {
+        }
+
+        private void btnDisplayIndexValue_FocusInput(object sender, EventArgs e)
+        {
                 txtIndexNo.Focus();
                 txtIndexNo.SelectAll();
-            };
         }
 
         private void FocusValue(object sender, EventArgs e)

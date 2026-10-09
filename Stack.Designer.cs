@@ -50,6 +50,7 @@
             this.btnpush.TabIndex = 2;
             this.btnpush.Text = "Push";
             this.btnpush.Click += new System.EventHandler(this.btnpush_Click);
+            this.btnpush.Click += new System.EventHandler(this.FocusInput);
             // 
             // btnpop
             // 
@@ -60,6 +61,7 @@
             this.btnpop.TabIndex = 3;
             this.btnpop.Text = "Pop";
             this.btnpop.Click += new System.EventHandler(this.btnpop_Click);
+            this.btnpop.Click += new System.EventHandler(this.FocusInput);
             // 
             // btnContains
             // 
@@ -70,6 +72,7 @@
             this.btnContains.TabIndex = 5;
             this.btnContains.Text = "Contains";
             this.btnContains.Click += new System.EventHandler(this.btnContains_Click);
+            this.btnContains.Click += new System.EventHandler(this.FocusInput);
             // 
             // btnCount
             // 
@@ -80,6 +83,7 @@
             this.btnCount.TabIndex = 6;
             this.btnCount.Text = "Count";
             this.btnCount.Click += new System.EventHandler(this.btnCount_Click);
+            this.btnCount.Click += new System.EventHandler(this.FocusInput);
             // 
             // btnClear
             // 
@@ -90,6 +94,7 @@
             this.btnClear.TabIndex = 7;
             this.btnClear.Text = "Clear";
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnClear.Click += new System.EventHandler(this.FocusInput);
             // 
             // btnPeek
             // 
@@ -100,6 +105,7 @@
             this.btnPeek.TabIndex = 8;
             this.btnPeek.Text = "Peek";
             this.btnPeek.Click += new System.EventHandler(this.btnPeek_Click);
+            this.btnPeek.Click += new System.EventHandler(this.FocusInput);
             // 
             // lblStatus
             // 
