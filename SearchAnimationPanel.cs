@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,10 +15,11 @@ namespace CpE2_DSA_Olivar_26271Sem
         private int activeIndex = -1;
         private bool found;
         private readonly HashSet<int> visited = new HashSet<int>();
-        private readonly Color[] palette = { Color.FromArgb(113, 148, 221), Color.FromArgb(207, 132, 162), Color.FromArgb(113, 177, 158), Color.FromArgb(172, 142, 204) };
+        private readonly Color[] palette = { Color.FromArgb(65, 94, 173), Color.FromArgb(86, 126, 187), Color.FromArgb(101, 111, 181) };
         private PointF from, destination, marker;
         private double duration = 400;
         private float progress = 1;
+        private readonly Bitmap[] furinaSprites = new Bitmap[3];
 
         public SearchAnimationPanel()
         {
@@ -44,7 +45,7 @@ namespace CpE2_DSA_Olivar_26271Sem
         private PointF Position(int index)
         {
             int columns = Math.Max(1, (ClientSize.Width - 20) / 90);
-            return new PointF(51 + (index % columns) * 90, 180 + (index / columns) * 180);
+            return new PointF(51 + (index % columns) * 90, 200 + (index / columns) * 205);
         }
 
         public void ShowStep(int index, bool isFound, int milliseconds)
@@ -101,7 +102,7 @@ namespace CpE2_DSA_Olivar_26271Sem
         {
             int columns = Math.Max(1, (ClientSize.Width - 20) / 90);
             int rows = Math.Max(1, (values.Length + columns - 1) / columns);
-            int height = Math.Max(390, rows * 180 + 80);
+            int height = Math.Max(390, rows * 205 + 70);
             if (Height != height) Height = height;
         }
 
@@ -111,7 +112,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             using (var background = new LinearGradientBrush(ClientRectangle,
-                Color.FromArgb(255, 247, 240), Color.FromArgb(238, 242, 255), 90F))
+                Color.FromArgb(239, 248, 255), Color.FromArgb(230, 234, 252), 90F))
                 g.FillRectangle(background, ClientRectangle);
             using (var titleFont = new Font("Segoe UI", 10F, FontStyle.Bold))
             using (var captionFont = new Font("Segoe UI", 8F))
@@ -121,6 +122,7 @@ namespace CpE2_DSA_Olivar_26271Sem
                     activeIndex < 0 ? "Search complete" : found ? "Target found!" : "Following the search trail...",
                     titleFont, text, 16, 10);
                 g.DrawString("Orange: checking    Green: found    Faded: previously checked", captionFont, text, 16, 32);
+                g.DrawString("Furina model: Xenoart3d / CC BY 4.0", captionFont, text, 16, Height - 18);
                 if (values.Length == 0)
                 {
                     g.DrawString("Enter sorted numbers above, then press Start or Next Step.", captionFont, text, 16, 65);
@@ -132,7 +134,6 @@ namespace CpE2_DSA_Olivar_26271Sem
                     {
                         PointF point = Position(i);
                         bool selected = i == activeIndex;
-                        float bounce = selected ? (float)Math.Sin(progress * Math.PI) * (found ? 13 : 7) : 0;
                         Color color = selected ? (found ? Color.SeaGreen : Color.DarkOrange) : palette[i % palette.Length];
                         if (visited.Contains(i) && !selected) color = Color.FromArgb(178, 181, 193);
                         using (var shadow = new SolidBrush(Color.FromArgb(24, 70, 60, 90)))
@@ -144,8 +145,9 @@ namespace CpE2_DSA_Olivar_26271Sem
                             using (var halo = new SolidBrush(Color.FromArgb(28, color)))
                                 g.FillEllipse(halo, point.X - 39, point.Y - 87, 78, 99);
                         }
-                        DrawMascot(g, point.X, point.Y - bounce, color, i % 3, selected, found && selected);
-                        DrawBadge(g, values[i].ToString(), new RectangleF(point.X - 42, point.Y - 125 - bounce, 84, 25), color, center);
+                        DrawFurina(g, point.X, point.Y, selected ? (found ? 2 : 1) : 0,
+                            selected ? (int)(progress * 23) : ((int)(progress * 23) + i * 3) % 24);
+                        DrawBadge(g, values[i].ToString(), new RectangleF(point.X - 42, point.Y - 150, 84, 25), color, center);
                         g.DrawString("Index " + i, captionFont, text,
                             new RectangleF(point.X - 40, point.Y + 16, 80, 20), center);
                         if (selected)
@@ -194,64 +196,22 @@ namespace CpE2_DSA_Olivar_26271Sem
             }
         }
 
-        private static void DrawMascot(Graphics g, float x, float y, Color color, int model, bool checking, bool happy)
+        // Frames rendered from Xenoart3d's CC BY model; see Assets/Furina/ATTRIBUTION.md.
+        private void DrawFurina(Graphics g, float x, float y, int action, int frame)
         {
-            var state = g.Save();
-            g.TranslateTransform(x, y);
-            using (var outline = new Pen(Color.FromArgb(68, 57, 80), 1.6F))
-            using (var suit = new SolidBrush(color))
-            using (var pale = new SolidBrush(Color.FromArgb(255, 235, 222)))
-            using (var pink = new SolidBrush(Color.FromArgb(244, 167, 174)))
-            using (var shoes = new SolidBrush(Color.FromArgb(73, 65, 92)))
+            if (furinaSprites[action] == null)
             {
-                // Three original hooded mascot models, drawn as vectors at any display scale.
-                g.FillEllipse(shoes, -20, -6, 17, 9);
-                g.FillEllipse(shoes, 3, -6, 17, 9);
-                using (var body = new LinearGradientBrush(new Rectangle(-22, -42, 44, 38), Color.White, color, 90F))
-                    g.FillEllipse(body, -22, -42, 44, 38);
-                g.DrawEllipse(outline, -22, -42, 44, 38);
-                g.FillEllipse(pale, -26, happy ? -51 : -31, 10, 13);
-                g.FillEllipse(pale, 16, happy ? -51 : -31, 10, 13);
-                if (model == 0)
+                string[] names = { "idle", "search", "found" };
+                using (var stream = typeof(SearchAnimationPanel).Assembly.GetManifestResourceStream(
+                    "CpE2_DSA_Olivar_26271Sem.Assets.Furina." + names[action] + ".png"))
                 {
-                    PointF[] left = { new PointF(-23, -65), new PointF(-24, -88), new PointF(-7, -73) };
-                    PointF[] right = { new PointF(7, -73), new PointF(24, -88), new PointF(23, -65) };
-                    g.FillPolygon(suit, left); g.DrawPolygon(outline, left);
-                    g.FillPolygon(suit, right); g.DrawPolygon(outline, right);
-                    g.FillEllipse(pink, -21, -80, 7, 10); g.FillEllipse(pink, 14, -80, 7, 10);
+                    if (stream == null) throw new InvalidOperationException("Furina animation resource is missing.");
+                    using (var image = new Bitmap(stream)) furinaSprites[action] = new Bitmap(image);
                 }
-                else if (model == 1)
-                {
-                    g.FillEllipse(suit, -25, -95, 14, 37); g.DrawEllipse(outline, -25, -95, 14, 37);
-                    g.FillEllipse(suit, 11, -95, 14, 37); g.DrawEllipse(outline, 11, -95, 14, 37);
-                    g.FillEllipse(pink, -21, -89, 6, 22); g.FillEllipse(pink, 15, -89, 6, 22);
-                }
-                else
-                {
-                    g.FillEllipse(suit, -31, -77, 20, 20); g.DrawEllipse(outline, -31, -77, 20, 20);
-                    g.FillEllipse(suit, 11, -77, 20, 20); g.DrawEllipse(outline, 11, -77, 20, 20);
-                }
-                g.FillEllipse(suit, -28, -79, 56, 48); g.DrawEllipse(outline, -28, -79, 56, 48);
-                g.FillEllipse(pale, -21, -70, 42, 33);
-                if (happy)
-                {
-                    g.DrawArc(outline, -14, -60, 9, 9, 195, 150);
-                    g.DrawArc(outline, 5, -60, 9, 9, 195, 150);
-                }
-                else
-                {
-                    g.FillEllipse(shoes, -12, -60, checking ? 6 : 5, 8);
-                    g.FillEllipse(shoes, 7, -60, checking ? 6 : 5, 8);
-                    g.FillEllipse(Brushes.White, -11, -59, 2, 3);
-                    g.FillEllipse(Brushes.White, 8, -59, 2, 3);
-                }
-                g.FillEllipse(pink, -18, -50, 8, 4); g.FillEllipse(pink, 10, -50, 8, 4);
-                g.DrawArc(outline, -5, -51, 10, 8, 5, 170);
-                g.FillEllipse(Brushes.White, -9, -26, 18, 14);
-                g.DrawLine(outline, -5, -30, 5, -30);
-                g.FillEllipse(pink, -3, -34, 6, 6);
             }
-            g.Restore(state);
+            var source = new Rectangle((frame % 6) * 256, (frame / 6) * 320, 256, 320);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.DrawImage(furinaSprites[action], new RectangleF(x - 52, y - 117, 104, 130), source, GraphicsUnit.Pixel);
         }
 
         private static void DrawCelebration(Graphics g, PointF point, float progress)
@@ -287,6 +247,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             {
                 animationTimer.Dispose();
                 clock.Stop();
+                foreach (var sprite in furinaSprites) if (sprite != null) sprite.Dispose();
             }
             base.Dispose(disposing);
         }

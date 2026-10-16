@@ -25,6 +25,24 @@ class AnimationChecks
         Check((float)Field(panel, "progress") == 1, "Resume must complete movement");
         panel.ShowStep(3, true, 100); Thread.Sleep(120); Tick(panel);
         using(var bitmap = new Bitmap(750, 390)) panel.DrawToBitmap(bitmap, new Rectangle(0, 0, 750, 390));
+        for (int action = 0; action < 3; action++)
+        {
+            using (var firstFrame = new Bitmap(150, 170))
+            using (var nextFrame = new Bitmap(150, 170))
+            {
+                var draw = panel.GetType().GetMethod("DrawFurina", flags);
+                using (var g = Graphics.FromImage(firstFrame)) draw.Invoke(panel, new object[] { g, 75F, 150F, action, 0 });
+                using (var g = Graphics.FromImage(nextFrame)) draw.Invoke(panel, new object[] { g, 75F, 150F, action, 6 });
+                int opaque = 0, changed = 0;
+                for (int y = 0; y < 170; y++) for (int x = 0; x < 150; x++)
+                {
+                    if (firstFrame.GetPixel(x, y).A > 0) opaque++;
+                    if (firstFrame.GetPixel(x, y) != nextFrame.GetPixel(x, y)) changed++;
+                }
+                Check(opaque > 1000, "Every action must draw the embedded model");
+                Check(changed > 100, "Every action must have distinct animation frames");
+            }
+        }
         panel.Width = 400;
         panel.SetValues(new int[40]);
         var last = (PointF)panel.GetType().GetMethod("Position", flags).Invoke(panel, new object[] { 39 });
