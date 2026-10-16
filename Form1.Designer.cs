@@ -133,6 +133,42 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnList_Click);
             // 
+            // btnFibonacciSearch
+            // 
+            this.btnFibonacciSearch.BackColor = System.Drawing.Color.White;
+            this.btnFibonacciSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFibonacciSearch.Location = new System.Drawing.Point(15, 404);
+            this.btnFibonacciSearch.Name = "btnFibonacciSearch";
+            this.btnFibonacciSearch.Size = new System.Drawing.Size(165, 46);
+            this.btnFibonacciSearch.TabIndex = 7;
+            this.btnFibonacciSearch.Text = "Fibonacci Search";
+            this.btnFibonacciSearch.UseVisualStyleBackColor = false;
+            this.btnFibonacciSearch.Click += new System.EventHandler(this.btnFibonacciSearch_Click);
+            // 
+            // btnExponentialSearch
+            // 
+            this.btnExponentialSearch.BackColor = System.Drawing.Color.White;
+            this.btnExponentialSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExponentialSearch.Location = new System.Drawing.Point(15, 348);
+            this.btnExponentialSearch.Name = "btnExponentialSearch";
+            this.btnExponentialSearch.Size = new System.Drawing.Size(165, 46);
+            this.btnExponentialSearch.TabIndex = 6;
+            this.btnExponentialSearch.Text = "Exponential Search";
+            this.btnExponentialSearch.UseVisualStyleBackColor = false;
+            this.btnExponentialSearch.Click += new System.EventHandler(this.btnExponentialSearch_Click);
+            // 
+            // btnJumpSearch
+            // 
+            this.btnJumpSearch.BackColor = System.Drawing.Color.White;
+            this.btnJumpSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnJumpSearch.Location = new System.Drawing.Point(15, 292);
+            this.btnJumpSearch.Name = "btnJumpSearch";
+            this.btnJumpSearch.Size = new System.Drawing.Size(165, 46);
+            this.btnJumpSearch.TabIndex = 5;
+            this.btnJumpSearch.Text = "Jump Search";
+            this.btnJumpSearch.UseVisualStyleBackColor = false;
+            this.btnJumpSearch.Click += new System.EventHandler(this.btnJumpSearch_Click);
+            // 
             // btnArray
             // 
             this.btnArray.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -183,27 +219,6 @@
             // 
             // Form1
             // 
-            this.btnJumpSearch.Name = "btnJumpSearch";
-            this.btnJumpSearch.Text = "Jump Search";
-            this.btnJumpSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnJumpSearch.Location = new System.Drawing.Point(15, 292);
-            this.btnJumpSearch.Size = new System.Drawing.Size(165, 46);
-            this.btnJumpSearch.TabIndex = 5;
-            this.btnJumpSearch.Click += new System.EventHandler(this.btnJumpSearch_Click);
-            this.btnExponentialSearch.Name = "btnExponentialSearch";
-            this.btnExponentialSearch.Text = "Exponential Search";
-            this.btnExponentialSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnExponentialSearch.Location = new System.Drawing.Point(15, 348);
-            this.btnExponentialSearch.Size = new System.Drawing.Size(165, 46);
-            this.btnExponentialSearch.TabIndex = 6;
-            this.btnExponentialSearch.Click += new System.EventHandler(this.btnExponentialSearch_Click);
-            this.btnFibonacciSearch.Name = "btnFibonacciSearch";
-            this.btnFibonacciSearch.Text = "Fibonacci Search";
-            this.btnFibonacciSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnFibonacciSearch.Location = new System.Drawing.Point(15, 404);
-            this.btnFibonacciSearch.Size = new System.Drawing.Size(165, 46);
-            this.btnFibonacciSearch.TabIndex = 7;
-            this.btnFibonacciSearch.Click += new System.EventHandler(this.btnFibonacciSearch_Click);
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
