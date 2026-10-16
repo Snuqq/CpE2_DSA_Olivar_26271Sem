@@ -23,7 +23,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.button1 = new System.Windows.Forms.Button();
-            this.btnSearch = new System.Windows.Forms.Button();
+            this.btnFibonacciSearch = new System.Windows.Forms.Button();
+            this.btnExponentialSearch = new System.Windows.Forms.Button();
+            this.btnJumpSearch = new System.Windows.Forms.Button();
             this.btnArray = new System.Windows.Forms.Button();
             this.btnLinkList = new System.Windows.Forms.Button();
             this.btnStack = new System.Windows.Forms.Button();
@@ -105,7 +107,9 @@
             // 
             this.splitContainer2.Panel1.BackColor = System.Drawing.Color.Gray;
             this.splitContainer2.Panel1.Controls.Add(this.button1);
-            this.splitContainer2.Panel1.Controls.Add(this.btnSearch);
+            this.splitContainer2.Panel1.Controls.Add(this.btnFibonacciSearch);
+            this.splitContainer2.Panel1.Controls.Add(this.btnExponentialSearch);
+            this.splitContainer2.Panel1.Controls.Add(this.btnJumpSearch);
             this.splitContainer2.Panel1.Controls.Add(this.btnArray);
             this.splitContainer2.Panel1.Controls.Add(this.btnLinkList);
             this.splitContainer2.Panel1.Controls.Add(this.btnStack);
@@ -121,9 +125,9 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(31, 307);
+            this.button1.Location = new System.Drawing.Point(15, 236);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(133, 50);
+            this.button1.Size = new System.Drawing.Size(165, 46);
             this.button1.TabIndex = 4;
             this.button1.Text = "List";
             this.button1.UseVisualStyleBackColor = true;
@@ -134,9 +138,9 @@
             this.btnArray.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnArray.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnArray.Location = new System.Drawing.Point(31, 15);
+            this.btnArray.Location = new System.Drawing.Point(15, 12);
             this.btnArray.Name = "btnArray";
-            this.btnArray.Size = new System.Drawing.Size(133, 50);
+            this.btnArray.Size = new System.Drawing.Size(165, 46);
             this.btnArray.TabIndex = 0;
             this.btnArray.Text = "Array";
             this.btnArray.UseVisualStyleBackColor = true;
@@ -147,9 +151,9 @@
             this.btnLinkList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkList.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnLinkList.Location = new System.Drawing.Point(31, 88);
+            this.btnLinkList.Location = new System.Drawing.Point(15, 68);
             this.btnLinkList.Name = "btnLinkList";
-            this.btnLinkList.Size = new System.Drawing.Size(133, 50);
+            this.btnLinkList.Size = new System.Drawing.Size(165, 46);
             this.btnLinkList.TabIndex = 1;
             this.btnLinkList.Text = "LinkedList";
             this.btnLinkList.UseVisualStyleBackColor = true;
@@ -158,9 +162,9 @@
             // btnStack
             // 
             this.btnStack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnStack.Location = new System.Drawing.Point(31, 161);
+            this.btnStack.Location = new System.Drawing.Point(15, 124);
             this.btnStack.Name = "btnStack";
-            this.btnStack.Size = new System.Drawing.Size(133, 50);
+            this.btnStack.Size = new System.Drawing.Size(165, 46);
             this.btnStack.TabIndex = 2;
             this.btnStack.Text = "Stack";
             this.btnStack.UseVisualStyleBackColor = true;
@@ -169,9 +173,9 @@
             // btnQueue
             // 
             this.btnQueue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnQueue.Location = new System.Drawing.Point(31, 234);
+            this.btnQueue.Location = new System.Drawing.Point(15, 180);
             this.btnQueue.Name = "btnQueue";
-            this.btnQueue.Size = new System.Drawing.Size(133, 50);
+            this.btnQueue.Size = new System.Drawing.Size(165, 46);
             this.btnQueue.TabIndex = 3;
             this.btnQueue.Text = "Queue";
             this.btnQueue.UseVisualStyleBackColor = true;
@@ -179,13 +183,27 @@
             // 
             // Form1
             // 
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Text = "Search";
-            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnSearch.Location = new System.Drawing.Point(31, 380);
-            this.btnSearch.Size = new System.Drawing.Size(133, 50);
-            this.btnSearch.TabIndex = 5;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            this.btnJumpSearch.Name = "btnJumpSearch";
+            this.btnJumpSearch.Text = "Jump Search";
+            this.btnJumpSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnJumpSearch.Location = new System.Drawing.Point(15, 292);
+            this.btnJumpSearch.Size = new System.Drawing.Size(165, 46);
+            this.btnJumpSearch.TabIndex = 5;
+            this.btnJumpSearch.Click += new System.EventHandler(this.btnJumpSearch_Click);
+            this.btnExponentialSearch.Name = "btnExponentialSearch";
+            this.btnExponentialSearch.Text = "Exponential Search";
+            this.btnExponentialSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnExponentialSearch.Location = new System.Drawing.Point(15, 348);
+            this.btnExponentialSearch.Size = new System.Drawing.Size(165, 46);
+            this.btnExponentialSearch.TabIndex = 6;
+            this.btnExponentialSearch.Click += new System.EventHandler(this.btnExponentialSearch_Click);
+            this.btnFibonacciSearch.Name = "btnFibonacciSearch";
+            this.btnFibonacciSearch.Text = "Fibonacci Search";
+            this.btnFibonacciSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnFibonacciSearch.Location = new System.Drawing.Point(15, 404);
+            this.btnFibonacciSearch.Size = new System.Drawing.Size(165, 46);
+            this.btnFibonacciSearch.TabIndex = 7;
+            this.btnFibonacciSearch.Click += new System.EventHandler(this.btnFibonacciSearch_Click);
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
@@ -220,6 +238,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Button btnFibonacciSearch;
+        private System.Windows.Forms.Button btnExponentialSearch;
+        private System.Windows.Forms.Button btnJumpSearch;
     }
 }

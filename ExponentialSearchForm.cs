@@ -5,17 +5,16 @@ using System.Windows.Forms;
 
 namespace CpE2_DSA_Olivar_26271Sem
 {
-    public partial class SearchForm : Form
+    public partial class ExponentialSearchForm : Form
     {
         private int[] values = new int[0];
         private List<SearchStep> steps = new List<SearchStep>();
         private int nextStep;
         private SearchStep current;
 
-        public SearchForm()
+        public ExponentialSearchForm()
         {
             InitializeComponent();
-            cmbAlgorithm.SelectedIndex = 0;
             ActiveControl = txtNumbers;
         }
 
@@ -51,7 +50,7 @@ namespace CpE2_DSA_Olivar_26271Sem
                 return false;
             }
             values = parsed;
-            steps = SearchAlgorithms.CreateSteps(values, target, cmbAlgorithm.Text);
+            steps = SearchAlgorithms.CreateSteps(values, target, "Exponential Search");
             nextStep = 0;
             current = null;
             SetInputs(false);
@@ -62,7 +61,6 @@ namespace CpE2_DSA_Olivar_26271Sem
         {
             txtNumbers.Enabled = enabled;
             txtTarget.Enabled = enabled;
-            cmbAlgorithm.Enabled = enabled;
         }
 
         private void btnStart_Click(object sender, EventArgs e)

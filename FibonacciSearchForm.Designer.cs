@@ -1,6 +1,6 @@
 namespace CpE2_DSA_Olivar_26271Sem
 {
-    partial class SearchForm
+    partial class FibonacciSearchForm
     {
         private System.ComponentModel.IContainer components = null;
         protected override void Dispose(bool disposing)
@@ -14,7 +14,6 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.tmrSearch = new System.Windows.Forms.Timer(this.components);
             this.lblNumbers = new System.Windows.Forms.Label();
             this.txtNumbers = new System.Windows.Forms.TextBox();
-            this.cmbAlgorithm = new System.Windows.Forms.ComboBox();
             this.lblTarget = new System.Windows.Forms.Label();
             this.txtTarget = new System.Windows.Forms.TextBox();
             this.lblSpeed = new System.Windows.Forms.Label();
@@ -27,6 +26,13 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.pnlAnimation = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)this.speed).BeginInit();
             this.SuspendLayout();
+            this.lblAlgorithm = new System.Windows.Forms.Label();
+            this.lblAlgorithm.Text = "Fibonacci Search";
+            this.lblAlgorithm.Name = "lblAlgorithm";
+            this.lblAlgorithm.Location = new System.Drawing.Point(15, 95);
+            this.lblAlgorithm.Size = new System.Drawing.Size(200, 28);
+            this.lblAlgorithm.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.Controls.Add(this.lblAlgorithm);
             this.lblNumbers.Name = "lblNumbers";
             this.lblNumbers.Text = "Sorted numbers (comma-separated)";
             this.lblNumbers.Location = new System.Drawing.Point(15, 25);
@@ -39,12 +45,6 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.txtNumbers.Size = new System.Drawing.Size(750, 26);
             this.txtNumbers.TabIndex = 1;
             this.Controls.Add(this.txtNumbers);
-            this.cmbAlgorithm.Name = "cmbAlgorithm";
-            this.cmbAlgorithm.Text = "";
-            this.cmbAlgorithm.Location = new System.Drawing.Point(15, 95);
-            this.cmbAlgorithm.Size = new System.Drawing.Size(200, 28);
-            this.cmbAlgorithm.TabIndex = 2;
-            this.Controls.Add(this.cmbAlgorithm);
             this.lblTarget.Name = "lblTarget";
             this.lblTarget.Text = "Target";
             this.lblTarget.Location = new System.Drawing.Point(230, 98);
@@ -109,8 +109,6 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.pnlAnimation.Size = new System.Drawing.Size(750, 390);
             this.pnlAnimation.TabIndex = 12;
             this.Controls.Add(this.pnlAnimation);
-            this.cmbAlgorithm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAlgorithm.Items.AddRange(new object[] { "Jump Search", "Exponential Search", "Fibonacci Search" });
             this.speed.Minimum = 100;
             this.speed.Maximum = 2000;
             this.speed.Increment = 100;
@@ -125,16 +123,16 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 650);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "SearchForm";
-            this.Text = "Jump, Exponential and Fibonacci Search";
+            this.Name = "FibonacciSearchForm";
+            this.Text = "Fibonacci Search";
             ((System.ComponentModel.ISupportInitialize)this.speed).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+        private System.Windows.Forms.Label lblAlgorithm;
         private System.Windows.Forms.Timer tmrSearch;
         private System.Windows.Forms.Label lblNumbers;
         private System.Windows.Forms.TextBox txtNumbers;
-        private System.Windows.Forms.ComboBox cmbAlgorithm;
         private System.Windows.Forms.Label lblTarget;
         private System.Windows.Forms.TextBox txtTarget;
         private System.Windows.Forms.Label lblSpeed;

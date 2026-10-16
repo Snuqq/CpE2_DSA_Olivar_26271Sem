@@ -49,9 +49,19 @@ namespace CpE2_DSA_Olivar_26271Sem
             formShow(new Queue(), splitContainer2.Panel2);
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void btnJumpSearch_Click(object sender, EventArgs e)
         {
-            formShow(new SearchForm(), splitContainer2.Panel2);
+            formShow(new JumpSearchForm(), splitContainer2.Panel2);
+        }
+
+        private void btnExponentialSearch_Click(object sender, EventArgs e)
+        {
+            formShow(new ExponentialSearchForm(), splitContainer2.Panel2);
+        }
+
+        private void btnFibonacciSearch_Click(object sender, EventArgs e)
+        {
+            formShow(new FibonacciSearchForm(), splitContainer2.Panel2);
         }
 
         private void formShow(Form formToShow, Panel formToShowParent)

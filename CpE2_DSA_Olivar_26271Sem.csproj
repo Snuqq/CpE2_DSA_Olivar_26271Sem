@@ -83,11 +83,23 @@
       <DependentUpon>Queue.cs</DependentUpon>
     </Compile>
     <Compile Include="SearchAlgorithms.cs" />
-    <Compile Include="SearchForm.cs">
+    <Compile Include="JumpSearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SearchForm.Designer.cs">
-      <DependentUpon>SearchForm.cs</DependentUpon>
+    <Compile Include="JumpSearchForm.Designer.cs">
+      <DependentUpon>JumpSearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExponentialSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExponentialSearchForm.Designer.cs">
+      <DependentUpon>ExponentialSearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FibonacciSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FibonacciSearchForm.Designer.cs">
+      <DependentUpon>FibonacciSearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
