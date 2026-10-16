@@ -25,6 +25,12 @@ class AnimationChecks
         Check((float)Field(panel, "progress") == 1, "Resume must complete movement");
         panel.ShowStep(3, true, 100); Thread.Sleep(120); Tick(panel);
         using(var bitmap = new Bitmap(750, 390)) panel.DrawToBitmap(bitmap, new Rectangle(0, 0, 750, 390));
+        panel.Width = 400;
+        panel.SetValues(new int[40]);
+        var last = (PointF)panel.GetType().GetMethod("Position", flags).Invoke(panel, new object[] { 39 });
+        Check(last.Y + 53 < panel.Height, "Last row labels must remain inside the panel");
+        panel.ShowStep(39, true, 100);
+        using(var bitmap = new Bitmap(panel.Width, panel.Height)) panel.DrawToBitmap(bitmap, new Rectangle(0, 0, panel.Width, panel.Height));
         panel.ShowStep(-1, false, 100);
         Check(!((System.Windows.Forms.Timer)Field(panel, "animationTimer")).Enabled, "Missing result must stop motion");
         panel.SetValues(new int[0]); Check((int)Field(panel, "activeIndex") == -1, "Reset must clear highlight");
