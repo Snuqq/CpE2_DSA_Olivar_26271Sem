@@ -50,6 +50,7 @@ namespace CpE2_DSA_Olivar_26271Sem
                 return false;
             }
             values = parsed;
+            pnlAnimation.SetValues(values);
             steps = SearchAlgorithms.CreateSteps(values, target, "Fibonacci Search");
             nextStep = 0;
             current = null;
@@ -66,13 +67,15 @@ namespace CpE2_DSA_Olivar_26271Sem
         private void btnStart_Click(object sender, EventArgs e)
         {
             if (nextStep >= steps.Count && !Prepare()) return;
+            pnlAnimation.ResumeAnimation();
             tmrSearch.Start();
-            ShowNextStep();
+            if (current == null) ShowNextStep();
         }
 
         private void btnPause_Click(object sender, EventArgs e)
         {
             tmrSearch.Stop();
+            pnlAnimation.PauseAnimation();
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -86,6 +89,7 @@ namespace CpE2_DSA_Olivar_26271Sem
         {
             tmrSearch.Stop();
             values = new int[0];
+            pnlAnimation.SetValues(values);
             steps.Clear();
             nextStep = 0;
             current = null;
@@ -101,6 +105,7 @@ namespace CpE2_DSA_Olivar_26271Sem
         {
             if (nextStep >= steps.Count) return;
             current = steps[nextStep++];
+            pnlAnimation.ShowStep(current.Index, current.Found, (int)(tmrSearch.Interval * 0.8));
             lblStatus.Text = "Step " + nextStep + "/" + steps.Count + " - " + current.Message;
             pnlAnimation.Invalidate();
             if (nextStep == steps.Count)
@@ -115,20 +120,5 @@ namespace CpE2_DSA_Olivar_26271Sem
             tmrSearch.Interval = (int)speed.Value;
         }
 
-        private void pnlAnimation_Paint(object sender, PaintEventArgs e)
-        {
-            int columns = Math.Max(1, pnlAnimation.ClientSize.Width / 90);
-            for (int i = 0; i < values.Length; i++)
-            {
-                int x = 10 + (i % columns) * 90;
-                int y = 15 + (i / columns) * 65;
-                Brush color = Brushes.SteelBlue;
-                if (current != null && current.Index == i)
-                    color = current.Found ? Brushes.SeaGreen : Brushes.DarkOrange;
-                e.Graphics.FillRectangle(color, x, y, 82, 35);
-                e.Graphics.DrawString(values[i].ToString(), pnlAnimation.Font, Brushes.White, x + 5, y + 8);
-                e.Graphics.DrawString("Index " + i, pnlAnimation.Font, Brushes.Black, x, y + 37);
-            }
-        }
     }
 }

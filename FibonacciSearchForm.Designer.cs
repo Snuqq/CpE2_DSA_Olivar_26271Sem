@@ -23,7 +23,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnNext = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.pnlAnimation = new System.Windows.Forms.Panel();
+            this.pnlAnimation = new SearchAnimationPanel();
             ((System.ComponentModel.ISupportInitialize)this.speed).BeginInit();
             this.SuspendLayout();
             this.lblAlgorithm = new System.Windows.Forms.Label();
@@ -115,7 +115,6 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.speed.Value = 700;
             this.speed.ValueChanged += new System.EventHandler(this.speed_ValueChanged);
             this.pnlAnimation.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.pnlAnimation.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlAnimation_Paint);
             this.tmrSearch.Interval = 700;
             this.tmrSearch.Tick += new System.EventHandler(this.tmrSearch_Tick);
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,6 +141,6 @@ namespace CpE2_DSA_Olivar_26271Sem
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.Panel pnlAnimation;
+        private SearchAnimationPanel pnlAnimation;
     }
 }

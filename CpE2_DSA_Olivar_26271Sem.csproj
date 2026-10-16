@@ -83,6 +83,9 @@
       <DependentUpon>Queue.cs</DependentUpon>
     </Compile>
     <Compile Include="SearchAlgorithms.cs" />
+    <Compile Include="SearchAnimationPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="JumpSearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
