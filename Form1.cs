@@ -49,6 +49,11 @@ namespace CpE2_DSA_Olivar_26271Sem
             formShow(new Queue(), splitContainer2.Panel2);
         }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            formShow(new SearchForm(), splitContainer2.Panel2);
+        }
+
         private void formShow(Form formToShow, Panel formToShowParent)
         {
             while (formToShowParent.Controls.Count > 0)

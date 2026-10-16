@@ -1,4 +1,4 @@
-namespace CpE2_DSA_Olivar_26271Sem
+﻿namespace CpE2_DSA_Olivar_26271Sem
 {
     partial class Form1
     {
@@ -23,6 +23,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.btnArray = new System.Windows.Forms.Button();
             this.btnLinkList = new System.Windows.Forms.Button();
             this.btnStack = new System.Windows.Forms.Button();
@@ -104,6 +105,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             // 
             this.splitContainer2.Panel1.BackColor = System.Drawing.Color.Gray;
             this.splitContainer2.Panel1.Controls.Add(this.button1);
+            this.splitContainer2.Panel1.Controls.Add(this.btnSearch);
             this.splitContainer2.Panel1.Controls.Add(this.btnArray);
             this.splitContainer2.Panel1.Controls.Add(this.btnLinkList);
             this.splitContainer2.Panel1.Controls.Add(this.btnStack);
@@ -119,7 +121,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(31, 367);
+            this.button1.Location = new System.Drawing.Point(31, 307);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(133, 50);
             this.button1.TabIndex = 4;
@@ -132,7 +134,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnArray.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnArray.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnArray.Location = new System.Drawing.Point(31, 42);
+            this.btnArray.Location = new System.Drawing.Point(31, 15);
             this.btnArray.Name = "btnArray";
             this.btnArray.Size = new System.Drawing.Size(133, 50);
             this.btnArray.TabIndex = 0;
@@ -145,7 +147,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnLinkList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkList.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnLinkList.Location = new System.Drawing.Point(31, 120);
+            this.btnLinkList.Location = new System.Drawing.Point(31, 88);
             this.btnLinkList.Name = "btnLinkList";
             this.btnLinkList.Size = new System.Drawing.Size(133, 50);
             this.btnLinkList.TabIndex = 1;
@@ -156,7 +158,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             // btnStack
             // 
             this.btnStack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnStack.Location = new System.Drawing.Point(31, 204);
+            this.btnStack.Location = new System.Drawing.Point(31, 161);
             this.btnStack.Name = "btnStack";
             this.btnStack.Size = new System.Drawing.Size(133, 50);
             this.btnStack.TabIndex = 2;
@@ -167,7 +169,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             // btnQueue
             // 
             this.btnQueue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnQueue.Location = new System.Drawing.Point(31, 285);
+            this.btnQueue.Location = new System.Drawing.Point(31, 234);
             this.btnQueue.Name = "btnQueue";
             this.btnQueue.Size = new System.Drawing.Size(133, 50);
             this.btnQueue.TabIndex = 3;
@@ -177,6 +179,13 @@ namespace CpE2_DSA_Olivar_26271Sem
             // 
             // Form1
             // 
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Text = "Search";
+            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnSearch.Location = new System.Drawing.Point(31, 380);
+            this.btnSearch.Size = new System.Drawing.Size(133, 50);
+            this.btnSearch.TabIndex = 5;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
@@ -211,5 +220,6 @@ namespace CpE2_DSA_Olivar_26271Sem
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
