@@ -22,6 +22,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.navigation = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.btnFibonacciSearch = new System.Windows.Forms.Button();
             this.btnExponentialSearch = new System.Windows.Forms.Button();
@@ -36,6 +37,7 @@
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
+            this.navigation.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,6 +47,7 @@
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.MaximumSize = new System.Drawing.Size(1013, 602);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -100,20 +103,15 @@
             // 
             this.splitContainer2.BackColor = System.Drawing.Color.White;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.IsSplitterFixed = true;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.BackColor = System.Drawing.Color.Gray;
-            this.splitContainer2.Panel1.Controls.Add(this.button1);
-            this.splitContainer2.Panel1.Controls.Add(this.btnFibonacciSearch);
-            this.splitContainer2.Panel1.Controls.Add(this.btnExponentialSearch);
-            this.splitContainer2.Panel1.Controls.Add(this.btnJumpSearch);
-            this.splitContainer2.Panel1.Controls.Add(this.btnArray);
-            this.splitContainer2.Panel1.Controls.Add(this.btnLinkList);
-            this.splitContainer2.Panel1.Controls.Add(this.btnStack);
-            this.splitContainer2.Panel1.Controls.Add(this.btnQueue);
+            this.splitContainer2.Panel1.Controls.Add(this.navigation);
             // 
             // splitContainer2.Panel2
             // 
@@ -121,11 +119,40 @@
             this.splitContainer2.Size = new System.Drawing.Size(1013, 471);
             this.splitContainer2.SplitterDistance = 199;
             this.splitContainer2.TabIndex = 0;
+            //
+            // navigation
+            //
+            this.navigation.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.navigation.ColumnCount = 1;
+            this.navigation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.navigation.Controls.Add(this.btnArray, 0, 0);
+            this.navigation.Controls.Add(this.btnLinkList, 0, 1);
+            this.navigation.Controls.Add(this.btnStack, 0, 2);
+            this.navigation.Controls.Add(this.btnQueue, 0, 3);
+            this.navigation.Controls.Add(this.button1, 0, 4);
+            this.navigation.Controls.Add(this.btnJumpSearch, 0, 5);
+            this.navigation.Controls.Add(this.btnExponentialSearch, 0, 6);
+            this.navigation.Controls.Add(this.btnFibonacciSearch, 0, 7);
+            this.navigation.Location = new System.Drawing.Point(15, 12);
+            this.navigation.Name = "navigation";
+            this.navigation.RowCount = 8;
+            this.navigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.navigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.navigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.navigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.navigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.navigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.navigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.navigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.navigation.Size = new System.Drawing.Size(165, 448);
+            this.navigation.TabIndex = 0;
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.button1.Location = new System.Drawing.Point(15, 236);
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(165, 46);
             this.button1.TabIndex = 4;
@@ -138,6 +165,8 @@
             this.btnFibonacciSearch.BackColor = System.Drawing.Color.White;
             this.btnFibonacciSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFibonacciSearch.Location = new System.Drawing.Point(15, 404);
+            this.btnFibonacciSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnFibonacciSearch.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.btnFibonacciSearch.Name = "btnFibonacciSearch";
             this.btnFibonacciSearch.Size = new System.Drawing.Size(165, 46);
             this.btnFibonacciSearch.TabIndex = 7;
@@ -150,6 +179,8 @@
             this.btnExponentialSearch.BackColor = System.Drawing.Color.White;
             this.btnExponentialSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExponentialSearch.Location = new System.Drawing.Point(15, 348);
+            this.btnExponentialSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExponentialSearch.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.btnExponentialSearch.Name = "btnExponentialSearch";
             this.btnExponentialSearch.Size = new System.Drawing.Size(165, 46);
             this.btnExponentialSearch.TabIndex = 6;
@@ -162,6 +193,8 @@
             this.btnJumpSearch.BackColor = System.Drawing.Color.White;
             this.btnJumpSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnJumpSearch.Location = new System.Drawing.Point(15, 292);
+            this.btnJumpSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnJumpSearch.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.btnJumpSearch.Name = "btnJumpSearch";
             this.btnJumpSearch.Size = new System.Drawing.Size(165, 46);
             this.btnJumpSearch.TabIndex = 5;
@@ -175,6 +208,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnArray.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnArray.Location = new System.Drawing.Point(15, 12);
+            this.btnArray.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnArray.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.btnArray.Name = "btnArray";
             this.btnArray.Size = new System.Drawing.Size(165, 46);
             this.btnArray.TabIndex = 0;
@@ -188,6 +223,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkList.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnLinkList.Location = new System.Drawing.Point(15, 68);
+            this.btnLinkList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLinkList.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.btnLinkList.Name = "btnLinkList";
             this.btnLinkList.Size = new System.Drawing.Size(165, 46);
             this.btnLinkList.TabIndex = 1;
@@ -199,6 +236,8 @@
             // 
             this.btnStack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnStack.Location = new System.Drawing.Point(15, 124);
+            this.btnStack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnStack.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.btnStack.Name = "btnStack";
             this.btnStack.Size = new System.Drawing.Size(165, 46);
             this.btnStack.TabIndex = 2;
@@ -210,6 +249,8 @@
             // 
             this.btnQueue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnQueue.Location = new System.Drawing.Point(15, 180);
+            this.btnQueue.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnQueue.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.btnQueue.Name = "btnQueue";
             this.btnQueue.Size = new System.Drawing.Size(165, 46);
             this.btnQueue.TabIndex = 3;
@@ -225,6 +266,7 @@
             this.ClientSize = new System.Drawing.Size(1284, 941);
             this.Controls.Add(this.splitContainer1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.MinimumSize = new System.Drawing.Size(980, 570);
             this.Name = "Form1";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -236,6 +278,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
+            this.navigation.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -244,6 +287,7 @@
 
         #endregion
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TableLayoutPanel navigation;
         private System.Windows.Forms.Button btnLinkList;
         private System.Windows.Forms.Button btnArray;
         private System.Windows.Forms.Button btnStack;

@@ -82,9 +82,17 @@
     <Compile Include="Queue.Designer.cs">
       <DependentUpon>Queue.cs</DependentUpon>
     </Compile>
-    <Compile Include="SearchAlgorithms.cs" />
-    <Compile Include="SearchAnimationPanel.cs">
+    <Compile Include="UnitySearch\Assets\Shared\SearchStep.cs">
+      <Link>SearchStep.cs</Link>
+    </Compile>
+    <Compile Include="UnitySearch\Assets\Shared\SearchPlan.cs">
+      <Link>SearchPlan.cs</Link>
+    </Compile>
+    <Compile Include="UnitySearchHost.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UnitySearch\Assets\Shared\SearchWire.cs">
+      <Link>SearchWire.cs</Link>
     </Compile>
     <Compile Include="JumpSearchForm.cs">
       <SubType>Form</SubType>
@@ -145,12 +153,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EmbeddedResource Include="Assets\Furina\idle.png" />
-    <EmbeddedResource Include="Assets\Furina\search.png" />
-    <EmbeddedResource Include="Assets\Furina\found.png" />
-    <None Include="Assets\Furina\ATTRIBUTION.md">
+    <None Include="UnitySearch\Assets\Resources\FurinaRig\ATTRIBUTION.md">
+      <Link>UnityPlayer\ATTRIBUTION.md</Link>
+      <TargetPath>UnityPlayer\ATTRIBUTION.md</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <UnityPlayerFiles Include="UnitySearch\Build\**\*" Exclude="UnitySearch\Build\**\*.pdb" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="CopyUnityPlayer" AfterTargets="Build">
+    <Copy SourceFiles="@(UnityPlayerFiles)" DestinationFiles="@(UnityPlayerFiles->'$(OutputPath)UnityPlayer\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
 </Project>

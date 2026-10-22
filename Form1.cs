@@ -14,6 +14,10 @@ namespace CpE2_DSA_Olivar_26271Sem
 
         private void CenterMainPanel()
         {
+            if (splitContainer1 == null) return;
+            splitContainer1.Size = new System.Drawing.Size(
+                Math.Min(splitContainer1.MaximumSize.Width, ClientSize.Width),
+                Math.Min(splitContainer1.MaximumSize.Height, ClientSize.Height));
             splitContainer1.Location = new System.Drawing.Point(
                 (ClientSize.Width - splitContainer1.Width) / 2,
                 (ClientSize.Height - splitContainer1.Height) / 2);

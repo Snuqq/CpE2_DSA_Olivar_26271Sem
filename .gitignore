@@ -315,6 +315,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+.pytest_cache/
+.venv/
 
 # Cake - Uncomment if you are using it
 # tools/**
@@ -366,3 +368,22 @@ FodyWeavers.xsd
 /.codex-remote-attachments/
 /AGENTS.md
 /docs/agents/
+
+# Local animation-review reports (not required to build or run the app)
+/docs/animation-motion-revision.md
+/docs/theatre-polish.md
+/docs/verification/
+
+# Generated player captures and local profiling output
+**/MotionProof-*/
+**/SearchProof.png
+/UnitySearch/Recordings/
+/UnitySearch/MemoryCaptures/
+/UnitySearch/ProfilerCaptures/
+
+# Unity requires stable asset IDs and its package manifest in source control.
+!UnitySearch/Assets/**/*.meta
+!UnitySearch/Assets.meta
+!UnitySearch/Packages/
+!UnitySearch/Packages/manifest.json
+!UnitySearch/Packages/packages-lock.json
