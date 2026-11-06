@@ -4,6 +4,19 @@ using UnityEngine;
 // Original geometry inspired by the Opera Epiclese's arches, brasswork and warm stage.
 public sealed class FontaineScenery : MonoBehaviour
 {
+    [Header("Contact effects")]
+    [SerializeField, Min(.01f)] float landingRippleSeconds = .32f;
+    [SerializeField, Min(.01f)] float foundPulseSeconds = .45f;
+    [SerializeField, Min(0)] float rippleElevation = .018f;
+    [SerializeField, Min(0)] float rippleStartScale = .4f;
+    [SerializeField, Min(0)] float rippleEndScale = 1.22f;
+    [SerializeField, Min(0)] float foundEmissionBoost = 1.35f;
+    [SerializeField] Color landingRippleColor = new Color(1, .79f, .33f, .75f);
+    [SerializeField] Color foundRippleColor = new Color(.36f, .96f, .72f, .85f);
+    Renderer landingRipple;
+    int contactIndex = -1, pulsingIndex = -1;
+    bool contactFound;
+    float rippleElapsed, pulseElapsed;
     readonly List<Material> materials = new List<Material>();
     readonly List<Mesh> meshes = new List<Mesh>();
     readonly List<Transform> platforms = new List<Transform>();
@@ -74,7 +87,18 @@ public sealed class FontaineScenery : MonoBehaviour
         Combine(centre);
         leftWing = BuildWing(-1); rightWing = BuildWing(1);
         for (int i = 0; i < 40; i++) BuildPlatform(i);
+        var rippleMaterial = Material("Landing ripple", landingRippleColor, 0);
+        rippleMaterial.SetFloat("_Mode", 2);
+        rippleMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        rippleMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        rippleMaterial.SetInt("_ZWrite", 0);
+        rippleMaterial.EnableKeyword("_ALPHABLEND_ON");
+        rippleMaterial.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+        landingRipple = Ring("Landing ripple", 1, .025f, rippleMaterial, transform, rippleElevation);
+        landingRipple.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        landingRipple.receiveShadows = false;
         TrimConstructionMeshes();
+        ResetEffects();
     }
 
     Material Material(string name, Color color, float metal)
@@ -474,6 +498,7 @@ public sealed class FontaineScenery : MonoBehaviour
     }
     public void Layout(int columns, int rows, int count)
     {
+        ResetEffects();
         float width = Mathf.Max(16, (columns - 1) * 2.4f + 8), depth = (rows - 1) * 3.2f + 8;
         floor.localScale = new Vector3(width, 1, depth);
         stairs.localPosition = new Vector3(0, 0, -depth * .48f);
@@ -504,6 +529,67 @@ public sealed class FontaineScenery : MonoBehaviour
             Color rim = selected ? (found ? new Color(.36f, .96f, .72f) : new Color(1, .79f, .33f)) : new Color(.58f, .39f, .17f);
             Colorize(faces[i], face, selected ? .22f : .025f); Colorize(rims[i], rim, selected ? .38f : .04f);
         }
+    }
+    public void ShowContact(int index, bool found, float delta, bool paused)
+    {
+        if (paused) return;
+        if (index < 0 || index >= platforms.Count || !platforms[index].gameObject.activeSelf)
+        {
+            contactIndex = -1;
+            contactFound = false;
+        }
+        else if (index != contactIndex || (found && !contactFound))
+        {
+            contactIndex = index;
+            contactFound = found;
+            rippleElapsed = 0;
+            landingRipple.transform.position = Position(index) + Vector3.up * rippleElevation;
+            landingRipple.enabled = true;
+            if (found)
+            {
+                RestorePulse();
+                pulsingIndex = index;
+                pulseElapsed = 0;
+            }
+        }
+        if (landingRipple.enabled)
+        {
+            rippleElapsed += Mathf.Max(0, delta);
+            float progress = Mathf.Clamp01(rippleElapsed / landingRippleSeconds);
+            float eased = Mathf.SmoothStep(0, 1, progress);
+            float scale = Mathf.Lerp(rippleStartScale, rippleEndScale, eased);
+            landingRipple.transform.localScale = new Vector3(scale, 1, scale);
+            Color color = contactFound ? foundRippleColor : landingRippleColor;
+            color.a *= 1 - eased;
+            Colorize(landingRipple, color, 1);
+            landingRipple.enabled = progress < 1;
+        }
+        if (pulsingIndex >= 0)
+        {
+            pulseElapsed += Mathf.Max(0, delta);
+            float progress = Mathf.Clamp01(pulseElapsed / foundPulseSeconds);
+            float pulse = Mathf.Sin(progress * Mathf.PI);
+            Colorize(faces[pulsingIndex], new Color(.08f, .60f, .42f), .22f + foundEmissionBoost * pulse);
+            Colorize(rims[pulsingIndex], foundRippleColor, .38f + foundEmissionBoost * pulse);
+            if (progress >= 1) RestorePulse();
+        }
+    }
+    void RestorePulse()
+    {
+        if (pulsingIndex < 0) return;
+        pulsingIndex = -1;
+        int left = previousLeft;
+        previousLeft = int.MinValue;
+        Highlight(left, previousRight, previousProbe, previousFound);
+    }
+    public void ResetEffects()
+    {
+        RestorePulse();
+        contactIndex = -1;
+        contactFound = false;
+        rippleElapsed = pulseElapsed = 0;
+        if (landingRipple != null) landingRipple.enabled = false;
+        previousLeft = int.MinValue;
     }
     void Release(Object item) { if (Application.isPlaying) Destroy(item); else DestroyImmediate(item); }
     void OnDestroy()

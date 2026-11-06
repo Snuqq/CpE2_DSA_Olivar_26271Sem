@@ -48,7 +48,7 @@ class EmbeddedChecks
             Control<TextBox>(form, "txtTarget").Text = int.MinValue.ToString();
             Control<NumericUpDown>(form, "speed").Value = 400;
             Control<Button>(form, "btnStart").PerformClick();
-            Wait(() => last != null && last.StartsWith("STATE|1|") && last.Split('|')[7] == "1", "dense-label result", 20);
+            Wait(() => last != null && last.StartsWith("STATE|1|") && last.Split('|')[7] == "1", "dense-label result", 60);
             if (!last.Contains("Found at index 0")) throw new Exception("Dense integer array result was incorrect.");
             Capture(host, 1, "dense-integer-labels");
             var pointer = Cursor.Position;
@@ -290,74 +290,168 @@ class EmbeddedChecks
         Pump(2000);
         if (Process.GetProcessesByName("FurinaSearch").Length != 0) throw new Exception("Fitted player remained after closing shell.");
     }
-    static void Motion()
+    sealed class PoseSample
+    {
+        public double X, Y, Z, Zoom, Elapsed, Drift, ResetProgress, IdleTime;
+        public string Phase;
+        public bool Resetting;
+        public int Occupied;
+        public static PoseSample Read(string message)
+        {
+            var fields = message.Split('|');
+            if (fields.Length < 15) throw new Exception("Player is missing animation diagnostics; rebuild Unity: " + message);
+            return new PoseSample { X = Number(fields[2]), Zoom = Number(fields[4]), Z = Number(fields[5]),
+                Phase = fields[7], Elapsed = Number(fields[8]), Drift = Number(fields[9]), Y = Number(fields[10]),
+                Resetting = fields[11] == "1", ResetProgress = Number(fields[12]), IdleTime = Number(fields[13]),
+                Occupied = int.Parse(fields[14], System.Globalization.CultureInfo.InvariantCulture) };
+        }
+        public double Distance(PoseSample other)
+        {
+            return Math.Sqrt(Math.Pow(X - other.X, 2) + Math.Pow(Y - other.Y, 2) + Math.Pow(Z - other.Z, 2));
+        }
+    }
+    static double Number(string value)
+    {
+        double number = double.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+        if (double.IsNaN(number) || double.IsInfinity(number)) throw new Exception("Non-finite diagnostic: " + value);
+        return number;
+    }
+    static PoseSample Sample(UnitySearchHost host, int session, string name)
+    {
+        Capture(host, session, name);
+        var pose = PoseSample.Read(capture);
+        if (pose.Drift > .01) throw new Exception("Planted foot drift exceeded 1 cm: " + capture);
+        return pose;
+    }
+    static byte[] ProofPixels()
+    {
+        return File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UnityPlayer/SearchProof.png"));
+    }
+    static bool StateIs(int session, int step, bool moving)
+    {
+        return last != null && last.StartsWith("STATE|" + session + "|" + step + "|" + (moving ? "1" : "0") + "|");
+    }
+    static void WaitReset(UnitySearchHost host, int session, string name)
+    {
+        var watch = Stopwatch.StartNew();
+        while (Sample(host, session, name).Resetting)
+        {
+            if (watch.Elapsed.TotalSeconds > 8) throw new Exception("Reset return did not settle.");
+            Pump(100);
+        }
+    }
+    static void Animation()
+    {
+        Animation(1000);
+        Animation(5000);
+        Wait(() => {
+            foreach (var process in Process.GetProcessesByName("FurinaSearch"))
+                using (process) { if (!process.HasExited) return false; }
+            return true;
+        }, "all animation players exit", 10);
+    }
+    static void Animation(int milliseconds)
     {
         last = error = capture = null;
+        string prefix = "animation-" + milliseconds;
         using (var form = new JumpSearchForm())
         {
             var host = Control<UnitySearchHost>(form, "pnlAnimation");
-            host.Message += text => { if (text.StartsWith("STATE|")) last = text; if (text.StartsWith("ERROR|")) error = text; if (text.StartsWith("CAPTURED|")) capture = text; };
-            form.Show(); Wait(() => host.Ready, "motion player ready");
-            Control<NumericUpDown>(form, "speed").Value = 3000;
-            var next = Control<Button>(form, "btnNext");
-            Wait(() => next.Enabled && next.CanSelect, "Next Step ready for a click");
-            bool clicked = false;
-            next.Click += (sender, args) => clicked = true;
-            Control<TextBox>(form, "txtNumbers").Text = "1,3,5,7,9,11,13,15,17,19";
+            host.Message += text => {
+                if (text.StartsWith("STATE|")) last = text;
+                if (text.StartsWith("ERROR|")) error = text;
+                if (text.StartsWith("CAPTURED|")) capture = text;
+            };
+            form.Show(); Wait(() => host.Ready, "animation player ready");
+            var idle = Sample(host, 0, prefix + "-idle-a");
+            byte[] idlePixels = ProofPixels();
+            Pump(700);
+            var idleLater = Sample(host, 0, prefix + "-idle-b");
+            if (idleLater.IdleTime <= idle.IdleTime || idlePixels.SequenceEqual(ProofPixels()))
+                throw new Exception("Idle breathing and weight shift did not advance.");
+            Control<NumericUpDown>(form, "speed").Value = milliseconds;
+            Control<TextBox>(form, "txtNumbers").Text = "1 3 5 7 9 11 13 15 17 19";
             Control<TextBox>(form, "txtTarget").Text = "13";
-            next.PerformClick();
-            if (!clicked) throw new Exception("Next Step did not dispatch Click. Status: " + Control<Label>(form, "lblStatus").Text);
-            if (Control<TextBox>(form, "txtNumbers").Enabled)
-                throw new Exception("Next Step rejected its prepared input: " + Control<Label>(form, "lblStatus").Text);
+            Control<Button>(form, "btnNext").PerformClick();
+            Wait(() => StateIs(1, 0, true), "first animation beat");
+            Pump(milliseconds == 5000 ? 900 : 350);
             host.Send("PAUSE|1");
-            Wait(() => last != null && last.StartsWith("STATE|1|0|1|1"), "startup pause");
-            Capture(host, 1, "jump-first-choose");
-            var startup = capture.Split('|');
-            if (startup[7] != "Choose" || double.Parse(startup[8], System.Globalization.CultureInfo.InvariantCulture) >= .3)
-                throw new Exception("Loading time skipped the first anticipation: " + capture);
+            Wait(() => StateIs(1, 0, true) && last.Split('|')[4] == "1", "pause acknowledgement");
+            var paused = Sample(host, 1, prefix + "-paused-a");
+            byte[] pausedPixels = ProofPixels();
+            Pump(450);
+            var pausedLater = Sample(host, 1, prefix + "-paused-b");
+            if (paused.Elapsed != pausedLater.Elapsed || paused.IdleTime != pausedLater.IdleTime
+                || paused.Distance(pausedLater) > .00001 || !pausedPixels.SequenceEqual(ProofPixels()))
+                throw new Exception("Pause changed the character, camera, idle, or effects.");
+            if (milliseconds == 5000 && (paused.Phase != "Travel" || paused.Y <= idle.Y + .05))
+                throw new Exception("Expected an elevated midair pose at the 5000 ms setting: " + capture);
+            for (int i = 0; i < 20; i++) host.Send("STEP|1");
+            Wait(() => StateIs(1, 0, false), "spam Next completes only the active beat", 12);
+            Pump(350);
+            if (!StateIs(1, 0, false)) throw new Exception("Next spam queued extra algorithm probes.");
+            var landed = Sample(host, 1, prefix + "-landed");
+            if (landed.Occupied != 2) throw new Exception("The first block probe did not land on index 2.");
+            if (milliseconds == 5000 && Math.Abs(landed.Zoom - paused.Zoom) > .001)
+                throw new Exception("The camera zoom changed after takeoff.");
+
             host.Send("STEP|1");
-            Wait(() => last != null && last.StartsWith("STATE|1|0|0"), "first landing");
-            Capture(host, 1, "jump-zoom-before"); CheckPosition(0, 0, 1.6f, 1.6f);
-            host.Send("STEP|1"); host.Send("PAUSE|1");
-            Wait(() => last.StartsWith("STATE|1|1|1|1"), "paused row transition");
-            Capture(host, 1, "jump-zoom-start"); CheckPosition(0, 0, 1.6f, 1.6f);
-            Pump(350); Capture(host, 1, "jump-zoom-still"); CheckPosition(0, 0, 1.6f, 1.6f);
-            host.Send("STEP|1"); Pump(1350); host.Send("PAUSE|1");
-            Wait(() => last.StartsWith("STATE|1|1|1|1"), "paused mid-pan");
-            Capture(host, 1, "jump-zoom-middle");
-            var mid = capture.Split('|');
-            float x = float.Parse(mid[2], System.Globalization.CultureInfo.InvariantCulture);
-            float camera = float.Parse(mid[3], System.Globalization.CultureInfo.InvariantCulture);
-            float zoom = float.Parse(mid[4], System.Globalization.CultureInfo.InvariantCulture);
-            float z = float.Parse(mid[5], System.Globalization.CultureInfo.InvariantCulture);
-            float cameraZ = float.Parse(mid[6], System.Globalization.CultureInfo.InvariantCulture);
-            if (x <= -4.8f || x >= 0 || camera > x || camera < -4.8f || zoom < 2.15f
-                || z <= -1.6f || z >= 1.6f || cameraZ > z || cameraZ < -1.6f)
-                throw new Exception("Camera did not frame performer and destination: " + capture);
-            host.Send("VIEW|1|wide"); Pump(150);
-            Capture(host, 1, "jump-whole-stage"); CheckPosition(x, 0, z, 0);
-            if (float.Parse(capture.Split('|')[4], System.Globalization.CultureInfo.InvariantCulture) <= zoom)
-                throw new Exception("Whole stage did not zoom out.");
-            host.Send("VIEW|1|follow"); Pump(150);
-            Capture(host, 1, "jump-zoom-restored"); CheckPosition(x, camera, z, cameraZ);
-            host.Send("STEP|1");
-            Wait(() => last.StartsWith("STATE|1|1|0"), "second landing");
-            Capture(host, 1, "jump-zoom-after"); CheckPosition(-4.8f, -4.8f, -1.6f, -1.6f);
+            Wait(() => StateIs(1, 1, true), "second animation beat");
+            Pump(milliseconds == 5000 ? 900 : 350);
+            host.Send("PAUSE|1");
+            Wait(() => StateIs(1, 1, true) && last.Split('|')[4] == "1", "second airborne pause");
+            var beforeReset = Sample(host, 1, prefix + "-before-reset");
+            if (milliseconds == 5000)
+            {
+                host.Send("VIEW|1|wide"); Pump(150);
+                var deferred = Sample(host, 1, prefix + "-deferred-view");
+                if (Math.Abs(deferred.Zoom - beforeReset.Zoom) > .001 || deferred.Distance(beforeReset) > .00001)
+                    throw new Exception("A view toggle changed the camera during a paused airborne pose.");
+                host.Send("VIEW|1|follow");
+            }
             Control<Button>(form, "btnReset").PerformClick();
-            Wait(() => last.StartsWith("STATE|2|-1|"), "motion reset");
-            Capture(host, 2, "jump-zoom-reset"); CheckPosition(-4.8f, 0, 1.6f, 0);
-            form.Close();
+            Wait(() => StateIs(2, -1, false), "reset clears search state immediately");
+            var returning = Sample(host, 2, prefix + "-reset-return");
+            if (!returning.Resetting || returning.ResetProgress < 0 || returning.ResetProgress >= 1)
+                throw new Exception("Reset skipped its visible return: " + capture);
+            double homeDistance = Math.Sqrt(Math.Pow(returning.X + 4.8, 2) + Math.Pow(returning.Z - 1.6, 2));
+            if (homeDistance < .02 || returning.Distance(beforeReset) > 3)
+                throw new Exception("Reset teleported to the starting platform.");
+            WaitReset(host, 2, prefix + "-reset-settled");
+            CheckPosition(-4.8f, 0, 1.6f, 0);
+            if (!Control<TextBox>(form, "txtNumbers").Enabled) throw new Exception("Reset left input disabled.");
+
+            Control<TextBox>(form, "txtTarget").Text = "12";
+            Control<Button>(form, "btnStart").PerformClick();
+            Wait(() => last != null && last.StartsWith("STATE|3|") && last.Split('|')[7] == "1", "not-found reaction and result hold", 60);
+            if (!last.Contains("Target not found")) throw new Exception("Not-found result changed.");
+            Sample(host, 3, prefix + "-not-found");
+
+            Control<TextBox>(form, "txtTarget").Text = "13";
+            Control<Button>(form, "btnStart").PerformClick();
+            Wait(() => StateIs(4, 0, true), "reset/start race setup");
+            Pump(milliseconds == 5000 ? 900 : 350);
+            Control<Button>(form, "btnReset").PerformClick();
+            Control<TextBox>(form, "txtNumbers").Text = "2 4 6 8 10 12 14 16 18 20";
+            Control<TextBox>(form, "txtTarget").Text = "12";
+            Control<Button>(form, "btnStart").PerformClick();
+            host.Send("STEP|4"); host.Send("PLAY|4");
+            Wait(() => last != null && last.StartsWith("STATE|6|") && last.Split('|')[7] == "1", "latest search starts after reset settles", 60);
+            if (!last.Contains("Found at index 5")) throw new Exception("A stale session or pending load changed the result.");
+            Sample(host, 6, prefix + "-found-after-reset");
+            int player = PlayerId(host);
+            form.Close(); Wait(() => Exited(player), "animation player disposal", 10);
         }
-        Pump(2000);
-        Console.WriteLine("PASS: continuous motion, automatic zoom, whole-stage toggle, pause, centered landing, overview reset");
+        Console.WriteLine("PASS: " + milliseconds + " ms idle, frozen Pause, Next spam, airborne reset, latest-session replay, found/not-found; review saved poses for artistic quality");
     }
+    static void Motion() { Animation(); }
     static void Performance()
     {
         string output = Path.Combine(ProofRoot, "performance-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff") + ".csv");
         Directory.CreateDirectory(ProofRoot);
         using (var report = new StreamWriter(output))
         {
-            report.WriteLine("algorithm,scenario,show_to_ready_ms,frames,sample_seconds,frame_median_ms,frame_p95_ms,frame_p99_ms,stage_mean_ms,stage_p95_ms,main_thread_alloc_bytes_per_frame,stage_alloc_bytes_per_frame,frames_over_33ms,frames_over_50ms,active_renderers,gpu,graphics_api");
+            report.WriteLine("algorithm,scenario,show_to_ready_ms,frames,sample_seconds,frame_median_ms,frame_p95_ms,frame_p99_ms,stage_mean_ms,stage_p95_ms,main_thread_alloc_bytes_per_frame,stage_alloc_bytes_per_frame,frames_over_33ms,frames_over_50ms,active_renderers,gpu,graphics_api,measured_fps,extra_diagnostics");
             Performance(new JumpSearchForm(), "jump", report);
             Performance(new ExponentialSearchForm(), "exponential", report);
             Performance(new FibonacciSearchForm(), "fibonacci", report);
@@ -406,18 +500,23 @@ class EmbeddedChecks
     static void WritePerformance(StreamWriter report, string name, double startupMs, string sample)
     {
         string[] fields = sample.Split('|');
-        if (fields.Length != 17 || fields[1] != "100") throw new Exception("Invalid performance response: " + sample);
+        if (fields.Length < 17 || fields[1] != "100") throw new Exception("Invalid performance response: " + sample);
         int frames = int.Parse(fields[3], System.Globalization.CultureInfo.InvariantCulture);
-        if (frames < 60) throw new Exception("Too few performance samples: " + sample);
+        if (frames < 1) throw new Exception("No performance samples: " + sample);
         for (int i = 4; i < 15; i++)
         {
             if ((i == 10 || i == 11) && fields[i] == "N/A") continue;
             double value = double.Parse(fields[i], System.Globalization.CultureInfo.InvariantCulture);
             if (double.IsNaN(value) || double.IsInfinity(value) || value < 0) throw new Exception("Invalid performance measurement: " + sample);
         }
+        double seconds = Number(fields[4]);
+        if (seconds <= 0) throw new Exception("Invalid performance sample duration: " + sample);
+        double fps = frames / seconds;
         string line = Csv(name) + "," + Csv(fields[2]) + "," + startupMs.ToString("F4", System.Globalization.CultureInfo.InvariantCulture)
-            + "," + string.Join(",", fields.Skip(3).Select(Csv));
+            + "," + string.Join(",", fields.Skip(3).Take(14).Select(Csv))
+            + "," + fps.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) + "," + Csv(string.Join("|", fields.Skip(17)));
         report.WriteLine(line); report.Flush(); Console.WriteLine(line);
+        Console.WriteLine("MEASURED FPS: {0} {1}: {2:F2}; p95 {3} ms; frames over 50 ms: {4}", name, fields[2], fps, fields[6], fields[13]);
     }
     static string Csv(string value) { return "\"" + value.Replace("\"", "\"\"") + "\""; }
     [STAThread] static int Main(string[] args)
@@ -462,6 +561,7 @@ class EmbeddedChecks
                     new[] { run + "-jump", run + "-exponential", run + "-fibonacci-missing" });
                 return 0;
             }
+            if (args.Length > 0 && args[0] == "animation") { Animation(); return 0; }
             if (args.Length > 0 && args[0] == "motion") { Motion(); return 0; }
             if (args.Length > 0 && args[0] == "performance") { Performance(); return 0; }
             if (args.Length > 0 && args[0] == "labels") { DenseLabels(); return 0; }

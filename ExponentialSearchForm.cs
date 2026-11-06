@@ -9,14 +9,41 @@ namespace CpE2_DSA_Olivar_26271Sem
     {
         bool loaded;
         int session;
+        readonly Random random = new Random();
 
         public ExponentialSearchForm()
         {
             InitializeComponent();
+            new ToolTip(components).SetToolTip(speed, "Speed changes apply to the next step.");
+            txtNumbers.Multiline = true;
+            txtNumbers.WordWrap = false;
+            txtNumbers.TextChanged += (sender, e) =>
+            {
+                if (txtNumbers.Text.IndexOfAny(new[] { '\r', '\n', '\t' }) < 0) return;
+                txtNumbers.Text = txtNumbers.Text.Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ').Replace('\t', ' ');
+                txtNumbers.SelectionStart = txtNumbers.TextLength;
+            };
             pnlAnimation.Algorithm = "Exponential Search";
             pnlAnimation.Message += Receive;
             btnStart.Enabled = btnPause.Enabled = btnNext.Enabled = false;
             ActiveControl = txtNumbers;
+        }
+
+        private void btnGenerate_Click(object sender, EventArgs e)
+        {
+            if (loaded) return;
+            int[] values = new int[(int)numberCount.Value];
+            int value = 0;
+            for (int i = 0; i < values.Length; i++)
+            {
+                value += random.Next(1, 11);
+                values[i] = value;
+            }
+            txtNumbers.Text = string.Join(", ", values);
+            txtTarget.Text = values[values.Length / 2].ToString();
+            lblStatus.Text = "Generated " + values.Length + " sorted numbers. Change the target or press Start.";
+            txtTarget.Focus();
+            txtTarget.SelectAll();
         }
 
         private void speed_ValueChanged(object sender, EventArgs e)
@@ -31,7 +58,7 @@ namespace CpE2_DSA_Olivar_26271Sem
                 lblStatus.Text = "Wait for the Unity theatre to load.";
                 return false;
             }
-            var tokens = txtNumbers.Text.Split(',');
+            var tokens = txtNumbers.Text.Split(new[] { ',', ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             int[] values = new int[tokens.Length];
             int targetValue;
             if (tokens.Length > 40)
@@ -43,7 +70,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             {
                 if (!int.TryParse(tokens[i].Trim(), out values[i]))
                 {
-                    lblStatus.Text = "Enter whole numbers separated by commas.";
+                    lblStatus.Text = "Separate whole numbers with spaces or commas.";
                     txtNumbers.Focus();
                     return false;
                 }
@@ -66,7 +93,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             pnlAnimation.Send("LOAD|" + session + "|" + plan.Serialize());
             ChangeSpeed();
             loaded = true;
-            txtNumbers.Enabled = txtTarget.Enabled = false;
+            txtNumbers.Enabled = txtTarget.Enabled = btnGenerate.Enabled = numberCount.Enabled = false;
             return true;
         }
         private void btnStart_Click(object sender, EventArgs e)
@@ -85,7 +112,7 @@ namespace CpE2_DSA_Olivar_26271Sem
         {
             session++;
             loaded = false;
-            txtNumbers.Enabled = txtTarget.Enabled = true;
+            txtNumbers.Enabled = txtTarget.Enabled = btnGenerate.Enabled = numberCount.Enabled = true;
             btnStart.Text = "Start";
             btnPause.Enabled = false;
             if (pnlAnimation.Ready) pnlAnimation.Send("RESET|" + session);
@@ -109,7 +136,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             if (text.StartsWith("ERROR|"))
             {
                 loaded = false;
-                txtNumbers.Enabled = txtTarget.Enabled = true;
+                txtNumbers.Enabled = txtTarget.Enabled = btnGenerate.Enabled = numberCount.Enabled = true;
                 btnStart.Enabled = btnPause.Enabled = btnNext.Enabled = false;
                 lblStatus.Text = text.Substring(6);
                 return;
@@ -128,7 +155,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             if (finished)
             {
                 loaded = false;
-                txtNumbers.Enabled = txtTarget.Enabled = true;
+                txtNumbers.Enabled = txtTarget.Enabled = btnGenerate.Enabled = numberCount.Enabled = true;
                 txtTarget.Focus();
                 txtTarget.SelectAll();
             }

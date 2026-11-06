@@ -36,5 +36,6 @@ public static class SearchPerformanceChecks
         File.WriteAllText("../obj/performance-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss") + ".txt", result);
         UnityEngine.Debug.Log(result);
         stage.ResetPlayback();
+        stage.AdvancePresentation(motion.resetSeconds);
     }
 }

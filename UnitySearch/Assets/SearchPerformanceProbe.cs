@@ -15,6 +15,9 @@ public sealed class SearchPerformanceProbe
     double requestedSeconds, startSeconds, previousFrameSeconds, frameSeconds, stageTotal;
     long previousAllocated, frameAllocated, frameStamp, totalAllocated, stageAllocated;
     bool active, sampleFrame, allocationCounterAvailable;
+    int focusedFrames, renderedFrames, highestRenderInterval;
+    double totalFrameSeconds;
+    public bool LogEvidence { get; set; }
 
     public void Begin(int sessionId, string sampleLabel, double seconds, Action<string> onComplete, double warmupSeconds = 1)
     {
@@ -33,9 +36,18 @@ public sealed class SearchPerformanceProbe
         allocationCounterAvailable = allocationAfter - allocationBefore >= sentinel.Length;
         session = sessionId; label = sampleLabel; requestedSeconds = seconds; complete = onComplete;
         count = over33 = over50 = 0;
+        focusedFrames = renderedFrames = highestRenderInterval = 0;
+        totalFrameSeconds = 0;
         totalAllocated = stageAllocated = 0; stageTotal = 0;
         startSeconds = Time.realtimeSinceStartupAsDouble + warmupSeconds;
         previousFrameSeconds = 0; sampleFrame = false; active = true;
+        if (LogEvidence)
+            UnityEngine.Debug.Log(string.Format(CultureInfo.InvariantCulture,
+                "Frame pacing BEGIN {0}: target={1}, vsync={2}, renderInterval={3}, refreshHz={4:F3}, focused={5}, background={6}, captureRate={7}, embedded={8}",
+                label, Application.targetFrameRate, QualitySettings.vSyncCount,
+                UnityEngine.Rendering.OnDemandRendering.renderFrameInterval,
+                Screen.currentResolution.refreshRateRatio.value, Application.isFocused, Application.runInBackground,
+                Time.captureFramerate, Array.IndexOf(Environment.GetCommandLineArgs(), "-parentHWND") >= 0));
     }
 
     public void BeginFrame()
@@ -48,6 +60,10 @@ public sealed class SearchPerformanceProbe
         {
             double milliseconds = (frameSeconds - previousFrameSeconds) * 1000;
             frameTimes[count] = milliseconds;
+            totalFrameSeconds += milliseconds / 1000;
+            if (Application.isFocused) focusedFrames++;
+            if (UnityEngine.Rendering.OnDemandRendering.willCurrentFrameRender) renderedFrames++;
+            highestRenderInterval = Math.Max(highestRenderInterval, UnityEngine.Rendering.OnDemandRendering.renderFrameInterval);
             totalAllocated += Math.Max(0, allocated - previousAllocated);
             if (milliseconds > 1000d / 30) over33++;
             if (milliseconds > 50) over50++;
@@ -83,8 +99,20 @@ public sealed class SearchPerformanceProbe
             Number(Percentile(stageTimes, count, .95)), allocationCounterAvailable ? Number(totalAllocated / (double)count) : "N/A",
             allocationCounterAvailable ? Number(stageAllocated / (double)count) : "N/A", over33.ToString(CultureInfo.InvariantCulture),
             over50.ToString(CultureInfo.InvariantCulture), visibleRenderers.ToString(CultureInfo.InvariantCulture),
-            SystemInfo.graphicsDeviceName.Replace('|', '/'), SystemInfo.graphicsDeviceType.ToString()
+            SystemInfo.graphicsDeviceName.Replace('|', '/'), SystemInfo.graphicsDeviceType.ToString(),
+            "focusedFrames=" + focusedFrames.ToString(CultureInfo.InvariantCulture),
+            "requestedRenders=" + renderedFrames.ToString(CultureInfo.InvariantCulture),
+            "renderInterval=" + highestRenderInterval.ToString(CultureInfo.InvariantCulture),
+            "vsync=" + QualitySettings.vSyncCount.ToString(CultureInfo.InvariantCulture),
+            "target=" + Application.targetFrameRate.ToString(CultureInfo.InvariantCulture),
+            "background=" + Application.runInBackground
         });
+        if (LogEvidence)
+            UnityEngine.Debug.Log(string.Format(CultureInfo.InvariantCulture,
+                "Frame pacing END {0}: updates={1}, requestedRenders={2}, averageFps={3:F2}, medianMs={4:F3}, p95Ms={5:F3}, p99Ms={6:F3}, focusedFrames={7}, maxRenderInterval={8}, vsync={9}, target={10}. Measure screenshot capture overhead separately.",
+                label, count, renderedFrames, count / Math.Max(.000001, totalFrameSeconds),
+                Percentile(frameTimes, count, .5), Percentile(frameTimes, count, .95), Percentile(frameTimes, count, .99),
+                focusedFrames, highestRenderInterval, QualitySettings.vSyncCount, Application.targetFrameRate));
         var callback = complete; complete = null; callback(reply);
     }
 

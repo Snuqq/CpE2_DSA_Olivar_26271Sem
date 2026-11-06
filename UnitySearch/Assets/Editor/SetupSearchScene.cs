@@ -17,7 +17,10 @@ public static class SetupSearchScene
     public static void BuildWindows()
     {
         if (!System.IO.File.Exists("Assets/Search.unity")) throw new System.IO.FileNotFoundException("Create the search scene before building.");
+        BuildSearchAnimation.Build();
         SearchMotionChecks.Run();
+        SearchCameraChecks.Run();
+        SearchAnimationChecks.Run();
         PlayerSettings.runInBackground = true;
         PlayerSettings.resizableWindow = true;
         PlayerSettings.fullScreenMode = FullScreenMode.Windowed;

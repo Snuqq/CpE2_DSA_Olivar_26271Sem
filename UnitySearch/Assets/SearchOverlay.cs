@@ -8,10 +8,10 @@ public sealed class SearchOverlay : MonoBehaviour
     Font sans, serif;
     readonly Color gold = new Color(.91f, .76f, .43f);
     readonly Color ink = new Color(.035f, .06f, .12f);
-    readonly GUIContent heading = new GUIContent("Furina's Search Theatre");
+    bool showCredits;
     readonly GUIContent wholeStageButton = new GUIContent("Whole stage");
     readonly GUIContent autoZoomButton = new GUIContent("Auto zoom");
-    readonly GUIContent attribution = new GUIContent("Furina: X9_YT / CC BY 4.0 • MMD model: miHoYo    |    Speed changes apply to the next step.");
+    readonly GUIContent attribution = new GUIContent("Furina: X9_YT / CC BY 4.0 • MMD model: miHoYo");
     readonly GUIContent ellipsis = new GUIContent("…");
     readonly GUIContent algorithmText = new GUIContent();
     readonly GUIContent targetText = new GUIContent();
@@ -129,20 +129,15 @@ public sealed class SearchOverlay : MonoBehaviour
         cachedTarget = Stage.Target; cachedAlgorithm = Stage.Algorithm; stateCached = true;
         int comparisons = step == null ? 0 : step.Comparisons - (revealed ? 0 : 1);
         algorithmText.text = Stage.Algorithm;
-        targetText.text = "TARGET  " + Stage.Target + "     •     " + comparisons + " comparisons";
+        targetText.text = comparisons + " comparisons";
         phaseText.text = step == null ? "The stage is yours" : step.Phase;
         reasonText.text = step == null ? Introduction() : step.Reason;
         comparisonText.text = step == null ? "Sorted • zero-based indexes" : revealed ? step.Comparison : "Checking index " + step.Index + "...";
         comparison.fontSize = 16;
         while (comparison.fontSize > 10 && comparison.CalcSize(comparisonText).x > 268) comparison.fontSize--;
         comparisonFontSize = comparison.fontSize;
-        messageText.text = step == null ? "Gold: checking    Green: found\nDimmed: ruled out"
-            : revealed ? step.Message : "Watch the chosen position before revealing the comparison.";
-        string beat = paused ? "PAUSED" : finished ? "COMPLETE" : step == null ? "READY" : phase.ToString().ToUpperInvariant();
-        string stageRange = Stage.WholeStage || step == null || finished
-            ? "ALL " + labelCount + " POSITIONS · VALUES BELOW"
-            : step.Terminal ? "SEARCH RESULT" : "FOCUSING INDEX " + step.Index;
-        stageText.text = beat + "     /     " + stageRange;
+        messageText.text = step != null && revealed ? step.Message : string.Empty;
+        stageText.text = paused ? "Paused" : finished ? "Complete" : step == null ? "Ready" : "Searching";
         rangeLeft = step == null ? 0 : revealed ? step.NextLeft : step.Left;
         rangeRight = step == null ? labelCount - 1 : revealed ? step.NextRight : step.Right;
         string range = rangeLeft > rangeRight ? "No candidates remain" : rangeLeft == rangeRight
@@ -153,21 +148,6 @@ public sealed class SearchOverlay : MonoBehaviour
     void Frame(Rect rect, Color background, Color border)
     {
         Fill(rect, border); Fill(new Rect(rect.x + 1, rect.y + 1, rect.width - 2, rect.height - 2), background);
-    }
-    Rect PerformerRect(Camera camera, float sx, float sy)
-    {
-        var bounds = Stage.Theatre.Actor.WorldBounds;
-        Vector2 min = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
-        Vector2 max = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
-        for (int corner = 0; corner < 8; corner++)
-        {
-            var point = bounds.center + Vector3.Scale(bounds.extents,
-                new Vector3((corner & 1) == 0 ? -1 : 1, (corner & 2) == 0 ? -1 : 1, (corner & 4) == 0 ? -1 : 1));
-            var screen = camera.WorldToScreenPoint(point);
-            var projected = new Vector2(screen.x / sx, (Screen.height - screen.y) / sy - 58);
-            min = Vector2.Min(min, projected); max = Vector2.Max(max, projected);
-        }
-        return Rect.MinMaxRect(min.x - 3, min.y - 3, max.x + 3, max.y + 3);
     }
     void OnGUI()
     {
@@ -185,6 +165,7 @@ public sealed class SearchOverlay : MonoBehaviour
         }
         // Keep this control in every event so keyboard focus, clicks and hover still work.
         if (GUI.Button(viewRect, Stage.WholeStage ? autoZoomButton : wholeStageButton, viewButton)) Stage.SetWholeStage(!Stage.WholeStage);
+        if (GUI.Button(new Rect(800, 454, 80, 23), "Credits", viewButton)) showCredits = !showCredits;
         if (repaint)
         {
             CacheState(CacheValues());
@@ -195,8 +176,6 @@ public sealed class SearchOverlay : MonoBehaviour
     void DrawOverlay(float sx, float sy)
     {
         var step = cachedStep;
-        GUI.Label(new Rect(20, 9, 540, 31), heading, title);
-        GUI.Label(new Rect(595, 10, 290, 25), algorithmText, accent);
         GUI.Label(new Rect(595, 35, 280, 22), targetText, small);
         Fill(new Rect(18, 54, 864, 1), gold * .7f);
         Fill(new Rect(585, 61, 315, 289), ink);
@@ -209,11 +188,6 @@ public sealed class SearchOverlay : MonoBehaviour
         GUI.Label(new Rect(606, 242, 268, 68), messageText, body);
         Fill(new Rect(15, 63, 554, 22), new Color(.025f, .045f, .08f, .86f));
         GUI.Label(new Rect(20, 65, 540, 23), stageText, small);
-        if (step != null)
-        {
-            Fill(new Rect(606, 326, 268, 3), new Color(.15f, .2f, .3f));
-            Fill(new Rect(606, 326, 268 * (float)Stage.Playback.Progress, 3), gold);
-        }
         DrawStageLabels(sx, sy);
         Fill(new Rect(0, 350, 900, 130), ink); Fill(new Rect(18, 350, 864, 1), gold * .5f);
         GUI.Label(new Rect(20, 354, 860, 19), rangeText, small);
@@ -242,45 +216,37 @@ public sealed class SearchOverlay : MonoBehaviour
             Fill(new Rect(570, 352, 310, 23), ink);
             GUI.Label(new Rect(580, 354, 300, 22), tooltipText, body);
         }
-        GUI.Label(new Rect(20, 457, 860, 20), attribution, small);
+        if (showCredits)
+        {
+            Frame(new Rect(20, 410, 760, 65), ink, gold);
+            GUI.Label(new Rect(30, 420, 740, 45), attribution, body);
+        }
     }
     void DrawStageLabels(float sx, float sy)
     {
         var camera = Stage.Theatre.View;
         var origin = camera.WorldToScreenPoint(Vector3.zero);
-        float spacing = (camera.WorldToScreenPoint(Vector3.right * 2.4f).x - origin.x) / sx;
-        if (spacing < 30) return;
-        float rowSpacing = Mathf.Abs(camera.WorldToScreenPoint(Vector3.forward * 3.2f).y - origin.y) / sy;
-        bool compact = (Stage.Theatre.Rows > 1 && rowSpacing < 50) || spacing < 65;
-        var performer = PerformerRect(camera, sx, sy);
-        float performerDepth = camera.WorldToScreenPoint(Stage.Theatre.Actor.transform.position).z;
-        float labelWidth = Mathf.Min(104, spacing - 4);
-        float available = compact ? labelWidth - 18 : labelWidth - 8;
+        float spacing = Mathf.Abs(camera.WorldToScreenPoint(Vector3.right * 2.4f).x - origin.x) / sx;
+        float labelWidth = Mathf.Max(24, Mathf.Min(104, spacing - 4));
         GUI.BeginGroup(new Rect(0, 58, 585, 292));
         for (int i = 0; i < labelCount; i++)
         {
             var label = labels[i];
-            var screen = camera.WorldToScreenPoint(Stage.Theatre.Position(i) + new Vector3(0, .12f, -.9f));
-            var rect = new Rect(screen.x / sx - labelWidth * .5f, (Screen.height - screen.y) / sy - 58, labelWidth, compact ? 18 : 39);
-            // The full array stays below; stage plaques must not obscure the performer.
-            if (screen.z > performerDepth && rect.Overlaps(performer)) continue;
-            bool selected = cachedStep != null && cachedStep.Index == i;
-            Color border = selected ? (cachedStep.Found ? new Color(.36f, .96f, .72f) : gold) : new Color(.38f, .33f, .24f);
-            Frame(rect, new Color(.035f, .075f, .11f, .96f), border);
-            plaqueValue.normal.textColor = selected ? Color.white : new Color(.86f, .91f, .94f);
-            plaqueValue.fontSize = FittingSize(label.PlaqueWidths, compact ? 12 : 18, available);
-            if (compact)
-            {
-                plaqueIndex.fontSize = 9;
-                GUI.Label(new Rect(rect.x + 1, rect.y, 13, 18), label.Index, plaqueIndex);
-                Fill(new Rect(rect.x + 14, rect.y + 4, 1, 10), border);
-                GUI.Label(new Rect(rect.x + 16, rect.y, available, 18),
-                    label.PlaqueWidths[plaqueValue.fontSize - 10] > available ? ellipsis : label.Value, plaqueValue);
-                continue;
-            }
-            GUI.Label(new Rect(rect.x + 4, rect.y, available, 24), label.Value, plaqueValue);
-            plaqueIndex.fontSize = 10;
-            GUI.Label(new Rect(rect.x, rect.y + 23, rect.width, 14), label.StageIndex, plaqueIndex);
+            var screen = camera.WorldToScreenPoint(Stage.Theatre.Position(i) + new Vector3(0, .2f, -.65f));
+            if (screen.z <= 0) continue;
+            var rect = new Rect(screen.x / sx - labelWidth * .5f,
+                (Screen.height - screen.y) / sy - 58 - 24, labelWidth, 24);
+            bool selected = Stage.OccupiedIndex == i;
+            bool found = selected && cachedStep != null && cachedStep.Found && cachedRevealed;
+            Color color = found ? new Color(.36f, .96f, .72f) : selected ? gold
+                : i < rangeLeft || i > rangeRight ? new Color(.48f, .53f, .60f) : new Color(.86f, .91f, .94f);
+            plaqueValue.fontSize = FittingSize(label.PlaqueWidths, 18, labelWidth);
+            if (label.PlaqueWidths[plaqueValue.fontSize - 10] > labelWidth)
+                plaqueValue.fontSize = Mathf.Max(1, Mathf.FloorToInt(10 * labelWidth / label.PlaqueWidths[0]));
+            plaqueValue.normal.textColor = ink;
+            GUI.Label(new Rect(rect.x + 1, rect.y + 1, rect.width, rect.height), label.Value, plaqueValue);
+            plaqueValue.normal.textColor = color;
+            GUI.Label(rect, label.Value, plaqueValue);
         }
         GUI.EndGroup();
     }

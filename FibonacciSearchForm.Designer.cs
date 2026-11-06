@@ -22,8 +22,12 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.btnNext = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.lblCount = new System.Windows.Forms.Label();
+            this.numberCount = new System.Windows.Forms.NumericUpDown();
+            this.btnGenerate = new System.Windows.Forms.Button();
             this.pnlAnimation = new UnitySearchHost();
             ((System.ComponentModel.ISupportInitialize)this.speed).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)this.numberCount).BeginInit();
             this.SuspendLayout();
             this.lblAlgorithm = new System.Windows.Forms.Label();
             this.lblAlgorithm.Text = "Fibonacci Search";
@@ -33,7 +37,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.lblAlgorithm.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.Controls.Add(this.lblAlgorithm);
             this.lblNumbers.Name = "lblNumbers";
-            this.lblNumbers.Text = "Sorted numbers (comma-separated)";
+            this.lblNumbers.Text = "Sorted numbers (spaces or commas)";
             this.lblNumbers.Location = new System.Drawing.Point(190, 12);
             this.lblNumbers.Size = new System.Drawing.Size(205, 20);
             this.lblNumbers.TabIndex = 0;
@@ -101,15 +105,39 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Text = "Enter sorted numbers and a target, then press Start.";
             this.lblStatus.Location = new System.Drawing.Point(12, 77);
-            this.lblStatus.Size = new System.Drawing.Size(776, 28);
+            this.lblStatus.Size = new System.Drawing.Size(450, 28);
             this.lblStatus.TabIndex = 11;
             this.Controls.Add(this.lblStatus);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Text = "Count";
+            this.lblCount.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.lblCount.Location = new System.Drawing.Point(480, 80);
+            this.lblCount.Size = new System.Drawing.Size(42, 22);
+            this.Controls.Add(this.lblCount);
+            this.numberCount.Name = "numberCount";
+            this.numberCount.AccessibleName = "Number of values to generate";
+            this.numberCount.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.numberCount.Location = new System.Drawing.Point(526, 77);
+            this.numberCount.Size = new System.Drawing.Size(60, 26);
+            this.numberCount.Minimum = 1;
+            this.numberCount.Maximum = 40;
+            this.numberCount.Value = 10;
+            this.numberCount.TabIndex = 11;
+            this.Controls.Add(this.numberCount);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Text = "Generate numbers";
+            this.btnGenerate.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.btnGenerate.Location = new System.Drawing.Point(596, 75);
+            this.btnGenerate.Size = new System.Drawing.Size(192, 28);
+            this.btnGenerate.TabIndex = 12;
+            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
+            this.Controls.Add(this.btnGenerate);
             this.pnlAnimation.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.pnlAnimation.Name = "pnlAnimation";
             this.pnlAnimation.Text = "";
             this.pnlAnimation.Location = new System.Drawing.Point(12, 112);
             this.pnlAnimation.Size = new System.Drawing.Size(776, 347);
-            this.pnlAnimation.TabIndex = 12;
+            this.pnlAnimation.TabIndex = 13;
             this.Controls.Add(this.pnlAnimation);
             this.speed.Minimum = 400;
             this.speed.Maximum = 5000;
@@ -125,6 +153,7 @@ namespace CpE2_DSA_Olivar_26271Sem
             this.Name = "FibonacciSearchForm";
             this.Text = "Fibonacci Search";
             ((System.ComponentModel.ISupportInitialize)this.speed).EndInit();
+            ((System.ComponentModel.ISupportInitialize)this.numberCount).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -140,6 +169,9 @@ namespace CpE2_DSA_Olivar_26271Sem
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Label lblCount;
+        private System.Windows.Forms.NumericUpDown numberCount;
+        private System.Windows.Forms.Button btnGenerate;
         private UnitySearchHost pnlAnimation;
     }
 }

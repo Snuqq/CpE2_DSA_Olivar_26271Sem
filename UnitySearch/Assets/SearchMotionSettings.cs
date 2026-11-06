@@ -6,13 +6,13 @@ using CpE2_DSA_Olivar_26271Sem;
 public sealed class SearchMotionSettings
 {
     [Header("Playback (seconds)")]
-    [SerializeField, Min(0.01f)] public float defaultStepSeconds = 3f;
+    [SerializeField, Min(0.01f)] public float defaultStepSeconds = 5f;
     [SerializeField, Min(0.01f)] public float minimumStepSeconds = .4f;
     [SerializeField, Min(0.01f)] public float maximumStepSeconds = 10f;
     [SerializeField, Min(0.01f)] public float chooseSeconds = .3f;
     [SerializeField, Min(0.01f)] public float comparisonSeconds = .45f;
     [Header("Contact phases: 30 fps reference converted to seconds")]
-    [SerializeField, Min(0.01f)] public float anticipationSeconds = .1666667f;
+    [SerializeField, Min(0.01f)] public float anticipationSeconds = .2f;
     [SerializeField, Min(0.01f)] public float takeoffSeconds = .0666667f;
     [SerializeField, Min(0.01f)] public float landingSeconds = .1166667f;
     [SerializeField, Min(0.01f)] public float settleSeconds = .2333333f;
@@ -20,7 +20,7 @@ public sealed class SearchMotionSettings
     [SerializeField] public bool scaleDurationWithDistance = true;
     [SerializeField, Range(0.01f, 1f)] public float constantTravelFraction = .45f;
     [SerializeField, Min(0.01f)] public float referenceDistance = 2.4f;
-    [SerializeField, Min(0.01f)] public float minimumTravelSeconds = .3f;
+    [SerializeField, Min(0.01f)] public float minimumTravelSeconds = .12f;
     [SerializeField, Min(0.01f)] public float maximumTravelSeconds = 1.8f;
     [SerializeField, Min(0)] public float minimumHopHeight = .3f;
     [SerializeField, Min(0)] public float maximumHopHeight = .85f;
@@ -63,6 +63,20 @@ public sealed class SearchMotionSettings
     [SerializeField, Range(7, 14)] public float resultHoldSeconds = 7f;
     [SerializeField, Min(0)] public float reactionWeightShift = .08f;
     [SerializeField, Min(0)] public float reactionHipDrop = .06f;
+    [Header("Step budget: fractions of the requested duration")]
+    [SerializeField, Range(.01f, .3f)] public float chooseFraction = .08f;
+    [SerializeField, Range(.01f, .3f)] public float anticipationFraction = .18f;
+    [SerializeField, Range(.01f, .2f)] public float takeoffFraction = .04f;
+    [SerializeField, Range(.01f, .3f)] public float landingFraction = .1f;
+    [SerializeField, Range(.01f, .3f)] public float settleFraction = .2f;
+    [SerializeField, Range(.01f, .3f)] public float comparisonFraction = .1f;
+    [SerializeField, Range(.1f, .95f)] public float maximumReservedFraction = .8f;
+    [SerializeField, Range(.01f, .5f)] public float shortTravelFraction = .18f;
+    [SerializeField, Range(.01f, .6f)] public float longTravelFraction = .38f;
+    [SerializeField, Min(1)] public float longJumpDistances = 3f;
+    [SerializeField, Range(.1f, 1)] public float scanTravelScale = .72f;
+    [SerializeField, Min(.1f)] public float resetSeconds = 1.2f;
+    [SerializeField, Range(.01f, .5f)] public float resetPreframeFraction = .25f;
     [Header("Verification")]
     [SerializeField] public bool logMotionPhases;
     [SerializeField] public bool drawContactGizmos = true;
@@ -70,19 +84,34 @@ public sealed class SearchMotionSettings
 
     public SearchMotionPlan Probe(float distance, double requestedSeconds)
     {
+        return Probe(distance, requestedSeconds, false);
+    }
+    public SearchMotionPlan Probe(float distance, double requestedSeconds, bool scan)
+    {
+        if (double.IsNaN(requestedSeconds) || double.IsInfinity(requestedSeconds) || requestedSeconds <= 0)
+            throw new ArgumentOutOfRangeException("requestedSeconds");
         bool moving = distance > Mathf.Epsilon;
-        double travel = moving ? requestedSeconds * constantTravelFraction : 0;
-        if (moving && scaleDurationWithDistance)
-            travel = Mathf.Clamp((float)Math.Max(travel, walkingSeconds) * distance / referenceDistance,
-                minimumTravelSeconds, maximumTravelSeconds);
-        double anticipation = moving ? anticipationSeconds : 0, takeoff = moving ? takeoffSeconds : 0;
-        double landing = moving ? landingSeconds : 0, settle = moving ? settleSeconds : 0;
-        double minimum = chooseSeconds + anticipation + takeoff + travel + landing + settle + comparisonSeconds;
-        double comparison = comparisonSeconds + Math.Max(0, requestedSeconds - minimum);
+        double choose = Math.Min(chooseSeconds, requestedSeconds * chooseFraction);
+        double anticipation = moving ? Math.Min(anticipationSeconds, requestedSeconds * anticipationFraction) : 0;
+        double takeoff = moving ? Math.Min(takeoffSeconds, requestedSeconds * takeoffFraction) : 0;
+        double landing = moving ? Math.Min(landingSeconds, requestedSeconds * landingFraction) : 0;
+        double settle = moving ? Math.Min(settleSeconds, requestedSeconds * settleFraction) : 0;
+        double comparison = Math.Min(comparisonSeconds, requestedSeconds * comparisonFraction);
+        // Inspector edits cannot make the mandatory phases overrun the requested beat.
+        double reserved = choose + anticipation + takeoff + landing + settle + comparison;
+        double budgetScale = Math.Min(1, requestedSeconds * maximumReservedFraction / Math.Max(reserved, double.Epsilon));
+        choose *= budgetScale; anticipation *= budgetScale; takeoff *= budgetScale;
+        landing *= budgetScale; settle *= budgetScale; comparison *= budgetScale;
+        double available = requestedSeconds - choose - anticipation - takeoff - landing - settle - comparison;
+        float fraction = scaleDurationWithDistance ? Mathf.Lerp(shortTravelFraction, longTravelFraction,
+            Mathf.Clamp01(distance / Math.Max(.01f, referenceDistance * longJumpDistances))) : constantTravelFraction;
+        double travel = moving ? Math.Min(available, Mathf.Clamp((float)requestedSeconds * fraction * (scan ? scanTravelScale : 1),
+            minimumTravelSeconds, maximumTravelSeconds)) : 0;
+        comparison = requestedSeconds - choose - anticipation - takeoff - travel - landing - settle;
         return new SearchMotionPlan(new[] { SearchMotionPhase.Choose, SearchMotionPhase.Anticipate,
             SearchMotionPhase.Takeoff, SearchMotionPhase.Travel, SearchMotionPhase.Land,
             SearchMotionPhase.Settle, SearchMotionPhase.Compare },
-            new[] { (double)chooseSeconds, anticipation, takeoff, travel, landing, settle, comparison });
+            new[] { choose, anticipation, takeoff, travel, landing, settle, comparison });
     }
     public SearchMotionPlan Result()
     {

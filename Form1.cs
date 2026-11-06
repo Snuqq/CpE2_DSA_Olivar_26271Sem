@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 namespace CpE2_DSA_Olivar_26271Sem
@@ -24,6 +24,12 @@ namespace CpE2_DSA_Olivar_26271Sem
         }
 
         private void Form1_Load(object sender, EventArgs e) { CenterMainPanel(); }
+
+        protected override void OnLayout(LayoutEventArgs e)
+        {
+            base.OnLayout(e);
+            CenterMainPanel();
+        }
 
         private void Form1_Resize(object sender, EventArgs e)
         {
@@ -66,6 +72,11 @@ namespace CpE2_DSA_Olivar_26271Sem
         private void btnFibonacciSearch_Click(object sender, EventArgs e)
         {
             formShow(new FibonacciSearchForm(), splitContainer2.Panel2);
+        }
+
+        private void btnInfographic_Click(object sender, EventArgs e)
+        {
+            formShow(new InfographicForm(), splitContainer2.Panel2);
         }
 
         private void formShow(Form formToShow, Panel formToShowParent)

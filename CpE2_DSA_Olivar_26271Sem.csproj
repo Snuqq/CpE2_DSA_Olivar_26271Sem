@@ -52,6 +52,8 @@
     <Compile Include="ArrayControl.Designer.cs">
       <DependentUpon>ArrayControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="InfographicForm.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="InfographicForm.Designer.cs"><DependentUpon>InfographicForm.cs</DependentUpon></Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

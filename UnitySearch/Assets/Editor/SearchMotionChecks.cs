@@ -133,7 +133,7 @@ public static class SearchMotionChecks
                 int visited = 0;
                 while (!stage.Playback.Finished)
                 {
-                    stage.Playback.Step(); stage.DrawPose();
+                    stage.Playback.Step(); stage.AdvancePresentation(0);
                     Check(stage.Playback.Current == visited++, "step order");
                     if (stage.Current.Terminal)
                     {
@@ -145,18 +145,17 @@ public static class SearchMotionChecks
                         Check(pullback >= plan.StartOf(SearchMotionPhase.ReactionSettle) + motion.reactionSettleSeconds, "camera overlaps reaction");
                         while (stage.Playback.Elapsed + 1.0 / 60 < pullback)
                         {
-                            stage.Playback.Tick(1.0 / 60); stage.DrawPose();
+                            stage.AdvancePresentation(1.0 / 60);
                             Check(Vector3.Distance(focus, stage.Theatre.CameraFocus) < .00001f, "camera moved during reaction");
                             Near(camera.orthographicSize, size, "camera zoom during reaction");
                             Check(actor.PlantedDrift < .01f, "reaction contact");
                             maximumDrift = Mathf.Max(maximumDrift, actor.PlantedDrift); samples++;
                         }
-                        stage.Playback.Tick(plan.StartOf(SearchMotionPhase.ResultHold) - stage.Playback.Elapsed);
-                        stage.DrawPose();
+                        stage.AdvancePresentation(plan.StartOf(SearchMotionPhase.ResultHold) - stage.Playback.Elapsed);
                         Near(camera.orthographicSize, stage.Theatre.OverviewSize, "settled overview");
                         Check(!stage.Playback.Finished, "overview hold skipped");
                     }
-                    stage.Playback.Tick(stage.Playback.BeatDuration); stage.DrawPose();
+                    stage.AdvancePresentation(stage.Playback.BeatDuration);
                 }
                 string actual = string.Join(";", stage.Playback.Steps.Select(s => s.Index + "," + s.Found + "," + s.Terminal + "," + s.Comparisons));
                 Check(actual == trace && visited == expected.Count, "algorithm trace changed");
@@ -170,6 +169,7 @@ public static class SearchMotionChecks
         }
         finally
         {
+            if (stage.Theatre != null) stage.Theatre.Actor.CharacterAnimator.Dispose();
             UnityEngine.Object.DestroyImmediate(root);
             if (camera != null) UnityEngine.Object.DestroyImmediate(camera.gameObject);
         }

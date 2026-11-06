@@ -2,6 +2,22 @@ using UnityEngine;
 
 public sealed class SearchTheatre : MonoBehaviour
 {
+    [Header("Camera framing")]
+    [SerializeField, Min(.01f)] float cameraFollowSeconds = .2f;
+    [SerializeField, Range(0, 1)] float destinationLookAhead = .25f;
+    [SerializeField, Min(0)] float performerHeight = 2.9f;
+    [SerializeField, Min(0)] float performerRadius = .65f;
+    [SerializeField, Min(0)] float platformRadius = .88f;
+    [SerializeField, Range(.01f, .3f)] float framingMargin = .08f;
+    [SerializeField, Min(.01f)] float minimumFrameSize = 2.15f;
+    [SerializeField, Min(0)] float cameraElevation = 1.3f;
+    [SerializeField, Min(.01f)] float cameraDistance = 12f;
+    [SerializeField, Range(.05f, .4f)] float preframeWidenFraction = .2f;
+    [SerializeField, Range(.1f, .8f)] float preframePanFraction = .5f;
+    Vector3 frameStart, frameTarget, followVelocity;
+    float frameStartSize, frameWideSize, frameTravelSize, frameAspect;
+    Bounds trajectoryBounds;
+    bool framePrepared, frameModeConfigured, frameCommitted;
     public Camera View { get; private set; }
     public FurinaActor Actor { get; private set; }
     public int Columns { get; private set; }
@@ -59,8 +75,117 @@ public sealed class SearchTheatre : MonoBehaviour
     {
         CameraFocus = center;
         View.transform.rotation = Quaternion.Euler(CameraPitch, 0, 0);
-        View.transform.position = center + Vector3.up * 1.3f + View.transform.rotation * Vector3.back * 12;
+        View.transform.position = center + Vector3.up * cameraElevation + View.transform.rotation * Vector3.back * cameraDistance;
         View.orthographicSize = size;
+    }
+    public void BeginFrameMove(Vector3 source, Vector3 destination, float arcHeight, SearchMotionSettings motion)
+    {
+        float radius = Mathf.Max(platformRadius, performerRadius, motion.platformSupportRadius);
+        trajectoryBounds = new Bounds(source, Vector3.zero);
+        trajectoryBounds.Encapsulate(destination);
+        trajectoryBounds.Expand(new Vector3(radius * 2, 0, radius * 2));
+        Vector3 maximum = trajectoryBounds.max;
+        maximum.y += performerHeight + Mathf.Max(0, arcHeight);
+        trajectoryBounds.SetMinMax(trajectoryBounds.min, maximum);
+        frameStart = CameraFocus;
+        frameTarget = trajectoryBounds.center - Vector3.up * cameraElevation;
+        frameStartSize = View.orthographicSize;
+        frameTravelSize = SizeFor(trajectoryBounds, frameTarget);
+        frameWideSize = Mathf.Max(frameStartSize, SizeFor(trajectoryBounds, frameStart), frameTravelSize);
+        frameAspect = View.aspect;
+        followVelocity = Vector3.zero;
+        framePrepared = true;
+        frameModeConfigured = false;
+        frameCommitted = false;
+    }
+    public void UpdateFrameMove(float chooseProgress, Vector3 actor, Vector3 destination, float delta, bool wholeStage)
+    {
+        if (!framePrepared || delta <= 0) return;
+        if (!frameModeConfigured)
+        {
+            if (wholeStage)
+            {
+                frameTarget = OverviewFocus;
+                frameTravelSize = Mathf.Max(OverviewSize, SizeFor(trajectoryBounds, frameTarget));
+                frameWideSize = Mathf.Max(frameStartSize, SizeFor(trajectoryBounds, frameStart), frameTravelSize);
+            }
+            frameModeConfigured = true;
+        }
+        // Resizing is allowed to widen the safe frame; ordinary travel never changes zoom.
+        if (!Mathf.Approximately(frameAspect, View.aspect))
+        {
+            frameAspect = View.aspect;
+            frameTravelSize = wholeStage ? Mathf.Max(OverviewSize, SizeFor(trajectoryBounds, frameTarget))
+                : SizeFor(trajectoryBounds, frameTarget);
+            frameWideSize = Mathf.Max(frameStartSize, SizeFor(trajectoryBounds, frameStart), frameTravelSize);
+        }
+        float progress = Mathf.Clamp01(chooseProgress);
+        if (progress < 1)
+        {
+            float panEnd = Mathf.Min(.95f, preframeWidenFraction + preframePanFraction);
+            if (progress < preframeWidenFraction)
+                MoveCamera(frameStart, Mathf.Lerp(frameStartSize, frameWideSize,
+                    Mathf.SmoothStep(0, 1, progress / preframeWidenFraction)));
+            else if (progress < panEnd)
+                MoveCamera(Vector3.Lerp(frameStart, frameTarget,
+                    Mathf.SmoothStep(0, 1, (progress - preframeWidenFraction) / (panEnd - preframeWidenFraction))), frameWideSize);
+            else
+                MoveCamera(frameTarget, Mathf.Lerp(frameWideSize, frameTravelSize,
+                    Mathf.SmoothStep(0, 1, (progress - panEnd) / (1 - panEnd))));
+            followVelocity = Vector3.zero;
+            return;
+        }
+        if (wholeStage || !frameCommitted)
+        {
+            MoveCamera(frameTarget, frameTravelSize);
+            followVelocity = Vector3.zero;
+            frameCommitted = true;
+            return;
+        }
+        Vector3 desired = Vector3.Lerp(actor, destination, destinationLookAhead)
+            + Vector3.up * (performerHeight * .5f - cameraElevation);
+        Bounds visible = new Bounds(actor, Vector3.zero);
+        visible.Encapsulate(actor + Vector3.up * performerHeight);
+        visible.Encapsulate(destination);
+        visible.Expand(new Vector3(platformRadius * 2, 0, platformRadius * 2));
+        desired = ClampFocus(desired, visible, frameTravelSize);
+        Vector3 current = ClampFocus(CameraFocus, visible, frameTravelSize);
+        Vector3 smoothed = Vector3.SmoothDamp(current, desired, ref followVelocity, cameraFollowSeconds, Mathf.Infinity, delta);
+        MoveCamera(ClampFocus(smoothed, visible, frameTravelSize), frameTravelSize);
+    }
+    float SizeFor(Bounds bounds, Vector3 focus)
+    {
+        Vector3 horizontal = Vector3.right;
+        Vector3 vertical = Quaternion.Euler(CameraPitch, 0, 0) * Vector3.up;
+        Vector3 relative = bounds.center - (focus + Vector3.up * cameraElevation);
+        float halfWidth = Mathf.Abs(Vector3.Dot(relative, horizontal)) + bounds.extents.x;
+        float halfHeight = Mathf.Abs(Vector3.Dot(relative, vertical))
+            + Mathf.Abs(vertical.y) * bounds.extents.y + Mathf.Abs(vertical.z) * bounds.extents.z;
+        return Mathf.Max(minimumFrameSize, halfWidth / Mathf.Max(.01f, View.aspect), halfHeight) / (1 - framingMargin);
+    }
+    Vector3 ClampFocus(Vector3 focus, Bounds bounds, float size)
+    {
+        Vector3 vertical = Quaternion.Euler(CameraPitch, 0, 0) * Vector3.up;
+        Vector3 aim = focus + Vector3.up * cameraElevation;
+        float safeHalfHeight = size * (1 - framingMargin);
+        float halfWidth = safeHalfHeight * View.aspect;
+        float verticalExtent = Mathf.Abs(vertical.y) * bounds.extents.y + Mathf.Abs(vertical.z) * bounds.extents.z;
+        float centerY = Vector3.Dot(bounds.center, vertical), aimY = Vector3.Dot(aim, vertical);
+        float minX = bounds.max.x - halfWidth, maxX = bounds.min.x + halfWidth;
+        float minY = centerY + verticalExtent - safeHalfHeight, maxY = centerY - verticalExtent + safeHalfHeight;
+        float x = minX <= maxX ? Mathf.Clamp(aim.x, minX, maxX) : bounds.center.x;
+        float y = minY <= maxY ? Mathf.Clamp(aimY, minY, maxY) : centerY;
+        return focus + Vector3.right * (x - aim.x) + vertical * (y - aimY);
+    }
+    public void ShowContact(int index, bool found, float delta, bool paused)
+    {
+        scenery.ShowContact(index, found, delta, paused);
+    }
+    public void ResetEffects()
+    {
+        framePrepared = false;
+        followVelocity = Vector3.zero;
+        scenery.ResetEffects();
     }
     public void ShowValues(int count)
     {

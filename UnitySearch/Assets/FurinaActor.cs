@@ -18,6 +18,64 @@ public sealed class FurinaActor : MonoBehaviour
         public Limb(Transform upper, Transform lower, Transform end) { this.upper = upper; this.lower = lower; this.end = end; }
     }
     Joint[] joints;
+    SearchCharacterAnimator characterAnimator;
+    Transform[] secondaryBones;
+    float[] secondaryWeights;
+    bool presentationConfigured, scanPresentation, overshootPresentation;
+    double idleClock;
+    float presentationDelta;
+    Vector3 gazeTarget;
+    Quaternion[] resetRotations;
+    Vector3[] resetPositions;
+    Vector3 resetRoot, resetLeft, resetRight;
+    Quaternion resetRootRotation;
+    bool resettingPose;
+    [SerializeField, Min(0)] float scanHopHeight = .22f;
+    [SerializeField, Range(0, 1)] float scanKneeScale = .45f;
+    [SerializeField, Min(0)] float resetClearance = .25f;
+    public SearchCharacterAnimator CharacterAnimator { get { return characterAnimator; } }
+
+    public void ConfigurePresentation(bool scan, double idleTime, float deltaTime, Vector3 lookTarget, bool overshoot = false)
+    {
+        presentationConfigured = true; scanPresentation = scan; overshootPresentation = overshoot;
+        idleClock = idleTime; presentationDelta = Mathf.Max(0, deltaTime); gazeTarget = lookTarget;
+    }
+
+    public void CaptureResetPose()
+    {
+        if (resetRotations == null) { resetRotations = new Quaternion[joints.Length]; resetPositions = new Vector3[joints.Length]; }
+        for (int i = 0; i < joints.Length; i++)
+        {
+            resetRotations[i] = joints[i].bone.localRotation;
+            resetPositions[i] = joints[i].bone.localPosition;
+        }
+        resetRoot = transform.position; resetRootRotation = transform.rotation;
+        resetLeft = legL.end.position; resetRight = legR.end.position; resettingPose = true;
+    }
+
+    public void PoseReset(float progress, Vector3 destination, SearchMotionSettings motion)
+    {
+        if (!resettingPose) CaptureResetPose();
+        float p = Smoother(progress);
+        Pose(null, 0, destination, destination, false, false, motion);
+        Vector3 finalLeft = legL.end.position, finalRight = legR.end.position;
+        for (int i = 0; i < joints.Length; i++)
+        {
+            joints[i].bone.localRotation = Quaternion.Slerp(resetRotations[i], joints[i].bone.localRotation, p);
+            joints[i].bone.localPosition = Vector3.Lerp(resetPositions[i], joints[i].bone.localPosition, p);
+        }
+        transform.position = Vector3.Lerp(resetRoot, destination, p);
+        transform.position += Vector3.up * (Mathf.Sin(p * Mathf.PI) * resetClearance);
+        transform.rotation = Quaternion.Slerp(resetRootRotation, Quaternion.identity, p);
+        if (progress > 0)
+        {
+            Vector3 lift = Vector3.up * (Mathf.Sin(p * Mathf.PI) * resetClearance);
+            Leg(legL, Vector3.Lerp(resetLeft, finalLeft, p) + lift, legL.end.rotation, Vector3.back);
+            Leg(legR, Vector3.Lerp(resetRight, finalRight, p) + lift, legR.end.rotation, Vector3.back);
+        }
+        LeftPlanted = RightPlanted = FeetPlanted = progress >= 1;
+        if (progress >= 1) { resettingPose = false; characterAnimator.ResetClock(); }
+    }
     readonly List<Material> materials = new List<Material>();
     Transform model, hips, chest, head, shoulderL, shoulderR;
     Limb armL, armR, legL, legR;
@@ -43,7 +101,12 @@ public sealed class FurinaActor : MonoBehaviour
     {
         get { var bounds = renderers[0].bounds; for (int i = 1; i < renderers.Length; i++) bounds.Encapsulate(renderers[i].bounds); return bounds; }
     }
-    public void ResetPose() { blending = false; MaxPlantedDrift = PlantedDrift = 0; }
+    public void ResetPose()
+    {
+        blending = false; resettingPose = false; presentationConfigured = false;
+        MaxPlantedDrift = PlantedDrift = 0;
+        if (characterAnimator != null) characterAnimator.ResetClock();
+    }
     public void BeginMotion()
     {
         blending = true;
@@ -110,6 +173,12 @@ public sealed class FurinaActor : MonoBehaviour
             }
             joints[i] = new Joint { bone = bone, rotation = bone.localRotation, position = bone.localPosition, secondaryWeight = weight };
         }
+        var secondaryList = new List<Transform>(); var weightList = new List<float>();
+        foreach (var joint in joints)
+            if (joint.secondaryWeight > 0) { secondaryList.Add(joint.bone); weightList.Add(joint.secondaryWeight); }
+        secondaryBones = secondaryList.ToArray(); secondaryWeights = weightList.ToArray();
+        characterAnimator = gameObject.AddComponent<SearchCharacterAnimator>();
+        characterAnimator.Initialize(model);
         hipRest = hips.localPosition; basePosition = model.localPosition;
         leftFoot = transform.InverseTransformPoint(legL.end.position); rightFoot = transform.InverseTransformPoint(legR.end.position);
         leftFootRotation = Quaternion.Inverse(transform.rotation) * legL.end.rotation;
@@ -228,6 +297,8 @@ public sealed class FurinaActor : MonoBehaviour
     public void Pose(SearchMotionPlan plan, double elapsed, Vector3 source, Vector3 destination, bool terminal, bool found, SearchMotionSettings motion)
     {
         settings = motion;
+        bool configured = presentationConfigured;
+        presentationConfigured = false;
         for (int i = 0; i < joints.Length; i++) { joints[i].bone.localRotation = joints[i].rotation; joints[i].bone.localPosition = joints[i].position; }
         hips.localPosition = hipRest; model.localPosition = basePosition; transform.rotation = Quaternion.identity;
         SearchMotionPhase phase = plan == null ? SearchMotionPhase.Choose : plan.PhaseAt(elapsed);
@@ -235,7 +306,10 @@ public sealed class FurinaActor : MonoBehaviour
         Vector3 direction = Vector3.ProjectOnPlane(destination - source, Vector3.up).normalized;
         float distance = Vector3.Distance(source, destination);
         bool travelling = !terminal && plan != null && phase == SearchMotionPhase.Travel && distance > Mathf.Epsilon;
-        bool walkMove = distance > Mathf.Epsilon && distance <= motion.maximumWalkDistance && Mathf.Abs(destination.y - source.y) < .001f;
+        bool walkMove = !configured && distance > Mathf.Epsilon && distance <= motion.maximumWalkDistance && Mathf.Abs(destination.y - source.y) < .001f;
+        bool smallHop = configured && scanPresentation;
+        characterAnimator.Sample(plan, elapsed, terminal, found, smallHop || walkMove, configured,
+            configured ? idleClock : 0, configured ? presentationDelta : 0);
         Walking = travelling && walkMove;
         bool flight = travelling && !walkMove;
         Vector3 support = terminal ? source : Vector3.Lerp(source, destination, Smoother(travel));
@@ -247,9 +321,10 @@ public sealed class FurinaActor : MonoBehaviour
         if (Walking) Walk(travel, source, destination, out leftTarget, out rightTarget);
         if (flight)
         {
-            float hop = Mathf.Clamp(distance * motion.heightPerMetre, motion.minimumHopHeight, motion.maximumHopHeight);
+            float hop = smallHop ? Mathf.Min(scanHopHeight + distance * motion.heightPerMetre * .15f, motion.maximumHopHeight)
+                : Mathf.Clamp(distance * motion.heightPerMetre, motion.minimumHopHeight, motion.maximumHopHeight);
             transform.position += Vector3.up * (4 * hop * travel * (1 - travel));
-            float tuck = Mathf.Sin(travel * Mathf.PI);
+            float tuck = Mathf.Sin(travel * Mathf.PI) * (smallHop ? scanKneeScale : 1);
             leftTarget = transform.position + leftFoot + Vector3.up * (motion.leadingKneeLift * tuck) + direction * (.18f * tuck);
             rightTarget = transform.position + rightFoot + Vector3.up * (motion.trailingKneeLift * tuck) - direction * (.24f * tuck);
         }
@@ -263,14 +338,14 @@ public sealed class FurinaActor : MonoBehaviour
         }
         float envelope = Mathf.Sin(travel * Mathf.PI);
         float stride = Mathf.Sin((Walking ? walkingCycle : travel * WalkContacts.Length) * Mathf.PI);
-        PelvisDrop = compression * (walkMove ? motion.walkingCompressionDepth : motion.compressionDepth)
+        PelvisDrop = compression * (walkMove || smallHop ? motion.walkingCompressionDepth : motion.compressionDepth)
             + (Walking ? motion.walkingPelvisDrop * envelope + walkingSupportDrop : 0);
-        hips.position += direction * (motion.launchWeightShift * compression) - Vector3.up * PelvisDrop;
+        hips.position -= direction * (motion.launchWeightShift * compression) + Vector3.up * PelvisDrop;
         float recover = plan == null ? 0 : 1 - Ease(plan.ProgressOf(SearchMotionPhase.Settle, elapsed));
         float lead = terminal || plan == null ? 0 : Ease(plan.ProgressOf(SearchMotionPhase.Anticipate, elapsed)) * recover;
-        float gaze = terminal || plan == null || distance < Mathf.Epsilon ? 0 : Ease(plan.ProgressOf(SearchMotionPhase.Choose, elapsed)) * recover;
+        float headRecover = configured ? characterAnimator.HeadRecovery(plan, elapsed) : recover;
+        float gaze = terminal || plan == null || distance < Mathf.Epsilon ? 0 : Ease(plan.ProgressOf(SearchMotionPhase.Choose, elapsed)) * headRecover;
         float inspection = plan == null ? 0 : terminal ? 1 : Ease(plan.ProgressOf(SearchMotionPhase.Compare, elapsed));
-        Arms(inspection);
         float yaw = Vector3.SignedAngle(Vector3.back, direction, Vector3.up);
         float side = direction.x >= 0 ? 1 : -1;
         float bodyYaw = walkMove ? Mathf.Clamp(yaw, -motion.walkingHipTurnDegrees, motion.walkingHipTurnDegrees) * lead
@@ -280,18 +355,11 @@ public sealed class FurinaActor : MonoBehaviour
         Rotate(chest, Vector3.Cross(Vector3.up, direction), motion.travelLeanDegrees * lead * (1 - .55f * envelope));
         Rotate(head, Vector3.up, Mathf.Clamp(yaw, -motion.headLeadDegrees, motion.headLeadDegrees) * gaze
             - Mathf.Clamp(yaw, -motion.chestLeadDegrees, motion.chestLeadDegrees) * lead);
-        if (lead > 0)
-        {
-            float swing = walkMove ? stride * envelope : Mathf.Sin(travel * Mathf.PI * 2) * envelope;
-            float reach = walkMove ? .28f * swing : .55f * envelope - .25f * compression;
-            Arm(armL, Vector3.Lerp(new Vector3(.22f, -1, -.12f), new Vector3(.35f, -.65f, -.12f) + direction * reach, lead),
-                Vector3.Lerp(new Vector3(.12f, -1, -.25f), new Vector3(.2f, -.65f + .4f * envelope, -.5f) + direction * (.25f * swing), lead));
-            Arm(armR, Vector3.Lerp(new Vector3(-.22f, -1, -.12f), new Vector3(-.4f, -.8f, .1f) - direction * reach, lead),
-                Vector3.Lerp(new Vector3(-.12f, -1, -.25f), new Vector3(-.2f, -.7f, -.35f) - direction * (.3f * swing), lead));
-            if (Walking) Rotate(chest, Vector3.forward, motion.walkingSwayDegrees * stride * envelope);
-        }
+        if (Walking) Rotate(chest, Vector3.forward, motion.walkingSwayDegrees * stride * envelope);
         if (terminal && plan != null) Reaction(plan, elapsed, found, motion);
         else Rotate(head, Vector3.right, -8 * inspection);
+        if (configured && overshootPresentation && !terminal)
+            characterAnimator.ApplyInspection(chest, head, plan, elapsed, direction);
 
         double delayed = elapsed - motion.secondaryRecoveryDelay;
         double release = plan == null ? 0 : plan.StartOf(terminal ? SearchMotionPhase.ReactionSettle : SearchMotionPhase.Settle);
@@ -303,6 +371,12 @@ public sealed class FurinaActor : MonoBehaviour
         {
             float angle = drag * motion.secondaryDragDegrees * joints[i].secondaryWeight;
             if (angle != 0) joints[i].bone.localRotation *= Quaternion.Euler(angle, 0, -direction.x * angle);
+        }
+        if (configured)
+        {
+            float idleWeight = plan == null || phase == SearchMotionPhase.Compare || phase == SearchMotionPhase.ResultHold ? 1 : 0;
+            characterAnimator.ApplyPresentation(hips, chest, head, secondaryBones, secondaryWeights,
+                gazeTarget, idleClock, presentationDelta, idleWeight);
         }
         float blend = Ease((float)elapsed / motion.poseBlendSeconds);
         if (plan != null && blending && blend < 1)
@@ -354,24 +428,16 @@ public sealed class FurinaActor : MonoBehaviour
         float flourish = Mathf.Sin(react * Mathf.PI);
         PelvisDrop = motion.reactionHipDrop * strength;
         hips.position += Vector3.right * (motion.reactionWeightShift * strength) - Vector3.up * PelvisDrop;
-        Arms(found ? 1 : 1 - register);
         if (found)
         {
-            Arm(armR, Vector3.Lerp(new Vector3(-.8f, -.4f, -.35f), new Vector3(-1, -.22f, -.3f), react) + Vector3.up * (.35f * flourish),
-                Vector3.Lerp(new Vector3(-.4f, -.3f, -.7f), new Vector3(-.85f, -.1f, -.55f), react) + Vector3.back * (.35f * flourish));
-            Aim(armL.lower, armL.end, Vector3.Lerp(new Vector3(.12f, -1, -.25f), new Vector3(-.3f, .8f, -.4f), react));
-            Rotate(chest, Vector3.up, -14 * strength); Rotate(chest, Vector3.forward, -6 * strength);
-            Rotate(head, Vector3.right, -12 * look + 16 * react);
-            Rotate(head, Vector3.up, -12 * react); Rotate(head, Vector3.forward, 7 * react);
+            Rotate(head, Vector3.right, -12 * look + 12 * react);
         }
         else
         {
-            Rotate(chest, Vector3.right, -14 * strength); Rotate(chest, Vector3.forward, 8 * strength);
+            // Register disappointment before the clip opens the palms and shakes the head.
             shoulderL.position -= Vector3.up * (motion.reactionHipDrop * strength);
             shoulderR.position -= Vector3.up * (motion.reactionHipDrop * strength * .7f);
-            float shake = Mathf.Sin(react * Mathf.PI * 2) * Mathf.Sin(react * Mathf.PI);
-            Rotate(head, Vector3.right, -14 * look); Rotate(head, Vector3.up, 28 * shake);
-            Rotate(head, Vector3.forward, -8 * strength);
+            Rotate(head, Vector3.right, -10 * look);
         }
     }
     void OnDrawGizmos()

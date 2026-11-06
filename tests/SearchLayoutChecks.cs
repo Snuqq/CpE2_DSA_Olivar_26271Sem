@@ -29,12 +29,12 @@ class SearchLayoutChecks
                         var main = Field<SplitContainer>(shell, "splitContainer1");
                         var content = Field<SplitContainer>(shell, "splitContainer2").Panel2;
                         Check(shell.ClientRectangle.Contains(main.Bounds), "School shell extends outside client area: " + main.Bounds + " in " + shell.ClientRectangle + ", max " + main.MaximumSize);
-                        Check(Math.Abs(main.Left * 2 + main.Width - shell.ClientSize.Width) <= 1, "School shell is not centered horizontally.");
+                        Check(Math.Abs(main.Left * 2 + main.Width - shell.ClientSize.Width) <= 1, "School shell is not centered horizontally: " + main.Bounds + " in " + shell.ClientRectangle + ", scale " + scale);
                         Check(Math.Abs(main.Top * 2 + main.Height - shell.ClientSize.Height) <= 1, "School shell is not centered vertically.");
                         var navigation = Field<TableLayoutPanel>(shell, "navigation");
                         Check(navigation.Parent.ClientRectangle.Contains(navigation.Bounds), "Navigation panel is clipped: " + navigation.Bounds + " in " + navigation.Parent.ClientRectangle);
                         foreach (Control button in navigation.Controls)
-                            Check(navigation.ClientRectangle.Contains(button.Bounds) && button.Height >= 25, "Navigation button is clipped: " + button.Text);
+                            Check(navigation.ClientRectangle.Contains(button.Bounds) && (!(button is Button) || button.Height >= 25), "Navigation button is clipped: " + button.Text);
                         foreach (var algorithm in new[] { "JumpSearch", "ExponentialSearch", "FibonacciSearch" })
                         {
                             var form = (Form)Activator.CreateInstance(typeof(Form1).Assembly.GetType("CpE2_DSA_Olivar_26271Sem." + algorithm + "Form"));
